@@ -23,8 +23,12 @@ $font-path: "../assets/fonts";
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
+
+$twitter-blue: #1da1f2;
+$twitter-gray-text: #657786;
+
 $colors: (
-  primary:    #488aff,
+  primary:    $twitter-blue,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,

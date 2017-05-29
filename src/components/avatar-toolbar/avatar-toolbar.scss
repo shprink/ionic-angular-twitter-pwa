@@ -1,0 +1,16 @@
+avatar-toolbar {
+    .toolbar-content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        avatar {
+            
+        }
+        .toolbar-title {
+            > div {
+                display: flex;
+                flex: 1;
+            }
+        }
+    }
+}

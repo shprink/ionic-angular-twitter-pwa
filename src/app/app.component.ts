@@ -1,44 +1,40 @@
+import { Observable } from 'rxjs/observable';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Nav, Platform, ModalController } from 'ionic-angular';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { StorageProvider } from '../providers/storage/storage';
+import { TwitterProvider } from '../providers/twitter/twitter';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  isMenuEnabled$: Observable<boolean>;
+  rootPage: any = 'HomePage';
 
-  rootPage: any = HomePage;
+  constructor(
+    public platform: Platform,
+    public storage: StorageProvider,
+    public twitter: TwitterProvider,
+    public modalCtrl: ModalController,
+  ) {
+    this.isMenuEnabled$ = this.twitter.isAuthenticated();
 
-  pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
-    ];
-
-  }
-
-  initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.storage.run();
+      this.twitter.isAuthenticated().debounceTime(100).subscribe(isAuthenticated => {
+        console.log('isAuthenticated', isAuthenticated)
+        if (isAuthenticated) return;
+
+        let loginModal = this.modalCtrl.create('LoginPage')
+        loginModal.onDidDismiss(data => this.nav.setRoot('HomePage'));
+        loginModal.present();
+      })
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  logout() {
+    this.twitter.logout();
   }
 }

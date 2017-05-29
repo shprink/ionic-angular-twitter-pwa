@@ -1,0 +1,17 @@
+page-tweet {
+    .toolbar-content {
+        &.toolbar-content-ios {
+            text-align: right;
+        }
+    }
+    ion-footer {
+        .toolbar-content {
+            align-items: center;
+            display: flex;
+        }
+        .counter{
+            margin-right: 5px;
+            color: $twitter-gray-text;
+        }
+    }
+}

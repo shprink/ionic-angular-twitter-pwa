@@ -1,0 +1,10 @@
+avatar {
+    margin: 0 10px;
+    cursor: pointer;
+    display: inline-block;
+    ion-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}

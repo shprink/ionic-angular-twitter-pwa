@@ -1,0 +1,29 @@
+{
+  "name": "ionic-twitter-pwa",
+  "description": "Express server to act as a proxy to server twitter resources on the same domain",
+  "scripts": {
+    "start": "better-npm-run start",
+    "stop": "pm2 stop twitter-pwa"
+  },
+  "betterScripts": {
+    "start": {
+      "command": "pm2 start ./index.js --name='twitter-pwa'",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3001
+      }
+    }
+  },
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.2",
+    "firebase": "^4.0.0",
+    "firebase-admin": "~4.1.2",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "better-npm-run": "^0.0.15",
+    "dotenv": "^4.0.0"
+  }
+}
