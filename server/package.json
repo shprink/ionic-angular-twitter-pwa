@@ -7,7 +7,7 @@
   },
   "betterScripts": {
     "start": {
-      "command": "pm2 start ./index.js --name='twitter-pwa'",
+      "command": "pm2 reload ./index.js --name='twitter-pwa' --force",
       "env": {
         "NODE_ENV": "production",
         "PORT": 3001
