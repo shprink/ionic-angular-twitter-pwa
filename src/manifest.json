@@ -12,6 +12,6 @@
   "name": "Twitter PWA",
   "orientation": "portrait",
   "short_name": "Twitter PWA",
-  "start_url": "index.html",
+  "start_url": "/",
   "theme_color": "#ffffff"
 }
