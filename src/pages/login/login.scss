@@ -3,7 +3,38 @@ page-login {
         @include verticalCentered();
         flex-direction: column;
     }
-    svg {
-        max-width: 150px;
+    h1 {
+        font-size: 3rem;
+    }
+    hr {
+        margin: 30px 0 10px 0;
+        width: 100px;
+    }
+    .github-corner {
+        svg {
+            fill: color($colors, primary);
+        }
+        &:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+    }
+    @keyframes octocat-wave {
+        0%, 100% {
+            transform: rotate(0)
+        }
+        20%, 60% {
+            transform: rotate(-25deg)
+        }
+        40%, 80% {
+            transform: rotate(10deg)
+        }
+    }
+    @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+            animation: none
+        }
+        .github-corner .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
     }
 }

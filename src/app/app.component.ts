@@ -27,10 +27,11 @@ export class MyApp {
       this.twitter.isAuthenticated().debounceTime(100).subscribe(isAuthenticated => {
         console.log('isAuthenticated', isAuthenticated)
         if (isAuthenticated) return;
+        this.nav.setRoot('LoginPage')
 
-        let loginModal = this.modalCtrl.create('LoginPage')
-        loginModal.onDidDismiss(data => this.nav.setRoot('HomePage'));
-        loginModal.present();
+        // let loginModal = this.modalCtrl.create('LoginPage')
+        // loginModal.onDidDismiss(data => this.nav.setRoot('HomePage'));
+        // loginModal.present();
       });
     });
   }

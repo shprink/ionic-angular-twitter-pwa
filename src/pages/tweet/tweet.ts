@@ -39,7 +39,8 @@ export class TweetPage {
   }
 
   ionViewDidLoad() {
-    this.textarea.setFocus();
+    // wait for the animation to finish before focus
+    setTimeout(() => this.textarea.setFocus(), 250);
   }
 
   ionViewDidLeave() {

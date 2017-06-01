@@ -3,10 +3,18 @@
   "description": "Express server to act as a proxy to server twitter resources on the same domain",
   "scripts": {
     "start": "better-npm-run start",
+    "reload": "better-npm-run reload",
     "stop": "pm2 stop twitter-pwa"
   },
   "betterScripts": {
     "start": {
+      "command": "pm2 start ./index.js --name='twitter-pwa'",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3001
+      }
+    },
+    "reload": {
       "command": "pm2 reload ./index.js --name='twitter-pwa' --force",
       "env": {
         "NODE_ENV": "production",

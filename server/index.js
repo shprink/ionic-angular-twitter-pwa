@@ -35,6 +35,7 @@ const Twitter = require('twitter');
 var bodyParser = require('body-parser')
 
 const config = require('./config');
+console.log('config', config)
 require('dotenv').config();
 
 const app = module.exports = express();
