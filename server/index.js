@@ -124,6 +124,20 @@ app.post('/api/messages', (req, res) => {
     });
 });
 
+app.post('/api/user', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('users/show', req.body, function (error, user, response) {
+        (!error) ? res.status(200).json(user) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/covers', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('users/profile_banner', req.body, function (error, covers, response) {
+        (!error) ? res.status(200).json(covers) : res.status(400).json(error);
+    });
+});
+
 // const server = http.createServer(app);
 
 app.listen(config.port, (err) => {

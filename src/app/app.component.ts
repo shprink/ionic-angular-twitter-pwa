@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
+
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, ModalController } from 'ionic-angular';
 
@@ -30,11 +31,7 @@ export class MyApp {
         let loginModal = this.modalCtrl.create('LoginPage')
         loginModal.onDidDismiss(data => this.nav.setRoot('HomePage'));
         loginModal.present();
-      })
+      });
     });
-  }
-
-  logout() {
-    this.twitter.logout();
   }
 }

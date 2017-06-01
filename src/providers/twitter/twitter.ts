@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
+import { Platform } from 'ionic-angular';
+import _get from 'lodash/get';
 
 import * as firebase from 'firebase/app';
 
-import { setAuthUser, setAuthCredential, logout } from '../../actions';
-import { AppState, ICredential, IAuthState } from '../../reducers';
+import {
+  setAuthUser, setAuthCredential,
+  cleanAuth, logout, setTwitterUser
+} from '../../actions';
+import {
+  AppState, ICredential, IAuthState, ITwitterUser
+} from '../../reducers';
 /*
   Generated class for the TwitterProvider provider.
 
@@ -20,8 +27,8 @@ export class TwitterProvider {
     public afAuth: AngularFireAuth,
     public http: Http,
     public store: Store<AppState>,
+    public platform: Platform,
   ) {
-    console.log('eeeeeee')
     afAuth.authState.distinctUntilChanged().subscribe((user) => {
       if (!user) return;
 
@@ -36,8 +43,16 @@ export class TwitterProvider {
       this.afAuth.auth.signInAndRetrieveDataWithCredential(
         firebase.auth.TwitterAuthProvider.credential(credential.access_token_key, credential.access_token_secret)
       ).then(
-        result => this.storeCredential(result.credential),
+        result => {
+          this.storeCredential(result.credential);
+
+          // Get Twitter User Object
+          this.getUser().first()
+            .subscribe((user) => this.store.dispatch(setTwitterUser(user)))
+        },
         error => this.logout());
+    }, () => {
+      this.store.dispatch(cleanAuth());
     });
   }
 
@@ -74,16 +89,35 @@ export class TwitterProvider {
     return new RequestOptions({ headers });
   }
 
+  private getProvider() {
+    let providerData: firebase.UserInfo;
+    this.store.select(state => state.auth.provider).first()
+      .subscribe((provider: firebase.UserInfo) => providerData = provider);
+    return providerData;
+  }
+
   getDirectMessages() {
-    return this.http.post(`${__APIURI__}api/timeline`, {}, this.getRequestOptions());
+    return this.http.post(`${__APIURI__}api/timeline`, {}, this.getRequestOptions()).map(res => res.json());
   }
 
   getTimeline() {
-    return this.http.post(`${__APIURI__}api/messages`, {}, this.getRequestOptions());
+    return this.http.post(`${__APIURI__}api/messages`, {}, this.getRequestOptions()).map(res => res.json());
   }
 
   tweet(status) {
-    return this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions());
+    return this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions()).map(res => res.json());
+  }
+
+  getUser(user_id?): Observable<ITwitterUser> {
+    return this.http.post(`${__APIURI__}api/user`, {
+      user_id: user_id || this.getProvider().uid
+    }, this.getRequestOptions()).map(res => res.json());
+  }
+
+  getCovers(user_id?): Observable<any> {
+    return this.http.post(`${__APIURI__}api/covers`, {
+      user_id: user_id || this.getProvider().uid
+    }, this.getRequestOptions()).map(res => res.json());
   }
 
 }

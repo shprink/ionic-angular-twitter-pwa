@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/observable';
-import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 import { getTweetLength } from 'twitter-text';
@@ -18,8 +18,10 @@ import { TwitterProvider } from '../../providers/twitter/twitter';
   templateUrl: 'tweet.html',
 })
 export class TweetPage {
+  maxCharacter: number = 140;
   tweetForm: FormGroup;
   characterCount$: Observable<number>;
+  @ViewChild('textarea') textarea;
 
   constructor(
     public navCtrl: NavController,
@@ -33,11 +35,11 @@ export class TweetPage {
       tweet: ['', [Validators.required, tweetValidator]],
     });
     this.characterCount$ = this.tweetForm.valueChanges
-      .map(({ tweet }) => tweet.length ? 140 - getTweetLength(tweet) : 140);
+      .map(({ tweet }) => this.maxCharacter - getTweetLength(tweet));
   }
 
   ionViewDidLoad() {
-    
+    this.textarea.setFocus();
   }
 
   ionViewDidLeave() {

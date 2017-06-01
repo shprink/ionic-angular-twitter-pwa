@@ -1,3 +1,9 @@
 page-login {
-
+    .scroll-content {
+        @include verticalCentered();
+        flex-direction: column;
+    }
+    svg {
+        max-width: 150px;
+    }
 }

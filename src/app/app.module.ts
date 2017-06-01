@@ -1,4 +1,3 @@
-import { SharedLazyModule } from './shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -6,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/skip';
@@ -16,6 +17,7 @@ import { MyApp } from './app.component';
 import { STORE } from '../store';
 import { StorageProvider } from '../providers/storage/storage';
 import { TwitterProvider } from '../providers/twitter/twitter';
+import { MenuComponentModule } from '../components/menu/menu.module';
 
 export function provideStorage() {
   return new Storage({ name: '__twitter-pwa' });
@@ -44,6 +46,7 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
       messagingSenderId: "635051733996"
     }),
     ...STORE,
+    MenuComponentModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

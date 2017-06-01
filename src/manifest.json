@@ -1,13 +1,17 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
-  "start_url": "index.html",
+  "background_color": "#ffffff",
+  "description": "Ionic PWA rewritten with Ionic and Open Source",
   "display": "standalone",
-  "icons": [{
-    "src": "assets/imgs/logo.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
-  "background_color": "#4e8ef7",
-  "theme_color": "#4e8ef7"
+  "icons": [
+    {
+      "src": "assets/icon/app.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Twitter PWA",
+  "orientation": "portrait",
+  "short_name": "Twitter PWA",
+  "start_url": "index.html",
+  "theme_color": "#ffffff"
 }

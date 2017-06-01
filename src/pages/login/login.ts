@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Observable } from 'rxjs/observable';
+import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
 
 import { TwitterProvider } from '../../providers/twitter/twitter';
@@ -18,17 +18,20 @@ import { TwitterProvider } from '../../providers/twitter/twitter';
 })
 export class LoginPage {
   isAuth$: Observable<boolean>;
+  platforms: string[];
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public twitter: TwitterProvider,
+    public platform: Platform,
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
     this.isAuth$ = this.twitter.isAuthenticated();
+    this.platforms = this.platform.platforms();
   }
 
   ionViewCanLeave(): boolean {

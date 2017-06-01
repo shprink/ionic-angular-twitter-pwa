@@ -1,0 +1,13 @@
+<!-- Generated template for the MenuComponent component -->
+<cover [user]="user$ | async"></cover>
+<ion-list no-lines class="primary-menu">
+  <button ion-item (click)="goToProfile()" menuClose>
+    <ion-icon name="leaf" item-left color="gray"></ion-icon>
+    Profile
+  </button>
+</ion-list>
+<ion-list class="misc-menu">
+  <button ion-item (click)="logout()" menuClose>
+    Logout
+  </button>
+</ion-list>

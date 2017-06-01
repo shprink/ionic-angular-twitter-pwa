@@ -1,19 +1,10 @@
-<ion-menu [content]="content" [enabled]="isMenuEnabled$ | async">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-split-pane>
+  <ion-menu [content]="content" [enabled]="isMenuEnabled$ | async">
+    <ion-content>
+      <menu [content]="content"></menu>
+    </ion-content>
+  </ion-menu>
 
-  <ion-content>
-    <ion-list>
-      <button ion-item (click)="logout()">
-        Logout
-      </button>
-    </ion-list>
-  </ion-content>
-
-</ion-menu>
-
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <ion-nav [root]="rootPage" #content main swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>

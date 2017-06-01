@@ -12,11 +12,8 @@ import { Component } from '@angular/core';
 })
 export class MessageFabComponent {
 
-  text: string;
-
   constructor() {
     console.log('Hello MessageFabComponent Component');
-    this.text = 'Hello World';
   }
 
 }

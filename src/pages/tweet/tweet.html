@@ -25,19 +25,16 @@
   <form [formGroup]="tweetForm">
     <ion-list>
       <ion-item>
-        <ion-textarea rows="5" formControlName="tweet" value="" placeholder="What's happening?"></ion-textarea>
+        <ion-textarea #textarea rows="5" formControlName="tweet" value="" placeholder="What's happening?"></ion-textarea>
       </ion-item>
     </ion-list>
-    <div *ngIf="tweetForm.controls.tweet.dirty" padding>
-      <p *ngIf="tweetForm.controls.tweet.hasError('required')">Required</p>
-    </div>
   </form>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <span flex></span>
-    <span class="counter" float-right>{{characterCount$ | async}}</span>
+    <span class="counter" float-right>{{(characterCount$ | async) || maxCharacter}}</span>
     <button type="button" (click)="tweet()" [disabled]="tweetForm.invalid" float-right ion-button>Tweet</button>
   </ion-toolbar>
 </ion-footer>

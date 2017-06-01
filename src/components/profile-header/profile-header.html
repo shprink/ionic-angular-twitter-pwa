@@ -1,0 +1,18 @@
+<!-- Generated template for the ProfileHeaderComponent component -->
+<div *ngIf="user" class="cover" [ngStyle]="{'background-image': 'url(' + user.profile_banner_url + '/mobile)'}"></div>
+<div *ngIf="user" class="user-details">
+  <ion-avatar item-start>
+    <img [src]="user.profile_image_url_https">
+  </ion-avatar>
+  <h2>{{user.name}}</h2>
+  <h3>@{{user.screen_name}}</h3>
+  <p>{{user.description}}</p>
+  <div class="location">
+    <span><ion-icon name="pin"></ion-icon>{{user.location}}</span>
+    <span><ion-icon name="link"></ion-icon>{{user.url}}</span>
+  </div>
+  <div class="following">
+    <span><span class="count">{{user.friends_count}}</span> FOLLOWING</span>
+    <span><span class="count">{{user.followers_count}}</span> FOLLOWERS</span>
+  </div>
+</div>
