@@ -8,7 +8,8 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-    "ionic:build": "ionic-app-scripts build --prod",
+    "ionic:build": "./scripts/build.sh",
+    "ionic:buildAndRun": "./scripts/buildAndRun.sh",
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@angular/http": "4.1.2",
     "@angular/platform-browser": "4.1.2",
     "@angular/platform-browser-dynamic": "4.1.2",
+    "@angular/service-worker": "^1.0.0-beta.14",
     "@ionic/storage": "2.0.1",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.2",
@@ -35,10 +37,16 @@
     "zone.js": "0.8.10"
   },
   "devDependencies": {
+    "@angular/animations": "^4.1.3",
+    "@angular/platform-server": "^4.1.3",
+    "@angular/router": "^4.1.3",
     "@ionic/app-scripts": "1.3.7",
     "@ionic/cli-plugin-ionic-angular": "1.3.0",
     "@types/node": "^7.0.22",
     "@types/webpack": "^2.2.15",
+    "http-server": "^0.10.0",
+    "ng-pwa-tools": "^0.0.15",
+    "ts-node": "^3.0.5",
     "typescript": "2.3.3"
   },
   "description": "An Ionic project",
