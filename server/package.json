@@ -4,7 +4,9 @@
   "scripts": {
     "start": "better-npm-run start",
     "reload": "better-npm-run reload",
-    "stop": "pm2 stop twitter-pwa"
+    "stop": "pm2 stop twitter-pwa",
+    "delete": "pm2 delete twitter-pwa",
+    "logs": "pm2 logs twitter-pwa"
   },
   "betterScripts": {
     "start": {
