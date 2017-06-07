@@ -20,12 +20,6 @@ profile-header {
             margin-bottom: 0px;
             color: color($colors, gray)
         }
-        ion-avatar img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            border: 4px solid white;
-        }
         .following {
             color: color($colors, gray);
             .count{

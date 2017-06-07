@@ -1,11 +1,10 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, Injector } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-import { Store } from '@ngrx/store';
+import { IonicPage, NavController, NavParams, InfiniteScroll, Refresher } from 'ionic-angular';
 
-import { canEnterIfAuthenticated, bindOpenMenu } from '../../decorators';
-import { AppState } from '../../reducers';
-import { TwitterProvider } from '../../providers/twitter/twitter';
-
+import { canEnterIfAuthenticated } from '../../decorators';
+import { FeedProvider, UsersProvider } from '../../providers';
+import { IFeedItem } from './../../reducers';
 /**
  * Generated class for the FeedPage page.
  *
@@ -19,17 +18,45 @@ import { TwitterProvider } from '../../providers/twitter/twitter';
   templateUrl: 'feed.html',
 })
 export class FeedPage {
+  feed$: Observable<IFeedItem[]>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public store: Store<AppState>,
-    public twitter: TwitterProvider,
+    public feedProvider: FeedProvider,
+    public usersProvider: UsersProvider,
     public injector: Injector,
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
+    this.feed$ = this.feedProvider.getFeed$();
+  }
+
+  init() {
+    const hasFeed = this.feedProvider.hasFeed();
+    if (!hasFeed) {
+      this.feedProvider.reset().first().subscribe(
+        () => { },
+        error => console.log('feed error', error)
+      );
+    }
+  }
+
+  refresh(refresher: Refresher) {
+    this.feedProvider.reset().first().subscribe(
+      () => { },
+      error => console.log('feed error', error),
+      () => refresher.complete()
+    );
+  }
+
+  loadMore(infiniteScroll: InfiniteScroll) {
+    this.feedProvider.getNextPage().first().subscribe(
+      () => { },
+      error => console.log('feed error', error),
+      () => infiniteScroll.complete()
+    );
   }
 }

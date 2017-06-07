@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
 
-import { TwitterProvider } from '../../providers/twitter/twitter';
+import { AuthProvider } from '../../providers';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,29 +15,42 @@ import { TwitterProvider } from '../../providers/twitter/twitter';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  isAuth$: Observable<boolean>;
   platforms: string[];
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    public twitter: TwitterProvider,
+    public authProvider: AuthProvider,
   ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.isAuth$ = this.twitter.isAuthenticated();
   }
 
+  // ionViewCanEnter(): Promise<boolean> {
+  //   return new Promise((resolve, reject) => {
+  //     const canEnter = !this.authProvider.isAuthenticated();
+  //     console.log('login canEnter', canEnter)
+  //     if (!canEnter) {
+  //       this.goToHomePage();
+  //     }
+  //     resolve(canEnter);
+  //   });
+  // }
+
   ionViewCanLeave(): boolean {
-    let canLeave = false;
-    this.isAuth$.first().subscribe(isAuth => canLeave = isAuth);
-    return canLeave;
+    console.log('login ionViewCanLeave', this.authProvider.isAuthenticated())
+    return this.authProvider.isAuthenticated();
+  }
+
+  goToHomePage() {
+    console.log('login goToHomePage')
+    this.navCtrl.setRoot('HomePage');
   }
 
   login() {
-    this.twitter.login().then(() => this.navCtrl.setRoot('HomePage'));
+    this.authProvider.login().then(() =>  this.goToHomePage());
   }
 
   dismiss() {

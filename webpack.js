@@ -39,7 +39,9 @@ module.exports = {
     new webpack.DefinePlugin({
         __DEV__: process.env.IONIC_ENV === 'dev',
         __PROD__: process.env.IONIC_ENV === 'prod',
-        __APIURI__: JSON.stringify(process.env.IONIC_ENV === 'prod' ? 'https://twitter-pwa.julienrenaux.fr/' : 'http://localhost:3001/')
+        __APIURI__: JSON.stringify(process.env.IONIC_ENV === 'prod' 
+          ? '//twitter-pwa.julienrenaux.fr/'
+          : `//localhost:${process.env.SERVER_PORT || 5000}/`)
     }),  
   ],
 

@@ -6,6 +6,7 @@ import { TweetFabComponent } from '../components/tweet-fab/tweet-fab';
 import { MessageFabComponent } from '../components/message-fab/message-fab';
 import { AvatarToolbarComponent } from '../components/avatar-toolbar/avatar-toolbar';
 import { ProfileHeaderComponent } from '../components/profile-header/profile-header';
+import { FeedComponent } from '../components/feed/feed';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { ProfileHeaderComponent } from '../components/profile-header/profile-hea
         TweetFabComponent,
         MessageFabComponent,
         ProfileHeaderComponent,
+        FeedComponent,
     ],
     exports: [
         AvatarComponent,
@@ -25,6 +27,7 @@ import { ProfileHeaderComponent } from '../components/profile-header/profile-hea
         TweetFabComponent,
         MessageFabComponent,
         ProfileHeaderComponent,
+        FeedComponent,
     ]
 })
 export class SharedLazyModule { }

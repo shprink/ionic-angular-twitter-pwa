@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { AppState, ITwitterUser, ICover } from '../../reducers';
+import { ITwitterUser } from '../../reducers';
 
 /**
  * Generated class for the CoverComponent component.
@@ -16,15 +14,8 @@ import { AppState, ITwitterUser, ICover } from '../../reducers';
 })
 export class CoverComponent {
   @Input() user: ITwitterUser;
+  @Input() onAvatarClick: (e) => void;
 
-  constructor(
-    public store: Store<AppState>,
-  ) {
-    
-  }
-
-  goToProfile() {
-
-  }
+  constructor() { }
 
 }

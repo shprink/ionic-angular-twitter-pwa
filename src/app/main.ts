@@ -5,8 +5,7 @@ import { AppModule } from './app.module';
 platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .then(() => {
-        if ('serviceWorker' in navigator) {
-            console.log('yeah!!!')
+        if ('serviceWorker' in navigator && __PROD__) {
             navigator.serviceWorker.register('worker-basic.min.js')
                 .then(() => console.log('service worker installed'))
                 .catch(err => console.error('Error', err));

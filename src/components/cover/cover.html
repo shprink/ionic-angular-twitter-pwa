@@ -1,7 +1,7 @@
 <!-- Generated template for the CoverComponent component -->
 <div *ngIf="user" [ngStyle]="{'background-image': 'url(' + user.profile_banner_url + '/mobile)'}">
   <span flex></span>
-  <ion-avatar item-start (click)="goToProfile()">
+  <ion-avatar item-start (click)="onAvatarClick && onAvatarClick($event)" menuClose>
     <img [src]="user.profile_image_url_https">
   </ion-avatar>
   <h2>{{user.name}}</h2>

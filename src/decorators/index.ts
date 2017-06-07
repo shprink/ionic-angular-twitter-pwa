@@ -1,12 +1,9 @@
 import { MenuController } from 'ionic-angular';
-import { TwitterProvider } from '../providers/twitter/twitter';
+import { AuthProvider } from '../providers';
 
 export function canEnterIfAuthenticated(target) {
     target.prototype.ionViewCanEnter = function () {
-        let canEnter;
-        this.injector.get(TwitterProvider)
-            .isAuthenticated().first().subscribe(isAuthenticated => canEnter = isAuthenticated);
-        return canEnter;
+        return this.injector.get(AuthProvider).isAuthenticated();
     }
 }
 

@@ -6,17 +6,20 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/toPromise';
 
 import { MyApp } from './app.component';
 import { STORE } from '../store';
-import { StorageProvider } from '../providers/storage/storage';
-import { TwitterProvider } from '../providers/twitter/twitter';
+import { StorageProvider, TwitterProvider, UsersProvider, FeedProvider, AuthProvider } from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
 
 export function provideStorage() {
@@ -24,9 +27,7 @@ export function provideStorage() {
 }
 
 export function appInitializerStorageFactory(storage: StorageProvider) {
-  return function () {
-    return storage.init();
-  };
+  return () => storage.init();
 };
 
 @NgModule({
@@ -53,17 +54,20 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
     MyApp,
   ],
   providers: [
-    AngularFireAuth,
     { provide: Storage, useFactory: provideStorage },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    StorageProvider,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerStorageFactory,
       deps: [StorageProvider],
       multi: true
     },
-    TwitterProvider
+    AngularFireAuth,
+    StorageProvider,
+    UsersProvider,
+    FeedProvider,
+    AuthProvider,
+    TwitterProvider,
   ]
 })
 export class AppModule { }

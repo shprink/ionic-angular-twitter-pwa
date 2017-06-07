@@ -1,11 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Component, Input } from '@angular/core';
 import { Nav } from 'ionic-angular';
-import { Store } from '@ngrx/store';
-import _get from 'lodash/get';
 
-import { TwitterProvider } from './../../providers/twitter/twitter';
-import { ITwitterUser, AppState } from './../../reducers';
+import { UsersProvider, AuthProvider } from './../../providers';
+import { ITwitterUser } from './../../reducers';
 
 /**
  * Generated class for the MenuComponent component.
@@ -22,28 +20,24 @@ export class MenuComponent {
   @Input() content: Nav;
 
   constructor(
-    public twitter: TwitterProvider,
-    public store: Store<AppState>,
+    public authProvider: AuthProvider,
+    public usersProvider: UsersProvider,
   ) {
     console.log('Hello MenuComponent Component', this.content);
   }
 
   ngOnInit() {
-    this.user$ = Observable.combineLatest(
-      this.store.select(state => state.auth.provider),
-      this.store.select(state => state.users),
-      (provider, users: any) => provider && _get(users, `[${provider.uid}]`)
-    );
+    this.user$ = this.usersProvider.getCurrentUser$();
   }
 
-  goToProfile() {
-    let id = null;
-    this.user$.first().subscribe(user => id = user.id)
+  goToProfile = (e) => {
+    const { id } = this.usersProvider.getCurrentUser();
     this.content.push('ProfilePage', { id });
   }
 
   logout() {
-    this.twitter.logout();
+    this.authProvider.logout();
+    this.content.setRoot('LoginPage')
   }
 
 }

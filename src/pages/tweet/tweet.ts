@@ -5,7 +5,8 @@ import { IonicPage, NavController, NavParams, ViewController, ToastController } 
 import { getTweetLength } from 'twitter-text';
 
 import { tweetValidator } from './tweetValidator';
-import { TwitterProvider } from '../../providers/twitter/twitter';
+import { UsersProvider, TwitterProvider } from './../../providers';
+import { ITwitterUser } from './../../reducers';
 /**
  * Generated class for the TweetPage page.
  *
@@ -21,15 +22,17 @@ export class TweetPage {
   maxCharacter: number = 140;
   tweetForm: FormGroup;
   characterCount$: Observable<number>;
+  user$: Observable<ITwitterUser>
   @ViewChild('textarea') textarea;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public twitter: TwitterProvider,
+    public twitterProvider: TwitterProvider,
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController,
+    private users: UsersProvider,
   ) {
     this.tweetForm = this.formBuilder.group({
       tweet: ['', [Validators.required, tweetValidator]],
@@ -39,6 +42,7 @@ export class TweetPage {
   }
 
   ionViewDidLoad() {
+    this.user$ = this.users.getCurrentUser$();
     // wait for the animation to finish before focus
     setTimeout(() => this.textarea.setFocus(), 250);
   }
@@ -48,7 +52,7 @@ export class TweetPage {
   }
 
   tweet() {
-    this.twitter.tweet(this.tweetForm.value.tweet).subscribe(() => {
+    this.twitterProvider.tweet(this.tweetForm.value.tweet).subscribe(() => {
       this.toastCtrl.create({
         message: 'Tweet sent!',
         duration: 3000

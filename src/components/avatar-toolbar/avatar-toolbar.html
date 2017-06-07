@@ -1,6 +1,6 @@
 <!-- Generated template for the AvatarToolbarComponent component -->
 <ion-toolbar>
-  <avatar (click)="openMenu()"></avatar>
+  <avatar (click)="openMenu()" [user]="user$ | async"></avatar>
   <ion-title>
     <div>
       <ng-content></ng-content>

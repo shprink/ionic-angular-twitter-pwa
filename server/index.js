@@ -16,18 +16,6 @@
 
 'use strict';
 
-// const express = require('express');
-// const config = require('./config');
-// const app = express();
-
-// app.get('/', function (req, res) {
-//     res.send('Hello World!')
-// });
-// console.log('config', config)
-// app.listen(config.port, function () {
-//     console.log('Example app listening on port ' + config.port)
-// });
-
 const serviceAccount = require("./serviceAccountKey.json");
 const admin = require('firebase-admin');
 const express = require('express');
@@ -35,7 +23,6 @@ const Twitter = require('twitter');
 var bodyParser = require('body-parser')
 
 const config = require('./config');
-console.log('config', config)
 require('dotenv').config();
 
 const app = module.exports = express();
@@ -46,9 +33,8 @@ admin.initializeApp({
 });
 
 const allowCrossDomain = function (req, res, next) {
-    var allowedOrigins = ['http://localhost:8100', 'twitter-pwa.julienrenaux.fr'];
     var origin = req.headers.origin;
-    if (allowedOrigins.indexOf(origin) > -1) {
+    if (origin === 'twitter-pwa.julienrenaux.fr' || origin.includes('localhost')) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -88,54 +74,45 @@ app.use(bodyParser.json());
 app.use(allowCrossDomain);
 app.use(authenticate);
 
+app.post('/api/feed', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('statuses/home_timeline', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
 app.post('/api/timeline', (req, res) => {
     var client = getTwitterClient(req);
-
-    var params = { screen_name: 'nodejs' };
-    client.get('statuses/user_timeline', params, function (error, tweets, response) {
-        if (!error) {
-            res.status(200).json(tweets);
-        } else {
-            res.status(400).json(error);
-        }
+    client.get('statuses/user_timeline', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 
 app.post('/api/tweet', (req, res) => {
     var client = getTwitterClient(req);
-    client.post('statuses/update', req.body, function (error, tweet, response) {
-        if (!error) {
-            res.status(200).json(tweet);
-        } else {
-            res.status(400).json(error);
-        }
+    client.post('statuses/update', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 
 app.post('/api/messages', (req, res) => {
     var client = getTwitterClient(req);
-
-    var params = { screen_name: 'nodejs' };
-    client.get('direct_messages', params, function (error, messages, response) {
-        if (!error) {
-            res.status(200).json(messages);
-        } else {
-            res.status(400).json(error);
-        }
+    client.get('direct_messages', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 
 app.post('/api/user', (req, res) => {
     var client = getTwitterClient(req);
-    client.get('users/show', req.body, function (error, user, response) {
-        (!error) ? res.status(200).json(user) : res.status(400).json(error);
+    client.get('users/show', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 
 app.post('/api/covers', (req, res) => {
     var client = getTwitterClient(req);
-    client.get('users/profile_banner', req.body, function (error, covers, response) {
-        (!error) ? res.status(200).json(covers) : res.status(400).json(error);
+    client.get('users/profile_banner', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 

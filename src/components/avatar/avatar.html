@@ -1,4 +1,9 @@
 <!-- Generated template for the AvatarComponent component -->
-<ion-avatar item-start>
-  <img [src]="(user$ | async)?.photoURL">
+<ion-avatar 
+  *ngIf="profile_image"
+  item-start
+  [attr.type]="type"
+  [attr.size]="size"
+  >
+  <img [src]="profile_image" >
 </ion-avatar>

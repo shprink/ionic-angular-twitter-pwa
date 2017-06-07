@@ -1,7 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import {
-    SET_AUTH_CREDENTIAL, SET_AUTH_USER, SET_AUTH_COVERS,
-    INIT, CLEAN_AUTH, LOGOUT
+    ADD_AUTH_CREDENTIAL, ADD_AUTH_USER, INIT, CLEAN_AUTH, LOGOUT, LOGIN, LOGIN_FAILED
 } from '../actions';
 import _get from 'lodash/get';
 
@@ -17,7 +16,17 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
     const payload = action.payload;
 
     switch (action.type) {
-        case SET_AUTH_USER: {
+        case LOGIN: {
+            const provider = _get(payload.user, 'providerData[0]');
+            delete payload.user.providerData;
+            return Object.assign({}, state, {
+                credential: mapCredential(payload.credential),
+                user: payload.user,
+                provider
+            });
+        }
+
+        case ADD_AUTH_USER: {
             const provider = _get(payload.user, 'providerData[0]');
             delete payload.user.providerData;
             return Object.assign({}, state, {
@@ -26,9 +35,9 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
             });
         }
 
-        case SET_AUTH_CREDENTIAL: {
+        case ADD_AUTH_CREDENTIAL: {
             return Object.assign({}, state, {
-                credential: payload.credential
+                credential: mapCredential(payload.credential)
             });
         }
 
@@ -36,6 +45,7 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
             return payload.auth || defaultState;
         }
 
+        // case LOGIN_FAILED:            
         case CLEAN_AUTH:
         case LOGOUT: {
             return defaultState;
@@ -43,6 +53,13 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
 
         default:
             return state;
+    }
+}
+
+function mapCredential({ accessToken, secret }) {
+    return {
+        access_token_key: accessToken,
+        access_token_secret: secret
     }
 }
 

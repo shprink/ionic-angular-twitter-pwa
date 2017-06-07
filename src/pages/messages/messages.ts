@@ -2,7 +2,7 @@ import { Component, Injector } from '@angular/core';
 
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { TwitterProvider } from '../../providers/twitter/twitter';
+import { TwitterProvider } from '../../providers';
 import { canEnterIfAuthenticated } from '../../decorators';
 /**
  * Generated class for the MessagesPage page.
@@ -29,14 +29,6 @@ export class MessagesPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagesPage');
     
-  }
-
-  getMessages() {
-    this.twitter.getDirectMessages().subscribe()
-  }
-
-  getTimeline() {
-    this.twitter.getTimeline().subscribe()
   }
 
 }

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
+import { UsersProvider } from './../../providers';
+import { ITwitterUser } from './../../reducers';
 /**
  * Generated class for the AvatarToolbarComponent component.
  *
@@ -12,11 +15,15 @@ import { MenuController } from 'ionic-angular';
   templateUrl: 'avatar-toolbar.html'
 })
 export class AvatarToolbarComponent {
+  user$: Observable<ITwitterUser>
 
   constructor(
-    public menuCtrl: MenuController
-  ) {
-    console.log('Hello AvatarToolbarComponent Component');
+    private menuCtrl: MenuController,
+    private users: UsersProvider,
+  ) { }
+
+  ngOnInit() {
+    this.user$ = this.users.getCurrentUser$();
   }
 
   openMenu() {

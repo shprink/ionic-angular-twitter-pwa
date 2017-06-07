@@ -6,11 +6,10 @@
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-    "ionic:build": "./scripts/build.sh",
-    "ionic:buildAndRun": "./scripts/buildAndRun.sh",
-    "ionic:serve": "ionic-app-scripts serve"
+    "start": "./scripts/serve.sh",
+    "build": "./scripts/build.sh",
+    "buildAndRun": "./scripts/buildAndRun.sh"
   },
   "dependencies": {
     "@angular/common": "4.1.2",
@@ -24,6 +23,7 @@
     "@angular/service-worker": "^1.0.0-beta.14",
     "@ionic/storage": "2.0.1",
     "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "^2.0.3",
     "@ngrx/store": "^2.2.2",
     "@ngrx/store-devtools": "^3.2.4",
     "angularfire2": "^4.0.0-rc.0",

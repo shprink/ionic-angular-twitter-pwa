@@ -1,5 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { SET_TWITTER_USER } from '../actions';
+import { ADD_TWITTER_USER } from '../actions';
 import _pickBy from 'lodash/pickBy';
 
 const defaultState = {};
@@ -15,7 +15,7 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
     const payload = action.payload;
 
     switch (action.type) {
-        case SET_TWITTER_USER: {
+        case ADD_TWITTER_USER: {
             return Object.assign({}, state, {
                 [payload.user.id]: _pickBy(payload.user, (v, k) => propertiesToKeep.includes(k))
             });
@@ -28,6 +28,7 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
 
 export interface ITwitterUser {
     id: number;
+    id_str: string;
     name: string;
     description: string;
     url: string;

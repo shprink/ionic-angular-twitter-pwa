@@ -11,7 +11,7 @@
         <span color="primary" >Cancel</span>
       </button>
     </ion-buttons>
-    <avatar></avatar>
+    <avatar [user]="user$ | async"></avatar>
     <ion-buttons end>
       <button ion-button (click)="dismiss()" showWhen="android,core,windows">
         <ion-icon name="md-close"></ion-icon>

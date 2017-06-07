@@ -1,10 +1,8 @@
 import { Action } from '@ngrx/store';
 
-export const SET_TWITTER_USER = 'SET_TWITTER_USER';
+export const ADD_TWITTER_USER = 'ADD_TWITTER_USER';
 
-export const setTwitterUser = (user): Action => ({
-    type: SET_TWITTER_USER,
-    payload: {
-        user
-    }
+export const addTwitterUser = (user): Action => ({
+    type: ADD_TWITTER_USER,
+    payload: { user }
 });

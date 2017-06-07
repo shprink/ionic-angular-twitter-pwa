@@ -1,6 +1,8 @@
 import { StoreModule, combineReducers } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { Reducers } from './reducers';
+import { AuthEffects } from './effects/auth';
 
 const combinedReducers = combineReducers(Reducers);
 
@@ -9,7 +11,8 @@ export function reducer(state: any, action: any) {
 }
 
 let modules = [
-  StoreModule.provideStore(reducer)
+  StoreModule.provideStore(reducer),
+  EffectsModule.run(AuthEffects)
 ];
 
 if (__DEV__) { // will be removed by minification

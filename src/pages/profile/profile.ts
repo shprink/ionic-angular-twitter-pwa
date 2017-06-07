@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { AppState, ITwitterUser } from './../../reducers';
+import { ITwitterUser } from './../../reducers';
+import { UsersProvider } from './../../providers';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -21,13 +21,12 @@ export class ProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public store: Store<AppState>,
+    private users: UsersProvider,
   ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
-    this.user$ = this.store.select(state => state.users).map(users => users[this.navParams.get('id')])
+    this.user$ = this.users.getUserById$(this.navParams.get('id'));
   }
 
 }

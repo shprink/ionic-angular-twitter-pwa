@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Component, Input } from '@angular/core';
 
-import { AppState, IUser } from '../../reducers';
+import { ITwitterUser } from './../../reducers';
 /**
  * Generated class for the AvatarComponent component.
  *
@@ -14,12 +12,18 @@ import { AppState, IUser } from '../../reducers';
   templateUrl: 'avatar.html'
 })
 export class AvatarComponent {
-  user$: Observable<IUser>
+  @Input() 'user': ITwitterUser;
+  @Input() 'type': string = 'round';
+  @Input() 'size': string = 'normal'; // mini, normal or bigger
+  profile_image: string;
 
-  constructor(
-    public store: Store<AppState>,
-  ) {
-    this.user$ = this.store.select(state => state.auth.user);
+  constructor() { }
+
+  ngOnChanges(changes: any) {
+    if (changes.user.currentValue && changes.user.currentValue !== changes.user.previousValue) {
+      this.profile_image = changes.user.currentValue.profile_image_url_https.replace('normal', this.size);
+    }
   }
 
 }
+
