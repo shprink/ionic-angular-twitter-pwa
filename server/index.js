@@ -20,7 +20,8 @@ const serviceAccount = require("./serviceAccountKey.json");
 const admin = require('firebase-admin');
 const express = require('express');
 const Twitter = require('twitter');
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const ogs = require('open-graph-scraper');
 
 const config = require('./config');
 require('dotenv').config();
@@ -73,6 +74,13 @@ const authenticate = (req, res, next) => {
 app.use(bodyParser.json());
 app.use(allowCrossDomain);
 app.use(authenticate);
+
+app.post('/api/og-scrapper', (req, res) => {
+    var client = getTwitterClient(req);
+    ogs(req.body, function (error, results) {
+        (!error) ? res.status(200).json(results) : res.status(400).json(results);
+    });
+});
 
 app.post('/api/feed', (req, res) => {
     var client = getTwitterClient(req);

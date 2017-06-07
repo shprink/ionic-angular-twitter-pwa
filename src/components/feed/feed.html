@@ -5,7 +5,7 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let item of content">{{item.id}}</ion-item>
+    <tweet *ngFor="let data of content;trackBy: trackById" [data]="data"></tweet>
   </ion-list>
 
   <ng-content></ng-content>

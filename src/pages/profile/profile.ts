@@ -10,7 +10,9 @@ import { UsersProvider } from './../../providers';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: ':handle'
+})
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',

@@ -1,5 +1,5 @@
 <!--
-  Generated template for the SearchPage page.
+  Generated template for the SearchTabPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,8 +7,8 @@
 <ion-header>
   <avatar-toolbar>
     <ion-searchbar
-      [(ngModel)]="term"
-      showCancelButton="true"
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
       (ionInput)="onInput($event)"
       (ionCancel)="onCancel($event)">
     </ion-searchbar>

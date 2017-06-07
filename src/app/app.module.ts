@@ -31,9 +31,7 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
 };
 
 @NgModule({
-  declarations: [
-    MyApp,
-  ],
+  declarations: [MyApp],
   imports: [
     BrowserModule,
     HttpModule,

@@ -30,6 +30,7 @@
     "express": "^4.15.2",
     "firebase": "^4.0.0",
     "firebase-admin": "~4.1.2",
+    "open-graph-scraper": "^2.5.1",
     "twitter": "^1.7.0"
   },
   "devDependencies": {

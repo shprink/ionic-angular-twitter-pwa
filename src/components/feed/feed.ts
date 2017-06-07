@@ -1,4 +1,4 @@
-import { IFeedItem } from './../../reducers/feed';
+import { ITweet } from './../../reducers/feed';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { InfiniteScroll, Refresher } from 'ionic-angular';
 
@@ -14,7 +14,7 @@ import { FeedProvider } from './../../providers';
   templateUrl: 'feed.html'
 })
 export class FeedComponent {
-  @Input() 'content': IFeedItem[];
+  @Input() 'content': ITweet[];
   @Output() onInit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onInfinite: EventEmitter<any> = new EventEmitter<any>();
   @Output() onRefresh: EventEmitter<any> = new EventEmitter<any>();
@@ -33,5 +33,9 @@ export class FeedComponent {
 
   doInfinite(infiniteScroll: InfiniteScroll) {
     this.onInfinite.emit(infiniteScroll);
+  }
+
+  trackById(index, item) {
+    return item.id
   }
 }

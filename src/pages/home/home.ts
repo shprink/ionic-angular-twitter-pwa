@@ -15,7 +15,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
   FeedPage: any = 'FeedPage';
-  SearchPage: any = 'SearchPage';
+  SearchTabPage: any = 'SearchTabPage';
   NotificationsPage: any = 'NotificationsPage';
   MessagesPage: any = 'MessagesPage';
 

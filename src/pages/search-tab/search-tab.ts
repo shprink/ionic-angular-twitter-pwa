@@ -3,21 +3,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { canEnterIfAuthenticated } from '../../decorators';
 /**
- * Generated class for the SearchPage page.
+ * Generated class for the SearchTabPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @canEnterIfAuthenticated
-@IonicPage({
-  segment: 'search/:term'
-})
+@IonicPage()
 @Component({
   selector: 'page-search',
-  templateUrl: 'search.html',
+  templateUrl: 'search-tab.html',
 })
-export class SearchPage {
-  term: string;
+export class SearchTabPage {
 
   constructor(
     public navCtrl: NavController,
@@ -27,8 +24,7 @@ export class SearchPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
-    this.term = this.navParams.get('term');
+    console.log('ionViewDidLoad SearchTabPage');
   }
 
 }

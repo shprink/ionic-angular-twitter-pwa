@@ -67,6 +67,12 @@ export class TwitterProvider {
     return this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions()).map(res => res.json());
   }
 
+  getOpenGraphData(url) {
+    return this.http.post(`${__APIURI__}api/og-scrapper`, {
+      url
+    }, this.getRequestOptions()).map(res => res.json());
+  }
+
   getUser$(user_id?): Observable<ITwitterUser> {
     return this.http.post(`${__APIURI__}api/user`, {
       user_id: user_id || this.authProvider.getProvider().uid

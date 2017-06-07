@@ -1,14 +1,17 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { ADD_FEED, RESET_FEED } from '../actions';
 import _pickBy from 'lodash/pickBy';
+
+import { ADD_FEED, RESET_FEED, INIT } from '../actions';
+import { ITwitterUser } from './users';
 
 const defaultState = [];
 
 const propertiesToKeep: string[] = [
-    'id', 'id_str', 'created_at', 'text', 'truncated', 'user'
+    'id', 'id_str', 'created_at', 'text', 'truncated', 'user',
+    'favorite_count', 'favorited', 'retweet_count', 'retweeted', 'entities'
 ];
 
-export const feedReducer: ActionReducer<Object> = (state: IFeedItem[] = defaultState, action: Action) => {
+export const feedReducer: ActionReducer<Object> = (state: ITweet[] = defaultState, action: Action) => {
     const payload = action.payload;
 
     switch (action.type) {
@@ -20,13 +23,16 @@ export const feedReducer: ActionReducer<Object> = (state: IFeedItem[] = defaultS
             return filterFeedItems(payload.feed);
         }
 
+        case INIT: {
+            return payload.feed || defaultState;
+        }
+
         default:
             return state;
     }
 }
 
 function filterFeedItems(feed = []) {
-    console.log('feed', feed)
     const feedItems = [];
     feed.forEach(item => {
         let feedItem = _pickBy(item, (v, k) => propertiesToKeep.includes(k))
@@ -37,11 +43,56 @@ function filterFeedItems(feed = []) {
     return feedItems;
 }
 
-export interface IFeedItem {
+// https://dev.twitter.com/overview/api/entities-in-twitter-objects
+export interface ITweetEntities {
+    hashtags: ITweetEntitiesHashtag[];
+    symbols: ITweetEntitiesSymbol[];
+    url: ITweetEntitiesUrl[];
+    media: ITweetEntitiesMedia[];
+    user_mentions: ITweetEntitiesMention[];
+}
+
+export interface ITweetEntitiesHashtag {
+    text: string;
+    indices: number[];
+}
+
+export interface ITweetEntitiesSymbol {
+    text: string;
+    indices: number[];
+}
+
+export interface ITweetEntitiesUrl {
+    display_url: string;
+    expanded_url: string;
+    url: string;
+    indices: number[];
+}
+
+export interface ITweetEntitiesMedia {
+    type: string;
+    media_url_https: string;
+}
+
+export interface ITweetEntitiesMention {
+    id: number;
+    id_str: string;
+    name: string;
+    screen_name: string;
+    indices: number[];
+}
+
+export interface ITweet {
     id: number;
     id_str: string;
     created_at: string;
     text: string;
     truncated: boolean;
-    userId: number;
+    favorited: boolean;
+    favorite_count: number;
+    retweeted: boolean;
+    retweet_count: number;
+    userId?: number;
+    user?: ITwitterUser;
+    entities: ITweetEntities;
 }

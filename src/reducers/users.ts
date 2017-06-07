@@ -1,5 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { ADD_TWITTER_USER } from '../actions';
+import { ADD_TWITTER_USER, ADD_FEED, RESET_FEED, INIT } from '../actions';
 import _pickBy from 'lodash/pickBy';
 
 const defaultState = {};
@@ -17,8 +17,22 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
     switch (action.type) {
         case ADD_TWITTER_USER: {
             return Object.assign({}, state, {
-                [payload.user.id]: _pickBy(payload.user, (v, k) => propertiesToKeep.includes(k))
+                [payload.user.id]: filterUser(payload.user)
             });
+        }
+
+        case RESET_FEED:
+        case ADD_FEED: {
+            if (!payload.feed) return state;
+            const users = {};
+            payload.feed.forEach(item => {
+                users[item.user.id] = filterUser(item.user);
+            });
+            return Object.assign({}, state, users);
+        }
+
+        case INIT: {
+            return payload.users || defaultState;
         }
 
         default:
@@ -26,10 +40,15 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
     }
 }
 
+function filterUser(user) {
+    return _pickBy(user, (v, k) => propertiesToKeep.includes(k))
+}
+
 export interface ITwitterUser {
     id: number;
     id_str: string;
     name: string;
+    screen_name: string;
     description: string;
     url: string;
     location: string;

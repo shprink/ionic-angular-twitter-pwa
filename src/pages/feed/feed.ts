@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, InfiniteScroll, Refresher } from '
 
 import { canEnterIfAuthenticated } from '../../decorators';
 import { FeedProvider, UsersProvider } from '../../providers';
-import { IFeedItem } from './../../reducers';
+import { ITweet } from './../../reducers';
 /**
  * Generated class for the FeedPage page.
  *
@@ -18,7 +18,7 @@ import { IFeedItem } from './../../reducers';
   templateUrl: 'feed.html',
 })
 export class FeedPage {
-  feed$: Observable<IFeedItem[]>;
+  feed$: Observable<ITweet[]>;
 
   constructor(
     public navCtrl: NavController,
