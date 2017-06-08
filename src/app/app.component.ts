@@ -12,6 +12,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   isMenuEnabled$: Observable<boolean>;
   rootPage: any = 'HomePage';
+  previousAuthState: boolean;
 
   constructor(
     public platform: Platform,
@@ -23,9 +24,18 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.storageProvider.run();
       this.authProvider.run();
-      const isAuthenticated = this.authProvider.isAuthenticated()
-      console.log('isAuthenticated', isAuthenticated)
-      if (!isAuthenticated) this.nav.setRoot('LoginPage')
+      this.authProvider.isAuthenticated$().debounceTime(100).subscribe(isAuthenticated => {
+        if (this.previousAuthState !== isAuthenticated) {
+          console.log('isAuthenticated', isAuthenticated, )
+
+          if (isAuthenticated && !location.hash.includes('home')) {
+            this.nav.setRoot('HomePage');
+          } else if (!isAuthenticated && !location.hash.includes('login')) {
+            this.nav.setRoot('LoginPage');
+          }
+        }
+        this.previousAuthState = isAuthenticated;
+      })
     });
   }
 }

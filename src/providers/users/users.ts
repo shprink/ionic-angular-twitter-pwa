@@ -21,9 +21,9 @@ export class UsersProvider {
 
   getCurrentUser$() {
     return Observable.combineLatest(
-      this.store.select(state => state.auth.provider),
+      this.store.select(state => state.auth.screen_name),
       this.store.select(state => state.users),
-      (provider, users: any) => provider && _get(users, `[${provider.uid}]`)
+      (screen_name, users: any) => screen_name && _get(users, `[${screen_name}]`)
     );
   }
 

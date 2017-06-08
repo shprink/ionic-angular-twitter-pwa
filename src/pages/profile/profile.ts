@@ -11,7 +11,7 @@ import { UsersProvider } from './../../providers';
  * on Ionic pages and navigation.
  */
 @IonicPage({
-  segment: ':handle'
+  segment: 'profile/:handle'
 })
 @Component({
   selector: 'page-profile',
@@ -28,6 +28,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    console.log('handle', this.navParams.get('handle'))
     this.user$ = this.users.getUserById$(this.navParams.get('id'));
   }
 

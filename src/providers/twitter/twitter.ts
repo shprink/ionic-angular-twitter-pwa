@@ -73,10 +73,12 @@ export class TwitterProvider {
     }, this.getRequestOptions()).map(res => res.json());
   }
 
-  getUser$(user_id?): Observable<ITwitterUser> {
-    return this.http.post(`${__APIURI__}api/user`, {
-      user_id: user_id || this.authProvider.getProvider().uid
-    }, this.getRequestOptions()).map(res => res.json());
+  getUser$(screen_name?): Observable<ITwitterUser> {
+    const params = screen_name
+      ? { screen_name }
+      : { user_id: this.authProvider.getProvider().uid }
+    return this.http.post(`${__APIURI__}api/user`, params,
+      this.getRequestOptions()).map(res => res.json());
   }
 
   showToast(message): void {

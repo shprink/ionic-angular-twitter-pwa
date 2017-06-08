@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Injector } from '@angular/core';
 import { IonicPage, NavController, NavParams, InfiniteScroll, Refresher } from 'ionic-angular';
 
@@ -19,6 +20,8 @@ import { ITweet } from './../../reducers';
 })
 export class FeedPage {
   feed$: Observable<ITweet[]>;
+  page: number = 0;
+  itemsToDisplay$ = new BehaviorSubject<number>(1);
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +34,7 @@ export class FeedPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
-    this.feed$ = this.feedProvider.getFeed$();
+    this.feed$ = this.feedProvider.getFeedPaginated$(this.itemsToDisplay$);
   }
 
   init() {
@@ -53,10 +56,25 @@ export class FeedPage {
   }
 
   loadMore(infiniteScroll: InfiniteScroll) {
-    this.feedProvider.getNextPage().first().subscribe(
-      () => { },
-      error => console.log('feed error', error),
-      () => infiniteScroll.complete()
-    );
+    let currentLength;
+    this.feed$.first().subscribe((items: ITweet[]) => currentLength = items.length);
+    if (this.feedProvider.feedLength() > currentLength) {
+      this.nextPage();
+      infiniteScroll.complete();
+    } else {
+      this.feedProvider.getNextPage().first().subscribe(
+        () => { },
+        error => console.log('feed error', error),
+        () => {
+          this.nextPage();
+          infiniteScroll.complete()
+        }
+      );
+    }
+  }
+
+  nextPage = (): void => {
+    this.page += 1;
+    this.itemsToDisplay$.next(this.page);
   }
 }

@@ -61,7 +61,7 @@ export class AuthProvider {
 
   isAuthenticated$(): Observable<boolean> {
     return this.store.select(state => state.auth)
-      .map(({ credential }: IAuthState) => credential !== null);
+      .map(({ credential, user }: IAuthState) => credential !== null && user !== null);
   }
 
   isAuthenticated(): boolean {

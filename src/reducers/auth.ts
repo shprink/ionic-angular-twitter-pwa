@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import {
-    ADD_AUTH_CREDENTIAL, ADD_AUTH_USER, INIT, CLEAN_AUTH, LOGOUT, LOGIN, LOGIN_FAILED
+    ADD_AUTH_CREDENTIAL, ADD_AUTH_USER, INIT, CLEAN_AUTH, LOGOUT, LOGIN, ADD_CURRENT_TWITTER_USER
 } from '../actions';
 import _get from 'lodash/get';
 
@@ -10,6 +10,7 @@ const defaultState = {
     user: null,
     credential: null,
     provider: null,
+    screen_name: null
 };
 
 export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultState, action: Action) => {
@@ -38,6 +39,12 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
         case ADD_AUTH_CREDENTIAL: {
             return Object.assign({}, state, {
                 credential: mapCredential(payload.credential)
+            });
+        }
+
+        case ADD_CURRENT_TWITTER_USER: {
+            return Object.assign({}, state, {
+                screen_name: payload.user.screen_name
             });
         }
 
@@ -113,4 +120,5 @@ export interface IAuthState {
     user: IUser,
     credential: ICredential,
     provider: firebase.UserInfo,
+    screen_name: string
 }

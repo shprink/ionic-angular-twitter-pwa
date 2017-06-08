@@ -1,7 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import _pickBy from 'lodash/pickBy';
 
-import { ADD_FEED, RESET_FEED, INIT } from '../actions';
+import { ADD_FEED, RESET_FEED, LOGOUT, INIT } from '../actions';
 import { ITwitterUser } from './users';
 
 const defaultState = [];
@@ -27,6 +27,10 @@ export const feedReducer: ActionReducer<Object> = (state: ITweet[] = defaultStat
             return payload.feed || defaultState;
         }
 
+        case LOGOUT: {
+            return defaultState;
+        }
+
         default:
             return state;
     }
@@ -36,7 +40,7 @@ function filterFeedItems(feed = []) {
     const feedItems = [];
     feed.forEach(item => {
         let feedItem = _pickBy(item, (v, k) => propertiesToKeep.includes(k))
-        feedItem.userId = feedItem.user.id;
+        feedItem.userHandle = feedItem.user.screen_name;
         delete feedItem.user;
         feedItems.push(feedItem);
     });
@@ -92,7 +96,7 @@ export interface ITweet {
     favorite_count: number;
     retweeted: boolean;
     retweet_count: number;
-    userId?: number;
+    userHandle?: number;
     user?: ITwitterUser;
     entities: ITweetEntities;
 }

@@ -1,5 +1,8 @@
 media {
-    img{
+    max-height: 180px;
+    overflow: hidden;
+    display: block;
+    img {
         margin-top: 10px;
     }
 }
