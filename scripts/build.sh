@@ -8,6 +8,8 @@ rm -fr www/
 # Prod build
 ionic-app-scripts build --prod
 
+# ngu-app-shell --module src/app/app.module.ts
+
 # Generate our SW manifest
 ngu-sw-manifest --out www/ngsw-manifest.json \
                 --dist www/
