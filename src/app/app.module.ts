@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpModule } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -46,6 +47,7 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
     }),
     ...STORE,
     MenuComponentModule,
+    ServiceWorkerModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

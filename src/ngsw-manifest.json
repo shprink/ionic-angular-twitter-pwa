@@ -1,1 +1,13 @@
-{}
+{
+    "routing": {
+        "index": "/index.html",
+        "routes": {
+            "/": {
+                "prefix": false
+            },
+            "/login": {
+                "prefix": false
+            }
+        }
+    }
+}

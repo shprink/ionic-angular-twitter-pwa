@@ -16,4 +16,4 @@ ngu-sw-manifest --out www/ngsw-manifest.json \
                 # --module src/app/app.module.ts \
 
 # Copy basic SW file
-cp node_modules/@angular/service-worker/bundles/worker-basic.min.js www/
+cp node_modules/@angular/service-worker/bundles/worker-basic.js www/
