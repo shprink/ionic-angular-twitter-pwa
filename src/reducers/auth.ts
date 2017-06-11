@@ -19,9 +19,9 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
     switch (action.type) {
         case LOGIN: {
             const provider = _get(payload.user, 'providerData[0]');
-            delete payload.user.providerData;
+            console.log('provider', provider)
+            // delete payload.user.providerData;
             return Object.assign({}, state, {
-                credential: mapCredential(payload.credential),
                 user: payload.user,
                 provider
             });

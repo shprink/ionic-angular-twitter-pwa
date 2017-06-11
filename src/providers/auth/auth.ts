@@ -27,23 +27,20 @@ export class AuthProvider {
   ) { }
 
   run() {
-    this.afAuth.authState.distinctUntilChanged().subscribe((user) => {
-      console.log('distinctUntilChanged user', user)
-      if (!user) return;
-      const credential = this.getCredential();
-      console.log('distinctUntilChanged credential', credential)
-      if (!credential) {
-        this.logout();
-        return;
-      }
 
-      // this.store.dispatch(addAuthUser(user.toJSON()));
-      console.log('distinctUntilChanged signInAndRetrieveDataWithCredential', credential)
+    const credential = this.getCredential();
+    if (credential) { // checking credential on app ready
       this.afAuth.auth.signInAndRetrieveDataWithCredential(
         firebase.auth.TwitterAuthProvider.credential(credential.access_token_key, credential.access_token_secret)
       ).then(
-        result => this.store.dispatch(login(user.toJSON(), result.credential)),
+        result => this.store.dispatch(addAuthCredential(result.credential)),
         error => this.logout());
+    }
+
+    this.afAuth.authState.distinctUntilChanged().subscribe((user) => {
+      console.log('authState user', user)
+      if (!user) return;
+      this.store.dispatch(login(user.toJSON()));
     }, () => {
       this.store.dispatch(cleanAuth());
     });
@@ -97,6 +94,7 @@ export class AuthProvider {
   getProvider(): firebase.UserInfo {
     let providerData: firebase.UserInfo;
     this.getProvider$().first().subscribe((provider: firebase.UserInfo) => providerData = provider);
+    console.log('getProvider', providerData)
     return providerData;
   }
 

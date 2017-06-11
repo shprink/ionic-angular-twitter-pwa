@@ -17,9 +17,9 @@ export const addAuthCredential = (credential): Action => ({
     payload: { credential }
 });
 
-export const login = (user, credential): Action => ({
+export const login = (user): Action => ({
     type: LOGIN,
-    payload: { user, credential }
+    payload: { user }
 });
 
 export const cleanAuth = (): Action => ({
