@@ -47,6 +47,7 @@
     "@types/webpack": "^2.2.15",
     "http-server": "^0.10.0",
     "ng-pwa-tools": "^0.0.15",
+    "purify-css": "^1.2.5",
     "source-map-explorer": "^1.3.3",
     "ts-node": "^3.0.6",
     "typescript": "^2.3.4"
