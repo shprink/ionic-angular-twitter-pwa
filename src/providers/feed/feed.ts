@@ -19,7 +19,7 @@ export class FeedProvider {
 
   constructor(
     public store: Store<AppState>,
-    private twitterProvider: TwitterProvider
+    private twitterProvider: TwitterProvider,
   ) {
     console.log('Hello FeedProvider Provider');
   }

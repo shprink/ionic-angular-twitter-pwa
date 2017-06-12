@@ -124,6 +124,13 @@ app.post('/api/covers', (req, res) => {
     });
 });
 
+app.post('/api/trending', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('trends/place', Object.assign({ id: 1 }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
 // const server = http.createServer(app);
 
 app.listen(config.port, (err) => {

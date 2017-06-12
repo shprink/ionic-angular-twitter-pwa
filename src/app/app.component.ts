@@ -41,6 +41,11 @@ export class MyApp {
       this.sw.updates.subscribe(res => {
         console.log('service-worker updates', res);
       });
+
+
+      console.info('__DEV__', __DEV__)
+      console.info('__PROD__', __PROD__)
+      console.info('__APIURI__', __APIURI__)
     });
   }
 }

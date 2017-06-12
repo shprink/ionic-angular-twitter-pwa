@@ -3,3 +3,4 @@ export * from './storage/storage';
 export * from './users/users';
 export * from './feed/feed';
 export * from './auth/auth';
+export * from './trends/trends';

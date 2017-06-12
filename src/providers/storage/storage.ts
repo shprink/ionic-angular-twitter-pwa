@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage as IonicStorage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 
-import { AppState, IAuthState, ITweet, IUsersState } from './../../reducers';
+import { AppState, IAuthState, ITweet, IUsersState, ITrends } from './../../reducers';
 import { INIT } from './../../actions';
 
 /*
@@ -45,6 +45,11 @@ export class StorageProvider {
     this.store.select('users').skip(1).debounceTime(500).subscribe((users: IUsersState) => {
       console.log('saving users');
       this.storage.set('users', JSON.stringify(users));
+    });
+
+    this.store.select('trends').skip(1).debounceTime(500).subscribe((trends: ITrends) => {
+      console.log('saving trends');
+      this.storage.set('trends', JSON.stringify(trends));
     });
   }
 }

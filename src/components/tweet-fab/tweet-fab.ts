@@ -21,7 +21,7 @@ export class TweetFabComponent {
 
   createTweet() {
     let tweetModal = this.modalCtrl.create('TweetPage')
-    // loginModal.onDidDismiss(data => this.nav.setRoot('HomePage'));
+    // loginModal.onDidDismiss( data => this.nav.setRoot('HomePage'));
     tweetModal.present();
   }
 

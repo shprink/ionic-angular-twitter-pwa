@@ -5,19 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <avatar-toolbar>
+  <ion-navbar>
     <ion-searchbar
-      [(ngModel)]="term"
+      [(ngModel)]="query"
       showCancelButton="true"
       (ionInput)="onInput($event)"
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
-  </avatar-toolbar>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
-  <tweet-fab></tweet-fab>
 
 </ion-content>

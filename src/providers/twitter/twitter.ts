@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Platform, ToastController } from 'ionic-angular';
 
-import { AppState, ITwitterUser } from '../../reducers';
+import { AppState, ITwitterUser, ITrends } from '../../reducers';
 import { AuthProvider } from './../auth/auth';
 
 /*
@@ -21,9 +21,7 @@ export class TwitterProvider {
     public platform: Platform,
     public authProvider: AuthProvider,
     public toastCtrl: ToastController,
-  ) {
-    console.log('__APIURI__', __APIURI__)
-  }
+  ) {  }
 
   getRequestOptions() {
     const headers = new Headers();
@@ -61,6 +59,13 @@ export class TwitterProvider {
     return this.http.post(`${__APIURI__}api/timeline`, {
       user_id, count
     }, this.getRequestOptions()).map(res => res.json());
+  }
+
+  getTrends$(): Observable<ITrends> { // do not allow localized trending topics for now
+    return this.http.post(`${__APIURI__}api/trending`, {},
+      this.getRequestOptions())
+      .map(res => res.json())
+      .map(res => res[0]);
   }
 
   tweet(status) {

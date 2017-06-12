@@ -10,14 +10,14 @@ import { canEnterIfAuthenticated } from '../../decorators';
  */
 @canEnterIfAuthenticated
 @IonicPage({
-  segment: 'search/:term'
+  segment: 'search/:query'
 })
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
 })
 export class SearchPage {
-  term: string;
+  query: string;
 
   constructor(
     public navCtrl: NavController,
@@ -28,7 +28,7 @@ export class SearchPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchPage');
-    this.term = this.navParams.get('term');
+    this.query = decodeURIComponent(this.navParams.get('query'));
   }
 
 }
