@@ -8,8 +8,8 @@ rm -fr www/
 # Prod build
 ionic-app-scripts build --prod
 
-# remove unused css
-purifycss www/build/main.css www/build/*.main.js --min --out www/build/main.css
+# remove unused css (not perfect)
+# purifycss www/build/main.css www/build/*.main.js --min --out www/build/main.css
 
 # ngu-app-shell --module src/app/app.module.ts
 
