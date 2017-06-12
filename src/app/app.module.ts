@@ -20,9 +20,11 @@ import 'rxjs/add/operator/toPromise';
 
 import { MyApp } from './app.component';
 import { STORE } from '../store';
-import { StorageProvider, TwitterProvider, UsersProvider, FeedProvider, AuthProvider } from '../providers';
+import {
+  StorageProvider, TwitterProvider, UsersProvider, FeedProvider,
+  AuthProvider, TrendsProvider, ServiceWorkerProvider
+} from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
-import { TrendsProvider } from '../providers/trends/trends';
 
 export function provideStorage() {
   return new Storage({ name: '__twitter-pwa' });
@@ -70,6 +72,7 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
     AuthProvider,
     TwitterProvider,
     TrendsProvider,
+    ServiceWorkerProvider,
   ]
 })
 export class AppModule { }

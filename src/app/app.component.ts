@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { NgServiceWorker } from '@angular/service-worker';
 
-import { StorageProvider, AuthProvider } from '../providers';
+import { StorageProvider, AuthProvider, ServiceWorkerProvider } from '../providers';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,13 +17,14 @@ export class MyApp {
     public platform: Platform,
     public storageProvider: StorageProvider,
     public authProvider: AuthProvider,
-    public sw: NgServiceWorker,
+    public swProvider: ServiceWorkerProvider,
   ) {
     this.isMenuEnabled$ = this.authProvider.isAuthenticated$();
 
     this.platform.ready().then(() => {
       this.storageProvider.run();
       this.authProvider.run();
+      this.swProvider.run();
       this.authProvider.isAuthenticated$().debounceTime(100).subscribe(isAuthenticated => {
         if (this.previousAuthState !== isAuthenticated) {
           console.log('isAuthenticated', isAuthenticated, )
@@ -37,15 +37,6 @@ export class MyApp {
         }
         this.previousAuthState = isAuthenticated;
       });
-      this.sw.log().subscribe(logs => console.log('service-worker logs', logs));
-      this.sw.updates.subscribe(res => {
-        console.log('service-worker updates', res);
-      });
-
-
-      console.info('__DEV__', __DEV__)
-      console.info('__PROD__', __PROD__)
-      console.info('__APIURI__', __APIURI__)
     });
   }
 }
