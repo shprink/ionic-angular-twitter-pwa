@@ -11,9 +11,12 @@
 <ion-content>
   <feed 
     [content]="feed$ | async"
+    [isFetching]="fetching$ | async"
     (onInit)="init()"
     (onRefresh)="refresh($event)"
     (onInfinite)="loadMore($event)">
   </feed>
-  <tweet-fab></tweet-fab>
+  <ion-fab bottom right>
+    <tweet-fab></tweet-fab>
+  </ion-fab>
 </ion-content>

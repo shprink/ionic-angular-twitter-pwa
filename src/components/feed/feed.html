@@ -4,6 +4,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <spinner [isVisible]="isFetching && !content.length"></spinner>
   <ion-list>
     <tweet *ngFor="let data of content;trackBy: trackById" [data]="data"></tweet>
   </ion-list>

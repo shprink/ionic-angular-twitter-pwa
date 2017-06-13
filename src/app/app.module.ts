@@ -1,8 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
+import {
+  ErrorHandler,
+  NgModule,
+  APP_INITIALIZER,
+  Injector,
+} from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -17,14 +23,21 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/finally';
 
 import { MyApp } from './app.component';
 import { STORE } from '../store';
 import {
-  StorageProvider, TwitterProvider, UsersProvider, FeedProvider,
-  AuthProvider, TrendsProvider, ServiceWorkerProvider
+  StorageProvider,
+  TwitterProvider,
+  UsersProvider,
+  FeedProvider,
+  AuthProvider,
+  TrendsProvider,
+  ServiceWorkerProvider,
 } from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
+import { HttpWrapper } from './http.wrapper';
 
 export function provideStorage() {
   return new Storage({ name: '__twitter-pwa' });
@@ -32,7 +45,16 @@ export function provideStorage() {
 
 export function appInitializerStorageFactory(storage: StorageProvider) {
   return () => storage.init();
-};
+}
+
+export function provideHttp(
+  xhrBackend: XHRBackend,
+  requestOptions: RequestOptions,
+  authProvider: AuthProvider,
+  injector: Injector,
+): Http {
+  return new HttpWrapper(xhrBackend, requestOptions, authProvider, injector);
+}
 
 @NgModule({
   declarations: [MyApp],
@@ -41,29 +63,33 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyAVDXvCWcmED4zI4LmAMlVJr21ul7z5DyQ",
-      authDomain: "ionic-twitter-pwa.firebaseapp.com",
-      databaseURL: "https://ionic-twitter-pwa.firebaseio.com",
-      projectId: "ionic-twitter-pwa",
-      storageBucket: "ionic-twitter-pwa.appspot.com",
-      messagingSenderId: "635051733996"
+      apiKey: 'AIzaSyAVDXvCWcmED4zI4LmAMlVJr21ul7z5DyQ',
+      authDomain: 'ionic-twitter-pwa.firebaseapp.com',
+      databaseURL: 'https://ionic-twitter-pwa.firebaseio.com',
+      projectId: 'ionic-twitter-pwa',
+      storageBucket: 'ionic-twitter-pwa.appspot.com',
+      messagingSenderId: '635051733996',
     }),
     ...STORE,
     MenuComponentModule,
     ServiceWorkerModule,
+    BrowserAnimationsModule,
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-  ],
+  entryComponents: [MyApp],
   providers: [
     { provide: Storage, useFactory: provideStorage },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     {
+      provide: Http,
+      useFactory: provideHttp,
+      deps: [XHRBackend, RequestOptions, AuthProvider, Injector],
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: appInitializerStorageFactory,
       deps: [StorageProvider],
-      multi: true
+      multi: true,
     },
     AngularFireAuth,
     StorageProvider,
@@ -73,6 +99,6 @@ export function appInitializerStorageFactory(storage: StorageProvider) {
     TwitterProvider,
     TrendsProvider,
     ServiceWorkerProvider,
-  ]
+  ],
 })
-export class AppModule { }
+export class AppModule {}

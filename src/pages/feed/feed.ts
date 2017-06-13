@@ -1,7 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Injector } from '@angular/core';
-import { IonicPage, NavController, NavParams, InfiniteScroll, Refresher } from 'ionic-angular';
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  InfiniteScroll,
+  Refresher,
+} from 'ionic-angular';
 
 import { canEnterIfAuthenticated } from '../../decorators';
 import { FeedProvider, UsersProvider } from '../../providers';
@@ -20,6 +26,7 @@ import { ITweet } from './../../reducers';
 })
 export class FeedPage {
   feed$: Observable<ITweet[]>;
+  fetching$: Observable<boolean>;
   page: number = 0;
   itemsToDisplay$ = new BehaviorSubject<number>(1);
 
@@ -29,52 +36,57 @@ export class FeedPage {
     public feedProvider: FeedProvider,
     public usersProvider: UsersProvider,
     public injector: Injector,
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedPage');
     this.feed$ = this.feedProvider.getFeedPaginated$(this.itemsToDisplay$);
+    this.fetching$ = this.feedProvider.isFetching$();
   }
 
   init() {
     const hasFeed = this.feedProvider.hasFeed();
     if (!hasFeed) {
-      this.feedProvider.reset().first().subscribe(
-        () => { },
-        error => console.log('feed error', error)
-      );
+    console.log('init')
+      this.feedProvider
+        .reset()
+        .first()
+        .subscribe(() => {}, error => console.log('feed error', error));
     }
   }
 
   refresh(refresher: Refresher) {
-    this.feedProvider.reset().first().subscribe(
-      () => { },
-      error => console.log('feed error', error),
-      () => refresher.complete()
-    );
+    console.log('refresh')
+    this.feedProvider
+      .reset()
+      .first()
+      .finally(() => refresher.complete())
+      .subscribe(() => {}, error => console.log('feed error', error));
   }
 
   loadMore(infiniteScroll: InfiniteScroll) {
+    console.log('loadMore')
     let currentLength;
-    this.feed$.first().subscribe((items: ITweet[]) => currentLength = items.length);
+    this.feed$
+      .first()
+      .subscribe((items: ITweet[]) => (currentLength = items.length));
+
     if (this.feedProvider.feedLength() > currentLength) {
       this.nextPage();
       infiniteScroll.complete();
     } else {
-      this.feedProvider.getNextPage().first().subscribe(
-        () => { },
-        error => console.log('feed error', error),
-        () => {
-          this.nextPage();
-          infiniteScroll.complete()
-        }
-      );
+      this.feedProvider
+        .getNextPage()
+        .first()
+        .finally(() => infiniteScroll.complete())
+        .subscribe(
+          () => this.nextPage(),
+          error => console.log('feed error', error),
+        );
     }
   }
 
   nextPage = (): void => {
     this.page += 1;
     this.itemsToDisplay$.next(this.page);
-  }
+  };
 }

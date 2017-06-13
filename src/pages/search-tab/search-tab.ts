@@ -31,7 +31,7 @@ export class SearchTabPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchTabPage');
-    this.trendingHashtags$ = this.trendsProvider.getTrendingHashtags$();
+    this.trendingHashtags$ = this.trendsProvider.getTrendsHashtags$();
   }
 
   ionViewWillEnter() {
@@ -46,10 +46,5 @@ export class SearchTabPage {
 
   search(item) {
     this.appCtrl.getRootNav().push('SearchPage', { query: item.query });
-  }
-
-  createTweet() {
-    let tweetModal = this.modalCtrl.create('TweetPage')
-    tweetModal.present();
   }
 }

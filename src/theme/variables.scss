@@ -23,6 +23,17 @@ $font-path: "../assets/fonts";
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
+$gray-base: #000 !default;
+$gray-darker: lighten($gray-base, 13.5%) !default;
+$gray-dark: lighten($gray-base, 20%) !default;
+$gray: lighten($gray-base, 33.5%) !default;
+$gray-light: lighten($gray-base, 46.7%) !default;
+$gray-light2: lighten($gray-base, 55%) !default;
+$gray-light3: lighten($gray-base, 65%) !default;
+$gray-light4: lighten($gray-base, 75%) !default;
+$gray-lighter: lighten($gray-base, 93.5%) !default;
+$gray-lighter2: lighten($gray-base, 95%) !default;
+$gray-lighter3: lighten($gray-base, 97%) !default;
 
 $twitter-blue: #1da1f2;
 $twitter-gray-text: #657786;
@@ -35,6 +46,12 @@ $colors: (
   dark:       #222,
   gray: $twitter-gray-text
 );
+
+$loader-width: 50px !default;
+$loader-height: 50px !default;
+$loader-zIndex: 1002 !default;
+$loader-bg-color: white !default;
+$loader-stroke: color($colors, primary) !default;
 
 // menu
 // ------------------------------

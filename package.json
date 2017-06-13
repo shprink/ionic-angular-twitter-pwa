@@ -28,6 +28,7 @@
     "@ngrx/store": "^2.2.2",
     "@ngrx/store-devtools": "^3.2.4",
     "angularfire2": "^4.0.0-rc.0",
+    "date-fns": "^1.28.5",
     "firebase": "^4.0.0",
     "ionic-angular": "3.3.0",
     "ionicons": "3.0.0",

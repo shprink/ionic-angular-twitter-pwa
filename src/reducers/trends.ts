@@ -22,7 +22,7 @@ export const trendsReducer: ActionReducer<Object> = (state: ITrends = defaultSta
         }
 
         case INIT: {
-            return payload.trending || defaultState;
+            return payload.trends || defaultState;
         }
 
         case LOGOUT: {

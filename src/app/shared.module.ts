@@ -10,33 +10,33 @@ import { FeedComponent } from '../components/feed/feed';
 import { TweetComponent } from '../components/tweet/tweet';
 import { OgComponent } from '../components/og/og';
 import { MediaComponent } from '../components/media/media';
+import { SpinnerComponent } from '../components/spinner/spinner';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        IonicModule,
-    ],
-    declarations: [
-        AvatarComponent,
-        AvatarToolbarComponent,
-        TweetFabComponent,
-        MessageFabComponent,
-        ProfileHeaderComponent,
-        FeedComponent,
-        TweetComponent,
-        OgComponent,
-        MediaComponent,
-    ],
-    exports: [
-        AvatarComponent,
-        AvatarToolbarComponent,
-        TweetFabComponent,
-        MessageFabComponent,
-        ProfileHeaderComponent,
-        FeedComponent,
-        TweetComponent,
-        OgComponent,
-        MediaComponent,
-    ]
+  imports: [CommonModule, IonicModule],
+  declarations: [
+    AvatarComponent,
+    AvatarToolbarComponent,
+    TweetFabComponent,
+    MessageFabComponent,
+    ProfileHeaderComponent,
+    FeedComponent,
+    TweetComponent,
+    OgComponent,
+    MediaComponent,
+    SpinnerComponent,
+  ],
+  exports: [
+    AvatarComponent,
+    AvatarToolbarComponent,
+    TweetFabComponent,
+    MessageFabComponent,
+    ProfileHeaderComponent,
+    FeedComponent,
+    TweetComponent,
+    OgComponent,
+    MediaComponent,
+    SpinnerComponent,
+  ],
 })
-export class SharedLazyModule { }
+export class SharedLazyModule {}

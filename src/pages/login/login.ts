@@ -44,13 +44,8 @@ export class LoginPage {
     return this.authProvider.isAuthenticated();
   }
 
-  goToHomePage() {
-    console.log('login goToHomePage')
-    this.navCtrl.setRoot('HomePage');
-  }
-
   login() {
-    this.authProvider.login().then(() =>  this.goToHomePage());
+    this.authProvider.login();
   }
 
   dismiss() {

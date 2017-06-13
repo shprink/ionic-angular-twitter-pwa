@@ -12,17 +12,15 @@ import { ITweet, ITweetEntitiesMedia } from './../../reducers';
  */
 @Component({
   selector: 'tweet',
-  templateUrl: 'tweet.html'
+  templateUrl: 'tweet.html',
 })
 export class TweetComponent {
   media: ITweetEntitiesMedia;
   text: string;
 
-  @Input() 'data': ITweet;
+  @Input() data: ITweet;
 
-  constructor(
-    public appCtrl: App
-  ) {
+  constructor(public appCtrl: App) {
     console.log('Hello TweetComponent Component');
   }
 
@@ -32,14 +30,13 @@ export class TweetComponent {
     this.text = autoLinkWithJSON(this.data.text, _get(this.data, 'entities'), {
       hashtagUrlBase: '#search/%23',
       usernameUrlBase: '#profile/',
-    })
+    });
   }
 
   goToProfile = (id, handle) => {
     this.appCtrl.getRootNav().push('ProfilePage', {
       id: this.data.user.id,
-      handle: this.data.user.screen_name
+      handle: this.data.user.screen_name,
     });
-  }
-
+  };
 }

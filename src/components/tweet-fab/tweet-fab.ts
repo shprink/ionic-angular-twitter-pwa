@@ -24,5 +24,5 @@ export class TweetFabComponent {
     // loginModal.onDidDismiss( data => this.nav.setRoot('HomePage'));
     tweetModal.present();
   }
-
+ 
 }

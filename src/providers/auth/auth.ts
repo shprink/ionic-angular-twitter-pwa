@@ -35,6 +35,8 @@ export class AuthProvider {
       ).then(
         result => this.store.dispatch(addAuthCredential(result.credential)),
         error => this.logout());
+    } else {
+      this.logout();
     }
 
     this.afAuth.authState.distinctUntilChanged().subscribe((user) => {

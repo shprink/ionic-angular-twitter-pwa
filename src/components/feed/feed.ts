@@ -11,24 +11,23 @@ import { FeedProvider } from './../../providers';
  */
 @Component({
   selector: 'feed',
-  templateUrl: 'feed.html'
+  templateUrl: 'feed.html',
 })
 export class FeedComponent {
-  @Input() 'content': ITweet[];
+  @Input() content: ITweet[];
+  @Input() isFetching: boolean;
   @Output() onInit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onInfinite: EventEmitter<any> = new EventEmitter<any>();
   @Output() onRefresh: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(
-    private feed: FeedProvider
-  ) { }
+  constructor(private feed: FeedProvider) {}
 
   ngOnInit() {
     this.onInit.emit();
   }
 
   doRefresh(refresher: Refresher) {
-    this.onRefresh.emit(refresher)
+    this.onRefresh.emit(refresher);
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
@@ -36,6 +35,6 @@ export class FeedComponent {
   }
 
   trackById(index, item) {
-    return item.id
+    return item.id;
   }
 }

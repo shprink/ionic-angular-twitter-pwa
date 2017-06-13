@@ -103,6 +103,13 @@ app.post('/api/tweet', (req, res) => {
     });
 });
 
+app.post('/api/mentions', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('statuses/mentions_timeline', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
 app.post('/api/messages', (req, res) => {
     var client = getTwitterClient(req);
     client.get('direct_messages', req.body, function (error, body, response) {

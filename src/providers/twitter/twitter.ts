@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Platform, ToastController } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 import { AppState, ITwitterUser, ITrends } from '../../reducers';
 import { AuthProvider } from './../auth/auth';
@@ -20,7 +20,6 @@ export class TwitterProvider {
     public store: Store<AppState>,
     public platform: Platform,
     public authProvider: AuthProvider,
-    public toastCtrl: ToastController,
   ) {  }
 
   getRequestOptions() {
@@ -44,15 +43,9 @@ export class TwitterProvider {
    * @param since_id  more recent than
    * @param max_id older than
    */
-  getFeed(options = {}) {
+  getFeed$(options = {}) {
     return this.http.post(`${__APIURI__}api/feed`, options, this.getRequestOptions())
-      .map(res => res.json())
-      .catch(res => {
-        console.log('res', res)
-        const error = res.json()[0];
-        this.showToast(error.message);
-        return Observable.throw(error);
-      });
+      .map(res => res.json());
   }
 
   getTimeline(user_id, count = 5) {
@@ -86,13 +79,9 @@ export class TwitterProvider {
       this.getRequestOptions()).map(res => res.json());
   }
 
-  showToast(message): void {
-    let toast = this.toastCtrl.create({
-      message,
-      duration: 3000,
-      showCloseButton: true
-    });
-    toast.present();
+  getMentions$(): Observable<any> {
+    return this.http.post(`${__APIURI__}api/mentions`, {},
+      this.getRequestOptions()).map(res => res.json());
   }
 
 }

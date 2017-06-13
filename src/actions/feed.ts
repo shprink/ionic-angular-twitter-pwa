@@ -1,15 +1,18 @@
 import { Action } from '@ngrx/store';
 
-export const ADD_FEED = 'ADD_FEED';
-export const RESET_FEED = 'RESET_FEED';
+export const FEED_FETCH = 'FEED_FETCH';
+export const FEED_FETCHED = 'FEED_FETCHED';
+export const FEED_ERROR = 'FEED_ERROR';
 
-export const addFeed = (feed): Action => ({
-    type: ADD_FEED,
-    payload: { feed }
+export const fetchFeed = (): Action => ({
+  type: FEED_FETCH,
 });
 
-export const resetFeed = (feed): Action => ({
-    type: RESET_FEED,
-    payload: { feed }
+export const fetchedFeed = (feed, reset = false): Action => ({
+  type: FEED_FETCHED,
+  payload: { feed, reset },
 });
 
+export const errorFeed = (): Action => ({
+  type: FEED_ERROR,
+});
