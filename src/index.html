@@ -11,7 +11,7 @@
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
-  <link href="build/main.css" rel="stylesheet">
+  <!--<link href="build/main.css" rel="stylesheet">-->
 </head>
 
 <body>
@@ -29,6 +29,10 @@
         to {
           transform: scale3d(1, 1, 1);
         }
+      }
+
+      html, body, ion-app{
+        height: 100%;
       }
 
       ion-app {
@@ -69,11 +73,21 @@
     </noscript>
   </ion-app>
 
+  <script type="text/javascript">
+    /* First CSS File */
+    var giftofspeed = document.createElement('link');
+    giftofspeed.rel = 'stylesheet';
+    giftofspeed.href = 'build/main.css';
+    giftofspeed.type = 'text/css';
+    var godefer = document.getElementsByTagName('link')[0];
+    godefer.parentNode.insertBefore(giftofspeed, godefer);
+  </script>
+
   <!-- The polyfills js is generated during the build process -->
-  <script src="build/polyfills.js"></script>
+  <script src="build/polyfills.js" async></script>
 
   <!-- The bundle js is generated during the build process -->
-  <script src="build/main.js"></script>
+  <script src="build/main.js" async></script>
 
 </body>
 
