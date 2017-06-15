@@ -1,0 +1,32 @@
+@charset "UTF-8";
+// Ionicons Icon Font CSS
+// --------------------------
+.ion {
+  display: inline-block;
+  font-family: "Ionicons";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// complete list https://github.com/ionic-team/ionicons/blob/3.0/dist/scss/ionicons-icons.scss
+.ion-md-home:before { content: "\f30c"; }
+.ion-md-search:before { content: "\f375"; }
+.ion-md-notifications:before { content: "\f338"; }
+.ion-md-chatboxes:before { content: "\f2b6"; }
+.ion-md-close:before { content: "\f2c0"; }
+
+.ion-md-home:before,
+.ion-md-search:before,
+.ion-md-notifications:before,
+.ion-md-chatboxes:before,
+.ion-md-close:before
+{
+  @extend .ion;
+}

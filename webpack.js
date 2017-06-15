@@ -36,6 +36,10 @@ module.exports = {
 
   plugins: [
     ionicWebpackFactory.getIonicEnvironmentPlugin(),
+    new webpack.NormalModuleReplacementPlugin(
+      /dist[\\\/]scss[\\\/]ionicons-icons.scss$/,
+      path.join(__dirname, '/src/theme/ionicons-icons.scss')
+    ),
     new webpack.DefinePlugin({
         __DEV__: process.env.IONIC_ENV === 'dev',
         __PROD__: process.env.IONIC_ENV === 'prod',

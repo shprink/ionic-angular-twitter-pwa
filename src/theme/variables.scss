@@ -2,7 +2,7 @@
 // http://ionicframework.com/docs/v2/theming/
 $font-path: "../assets/fonts";
 
-@import "ionic.globals";
+@import "ionic.globals.md";
 
 
 // Shared Variables
@@ -86,7 +86,7 @@ $split-pane-side-max-width: 304px !default;
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
+@import "ionic.theme.default.md";
 
 
 // Ionicons
@@ -101,5 +101,5 @@ $split-pane-side-max-width: 304px !default;
 // --------------------------------------------------
 
 @import "roboto";
-@import "noto-sans";
+// @import "noto-sans";
 @import "./mixins";

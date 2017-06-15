@@ -61,7 +61,10 @@ export function provideHttp(
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      iconMode: 'md',
+      mode: 'md'
+    }),
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyAVDXvCWcmED4zI4LmAMlVJr21ul7z5DyQ',
       authDomain: 'ionic-twitter-pwa.firebaseapp.com',

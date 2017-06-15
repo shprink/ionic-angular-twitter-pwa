@@ -55,6 +55,7 @@
   },
   "description": "An Ionic project",
   "config": {
-    "ionic_webpack": "./webpack.js"
+    "ionic_webpack": "./webpack.js",
+    "ionic_sass": "./sass.js"
   }
 }
