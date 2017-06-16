@@ -60,10 +60,12 @@ module.exports = {
    * excludeFiles: An array of regex patterns for files which
    * should be excluded. If a file matches both include and exclude
    * patterns, then the file will be excluded.
+   * https://github.com/ionic-team/ionic/blob/master/src/themes/ionic.components.scss
    */
   excludeFiles: [
-    /\.(wp).(scss)$/i,
-    /\.(ios).(scss)$/i
+    /\.(wp|ios).(scss)$/i,
+    /(action-sheet|alert|badge|card|checkbox|chip|datetime|grid|item-reorder|item-sliding|label|loading|note|picker|popover|radio|range|segment|select|select|slides|toggle|virtual-scroll|cordova)/i,
+
   ],
 
   /**
