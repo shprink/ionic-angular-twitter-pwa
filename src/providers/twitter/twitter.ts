@@ -7,6 +7,7 @@ import { Platform } from 'ionic-angular';
 import { AppState, ITwitterUser, ITrends } from '../../reducers';
 import { AuthProvider } from './../auth/auth';
 
+const authRequiredError = { error: 'Auth is required' };
 /*
   Generated class for the TwitterProvider provider.
 
@@ -20,7 +21,7 @@ export class TwitterProvider {
     public store: Store<AppState>,
     public platform: Platform,
     public authProvider: AuthProvider,
-  ) {  }
+  ) { }
 
   getRequestOptions() {
     const headers = new Headers();
@@ -43,45 +44,62 @@ export class TwitterProvider {
    * @param since_id  more recent than
    * @param max_id older than
    */
-  getFeed$(options = {}) {
-    return this.http.post(`${__APIURI__}api/feed`, options, this.getRequestOptions())
-      .map(res => res.json());
+  getFeed$(options = {}): Observable<any> {
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/feed`, options, this.getRequestOptions())
+        .map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
-  getTimeline(user_id, count = 5) {
-    return this.http.post(`${__APIURI__}api/timeline`, {
-      user_id, count
-    }, this.getRequestOptions()).map(res => res.json());
+  getTimeline(user_id, count = 5): Observable<any> {
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/timeline`, {
+        user_id, count
+      }, this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
   getTrends$(): Observable<ITrends> { // do not allow localized trending topics for now
-    return this.http.post(`${__APIURI__}api/trending`, {},
-      this.getRequestOptions())
-      .map(res => res.json())
-      .map(res => res[0]);
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/trending`, {},
+        this.getRequestOptions())
+        .map(res => res.json())
+        .map(res => res[0])
+      : Observable.throw(authRequiredError);
   }
 
   tweet(status) {
-    return this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions()).map(res => res.json());
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions())
+        .map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
   getOpenGraphData(url) {
-    return this.http.post(`${__APIURI__}api/og-scrapper`, {
-      url
-    }, this.getRequestOptions()).map(res => res.json());
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/og-scrapper`, {
+        url
+      }, this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
   getUser$(screen_name?): Observable<ITwitterUser> {
+    const provider = this.authProvider.getProvider();
     const params = screen_name
       ? { screen_name }
-      : { user_id: this.authProvider.getProvider().uid }
-    return this.http.post(`${__APIURI__}api/user`, params,
-      this.getRequestOptions()).map(res => res.json());
+      : { user_id: provider && provider.uid };
+
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/user`, params,
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
   getMentions$(): Observable<any> {
-    return this.http.post(`${__APIURI__}api/mentions`, {},
-      this.getRequestOptions()).map(res => res.json());
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/mentions`, {},
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
   }
 
 }

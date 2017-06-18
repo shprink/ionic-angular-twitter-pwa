@@ -1,36 +1,31 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { InfiniteScroll, Refresher } from 'ionic-angular';
 
-import { ITweet } from './../../reducers/feed';
+import { ITrendingHashtag } from './../../reducers';
 /**
- * Generated class for the FeedComponent component.
+ * Generated class for the TrendingHashtagsComponent component.
  *
  * See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
  * for more info on Angular Components.
  */
 @Component({
-  selector: 'feed',
-  templateUrl: 'feed.html',
+  selector: 'trending-hashtags',
+  templateUrl: 'trendingHashtags.html',
 })
-export class FeedComponent {
-  @Input() content: ITweet[];
+export class TrendingHashtagsComponent {
+  @Input() content: ITrendingHashtag[];
   @Input() isFetching: boolean;
-  @Output() onInit: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onInfinite: EventEmitter<any> = new EventEmitter<any>();
   @Output() onRefresh: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
-
-  ngOnInit() {
-    this.onInit.emit();
-  }
 
   doRefresh(refresher: Refresher) {
     this.onRefresh.emit(refresher);
   }
 
-  doInfinite(infiniteScroll: InfiniteScroll) {
-    this.onInfinite.emit(infiniteScroll);
+  doClick(hashtag: ITrendingHashtag) {
+    this.onClick.emit(hashtag);
   }
 
   trackById(index, item) {

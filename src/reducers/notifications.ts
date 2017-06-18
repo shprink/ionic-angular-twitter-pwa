@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 
-import { ADD_TRENDS, LOGOUT, INIT } from '../actions';
+import { TRENDS_FETCHED, LOGOUT, INIT } from '../actions';
 
 const defaultState = [];
 
@@ -13,7 +13,7 @@ export const notificationsReducer: ActionReducer<Object> = (state: INotification
     const payload = action.payload;
 
     switch (action.type) {
-        case ADD_TRENDS: {
+        case TRENDS_FETCHED: {
             const { trends: hashtags, ...rest } = payload;
             return {
                 hashtags,

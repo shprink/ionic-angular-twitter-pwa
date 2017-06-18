@@ -5,7 +5,7 @@ import fnsParse from 'date-fns/parse';
 import fnsDiffInMinutes from 'date-fns/difference_in_minutes';
 
 import { AppState, ITrends, ITrendingHashtag } from '../../reducers';
-import { addTrends } from '../../actions';
+import { fetchTrends, fetchedTrends, errorTrends } from '../../actions';
 import { TwitterProvider } from './../twitter/twitter';
 /*
   Generated class for the TrendsProvider provider.
@@ -22,6 +22,10 @@ export class TrendsProvider {
     private twitterProvider: TwitterProvider,
   ) {
     console.log('Hello TrendsProvider Provider');
+  }
+
+  isFetching$(): Observable<boolean> {
+    return this.store.select(state => state.trends.fetching);
   }
 
   getTrends$(): Observable<ITrends> {
@@ -56,20 +60,30 @@ export class TrendsProvider {
     this.getTrendsHashtags$()
       .first()
       .subscribe(
-        (hashtags: ITrendingHashtag[]) =>
-          (hasTrendingHashtags = hashtags.length !== 0),
-      );
+      (hashtags: ITrendingHashtag[]) =>
+        (hasTrendingHashtags = hashtags.length !== 0),
+    );
     return hasTrendingHashtags;
   }
 
-  fetch$() {
+  canFetchNewContent() {
     const date = fnsParse(this.getTrendsAsOf());
     if (fnsDiffInMinutes(Date.now(), date) < REFRESH_TRENDS_INTERVAL) {
       console.info(`Trends created less than ${REFRESH_TRENDS_INTERVAL} min ago, keeping existing data`);
-      return Observable.of(null);
+      return false;
     }
+    return true;
+  }
+
+  fetch$() {
+    this.store.dispatch(fetchTrends());
     return this.twitterProvider
       .getTrends$()
-      .map(trends => this.store.dispatch(addTrends(trends)));
+      .debounceTime(500)
+      .map(trends => this.store.dispatch(fetchedTrends(trends)))
+      .catch(error => {
+        this.store.dispatch(errorTrends());
+        return Observable.of(null);
+      });
   }
 }

@@ -6,14 +6,9 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()" showWhen="ios">
-        <span color="primary" >Cancel</span>
-      </button>
-    </ion-buttons>
     <avatar [user]="user$ | async"></avatar>
     <ion-buttons end>
-      <button ion-button (click)="dismiss()" showWhen="android,core,windows">
+      <button ion-button (click)="dismiss()">
         <ion-icon name="md-close"></ion-icon>
       </button>
     </ion-buttons>

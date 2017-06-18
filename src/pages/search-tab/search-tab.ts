@@ -1,6 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Component, Injector } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import {
+  App, IonicPage, NavController,
+  NavParams, ModalController, Refresher
+} from 'ionic-angular';
 
 import { canEnterIfAuthenticated } from '../../decorators';
 import { TrendsProvider } from './../../providers';
@@ -14,11 +17,12 @@ import { ITrendingHashtag } from './../../reducers';
 @canEnterIfAuthenticated
 @IonicPage()
 @Component({
-  selector: 'page-search',
+  selector: 'page-search-tab',
   templateUrl: 'search-tab.html',
 })
 export class SearchTabPage {
   trendingHashtags$: Observable<ITrendingHashtag[]>
+  fetching$: Observable<boolean>;
 
   constructor(
     public navCtrl: NavController,
@@ -32,16 +36,31 @@ export class SearchTabPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchTabPage');
     this.trendingHashtags$ = this.trendsProvider.getTrendsHashtags$();
-  }
-
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter SearchTabPage');
-    this.trendsProvider.fetch$().first().subscribe();
+    this.fetching$ = this.trendsProvider.isFetching$();
   }
 
   ionViewWillLeave() {
     console.log('ionViewWillLeave SearchTabPage');
+  }
 
+  ionViewWillEnter() { 
+    const canFetch = this.trendsProvider.canFetchNewContent();
+    if (canFetch) {
+      console.log('init')
+      this.trendsProvider
+        .fetch$()
+        .first()
+        .subscribe(() => { }, error => console.log('trends error', error));
+    }
+  }
+
+  refresh(refresher: Refresher) {
+    console.log('refresh')
+    this.trendsProvider
+      .fetch$()
+      .first()
+      .finally(() => refresher.complete())
+      .subscribe(() => { }, error => console.log('trends error', error));
   }
 
   search(item) {

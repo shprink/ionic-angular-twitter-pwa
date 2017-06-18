@@ -11,6 +11,7 @@ import { TweetComponent } from '../components/tweet/tweet';
 import { OgComponent } from '../components/og/og';
 import { MediaComponent } from '../components/media/media';
 import { SpinnerComponent } from '../components/spinner/spinner';
+import { TrendingHashtagsComponent } from '../components/trendingHashtags/trendingHashtags';
 
 @NgModule({
   imports: [CommonModule, IonicModule],
@@ -25,6 +26,7 @@ import { SpinnerComponent } from '../components/spinner/spinner';
     OgComponent,
     MediaComponent,
     SpinnerComponent,
+    TrendingHashtagsComponent,
   ],
   exports: [
     AvatarComponent,
@@ -37,6 +39,7 @@ import { SpinnerComponent } from '../components/spinner/spinner';
     OgComponent,
     MediaComponent,
     SpinnerComponent,
+    TrendingHashtagsComponent,
   ],
 })
 export class SharedLazyModule {}

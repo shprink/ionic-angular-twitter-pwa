@@ -18,12 +18,12 @@
 
 <ion-content>
   <ion-item-divider color="light">Trending Now</ion-item-divider>
-  <ion-list>
-    <button ion-item *ngFor="let item of (trendingHashtags$ | async)" (click)="search(item)">
-      {{ item.name }}
-    </button>  
-  </ion-list>
+  <trending-hashtags 
+    [isFetching]="fetching$ | async"
+    [content]="trendingHashtags$ | async"
+    (onRefresh)="refresh($event)">
+  </trending-hashtags>
   <ion-fab bottom right>
     <tweet-fab></tweet-fab>
-  </ion-fab>
+  </ion-fab>  
 </ion-content>

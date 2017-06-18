@@ -36,12 +36,14 @@
 .ion-md-notifications:before { content: "\f338"; }
 .ion-md-chatboxes:before { content: "\f2b6"; }
 .ion-md-close:before { content: "\f2c0"; }
+.ion-md-person:before { content: "\f47e"; }
 
 .ion-md-home:before,
 .ion-md-search:before,
 .ion-md-notifications:before,
 .ion-md-chatboxes:before,
-.ion-md-close:before
+.ion-md-close:before,
+.ion-md-person:before
 {
   @extend .ion
 }

@@ -1,8 +1,9 @@
 import { ActionReducer, Action } from '@ngrx/store';
 
-import { ADD_TRENDS, LOGOUT, INIT } from '../actions';
+import { TRENDS_FETCHED, TRENDS_ERROR, TRENDS_FETCH, LOGOUT, INIT } from '../actions';
 
 const defaultState = {
+    fetching: false,
     hashtags: [],
     as_of: null,
     created_at: null,
@@ -13,9 +14,18 @@ export const trendsReducer: ActionReducer<Object> = (state: ITrends = defaultSta
     const payload = action.payload;
 
     switch (action.type) {
-        case ADD_TRENDS: {
+        case TRENDS_FETCH: {
+            return Object.assign({}, state, { fetching: true });
+        }
+
+        case TRENDS_ERROR: {
+            return Object.assign({}, state, { fetching: false });
+        }
+
+        case TRENDS_FETCHED: {
             const { trends: hashtags, ...rest } = payload;
             return {
+                fetching: false,
                 hashtags,
                 ...rest,
             }
@@ -43,6 +53,7 @@ export interface ITrendingHashtag {
 }
 
 export interface ITrends {
+    fetching: boolean,
     as_of: string | null;
     created_at: string | null;
     hashtags: ITrendingHashtag[];

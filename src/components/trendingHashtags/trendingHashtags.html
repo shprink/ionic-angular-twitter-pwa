@@ -1,0 +1,13 @@
+<!-- Generated template for the FeedComponent component -->
+<ion-content fullscreen>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <spinner [isVisible]="isFetching && !content.length"></spinner>
+  <ion-list>
+    <button ion-item *ngFor="let data of content;trackBy: trackById" (click)="doClick(data)">
+      {{ data.name }}
+    </button>  
+  </ion-list>
+</ion-content>

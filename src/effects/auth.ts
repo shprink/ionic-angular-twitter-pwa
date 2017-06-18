@@ -19,7 +19,7 @@ export class AuthEffects {
     .debounceTime(100)
     .switchMap(action =>
       this.twitterProvider
-        .getFeed$()
+        .getUser$()
         .first()
         .map(user => addCurrentTwitterUser(user))
         .catch(() => Observable.of({ type: 'LOGIN_FAILED' })),

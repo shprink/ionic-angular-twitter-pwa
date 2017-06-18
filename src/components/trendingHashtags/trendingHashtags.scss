@@ -1,0 +1,13 @@
+feed {
+    ion-item {
+        h2 {
+            font-size: 1.5rem !important;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .handle {
+            color: color($colors, gray);
+        }
+    }
+}
