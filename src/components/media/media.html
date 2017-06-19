@@ -1,3 +1,2 @@
 <!-- Generated template for the MediaComponent component -->
-{{data.type}}
-<img *ngIf="data.type === 'photo'" [src]="data.media_url_https"  alt="media" />
+<div *ngIf="data.type === 'photo'" class="media-img" [ngStyle]="{'background-image': 'url(' + data.media_url_https + ')'}"></div>

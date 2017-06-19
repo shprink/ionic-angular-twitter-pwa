@@ -1,19 +1,13 @@
+import { Component, Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, Injector } from '@angular/core';
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  InfiniteScroll,
-  Refresher,
-} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Refresher, InfiniteScroll } from 'ionic-angular';
 
+import { MentionsProvider } from './../../providers';
 import { canEnterIfAuthenticated } from '../../decorators';
-import { FeedProvider, UsersProvider } from '../../providers';
 import { ITweet } from './../../reducers';
 /**
- * Generated class for the FeedPage page.
+ * Generated class for the MentionsPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -21,10 +15,10 @@ import { ITweet } from './../../reducers';
 @canEnterIfAuthenticated
 @IonicPage()
 @Component({
-  selector: 'page-feed',
-  templateUrl: 'feed.html',
+  selector: 'page-mentions',
+  templateUrl: 'mentions.html',
 })
-export class FeedPage {
+export class MentionsPage {
   feed$: Observable<ITweet[]>;
   fetching$: Observable<boolean>;
   page: number = 0;
@@ -33,34 +27,33 @@ export class FeedPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public feedProvider: FeedProvider,
-    public usersProvider: UsersProvider,
     public injector: Injector,
-  ) {}
+    public mentionsProvider: MentionsProvider,
+  ) { }
 
   ionViewDidLoad() {
-    this.feed$ = this.feedProvider.getFeedPaginated$(this.itemsToDisplay$);
-    this.fetching$ = this.feedProvider.isFetching$();
+    this.feed$ = this.mentionsProvider.getMentionsPaginated$(this.itemsToDisplay$);
+    this.fetching$ = this.mentionsProvider.isFetching$();
   }
 
   init() {
-    const hasFeed = this.feedProvider.hasFeed();
+    const hasFeed = this.mentionsProvider.hasFeed();
     if (!hasFeed) {
-    console.log('init')
-      this.feedProvider
+      console.log('init')
+      this.mentionsProvider
         .fetch$()
         .first()
-        .subscribe(() => {}, error => console.log('feed error', error));
+        .subscribe(() => { }, error => console.log('feed error', error));
     }
   }
 
   refresh(refresher: Refresher) {
     console.log('refresh')
-    this.feedProvider
+    this.mentionsProvider
       .fetch$()
       .first()
       .finally(() => refresher.complete())
-      .subscribe(() => {}, error => console.log('feed error', error));
+      .subscribe(() => { }, error => console.log('feed error', error));
   }
 
   loadMore(infiniteScroll: InfiniteScroll) {
@@ -70,18 +63,18 @@ export class FeedPage {
       .first()
       .subscribe((items: ITweet[]) => (currentLength = items.length));
 
-    if (this.feedProvider.feedLength() > currentLength) {
+    if (this.mentionsProvider.feedLength() > currentLength) {
       this.nextPage();
       infiniteScroll.complete();
     } else {
-      this.feedProvider
+      this.mentionsProvider
         .fetchNextPage$()
         .first()
         .finally(() => infiniteScroll.complete())
         .subscribe(
-          () => this.nextPage(),
-          error => console.log('feed error', error),
-        );
+        () => this.nextPage(),
+        error => console.log('feed error', error),
+      );
     }
   }
 

@@ -2,20 +2,20 @@ import { authReducer, IAuthState } from './auth';
 import { usersReducer, IUsersState } from './users';
 import { feedReducer, IFeed } from './feed';
 import { trendsReducer, ITrends } from './trends';
-import { notificationsReducer, INotification } from './notifications';
+import { mentionsReducer, IMentions } from './mentions';
 
 export * from './auth';
 export * from './users';
 export * from './feed';
 export * from './trends';
-export * from './notifications';
+export * from './mentions';
 
 export interface AppState {
     auth: IAuthState;
     users: IUsersState;
     feed: IFeed;
     trends: ITrends;
-    notifications: INotification[];
+    mentions: IMentions;
 }
 
 export const Reducers = {
@@ -23,5 +23,5 @@ export const Reducers = {
     users: usersReducer,
     feed: feedReducer,
     trends: trendsReducer,
-    notifications: notificationsReducer,
+    mentions: mentionsReducer,
 }

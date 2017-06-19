@@ -1,8 +1,8 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import _pickBy from 'lodash/pickBy';
 
 import { FEED_FETCH, FEED_FETCHED, FEED_ERROR, LOGOUT, INIT } from '../actions';
 import { ITwitterUser } from './users';
+import { filterFeedList } from '../utils/feed';
 
 const defaultState = {
   fetching: false,
@@ -39,7 +39,7 @@ export const feedReducer: ActionReducer<Object> = (
     }
 
     case FEED_FETCHED: {
-      const newItems = filterFeedItems(payload.feed);
+      const newItems = filterFeedList(payload.feed, propertiesToKeep);
       return {
         fetching: false,
         list: payload.reset ? newItems : [...state.list, ...newItems],
@@ -60,17 +60,6 @@ export const feedReducer: ActionReducer<Object> = (
       return state;
   }
 };
-
-function filterFeedItems(feed = []) {
-  const feedItems = [];
-  feed.forEach(item => {
-    let feedItem = _pickBy(item, (v, k) => propertiesToKeep.includes(k));
-    feedItem.userHandle = feedItem.user.screen_name;
-    delete feedItem.user;
-    feedItems.push(feedItem);
-  });
-  return feedItems;
-}
 
 // https://dev.twitter.com/overview/api/entities-in-twitter-objects
 export interface ITweetEntities {

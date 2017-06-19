@@ -36,6 +36,7 @@ import {
   TrendsProvider,
   ServiceWorkerProvider,
   SearchProvider,
+  MentionsProvider,
 } from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
 import { HttpWrapper } from './http.wrapper';
@@ -104,6 +105,7 @@ export function provideHttp(
     TrendsProvider,
     ServiceWorkerProvider,
     SearchProvider,
+    MentionsProvider,
   ],
 })
 export class AppModule {}

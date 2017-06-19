@@ -16,7 +16,7 @@ export class HomePage {
 
   FeedPage: any = 'FeedPage';
   SearchTabPage: any = 'SearchTabPage';
-  NotificationsPage: any = 'NotificationsPage';
+  MentionsPage: any = 'MentionsPage';
   MessagesPage: any = 'MessagesPage';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

@@ -1,35 +1,36 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import _get from 'lodash/get';
 import _take from 'lodash/take';
 
 import { AppState, ITweet, IUsersState } from '../../reducers';
-import { fetchFeed, fetchedFeed, errorFeed } from '../../actions';
+import { fetchMentions, fetchedMentions, errorMentions } from '../../actions';
 import { TwitterProvider } from './../twitter/twitter';
 /*
-  Generated class for the FeedProvider provider.
+  Generated class for the MentionsProvider provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class FeedProvider {
+export class MentionsProvider {
+
   constructor(
     public store: Store<AppState>,
     private twitterProvider: TwitterProvider,
   ) {
-    console.log('Hello FeedProvider Provider');
+    console.log('Hello MentionsProvider Provider');
   }
 
   isFetching$(): Observable<boolean> {
-    return this.store.select(state => state.feed.fetching);
+    return this.store.select(state => state.mentions.fetching);
   }
 
   getFeed$(): Observable<ITweet[]> {
     return Observable.combineLatest(
-      this.store.select(state => state.feed.list),
+      this.store.select(state => state.mentions.list),
       this.store.select(state => state.users),
       (feed: ITweet[], users: IUsersState) =>
         feed.map(feedItem => {
@@ -39,12 +40,12 @@ export class FeedProvider {
     );
   }
 
-  getFeedPaginated$(
+  getMentionsPaginated$(
     pageBSubject: BehaviorSubject<number>,
     perPage: number = 10,
   ): Observable<ITweet[]> {
     return Observable.combineLatest(
-      this.store.select(state => state.feed.list),
+      this.store.select(state => state.mentions.list),
       this.store.select(state => state.users),
       pageBSubject,
       (feed: ITweet[], users: IUsersState, page) =>
@@ -80,27 +81,28 @@ export class FeedProvider {
   }
 
   fetch$() {
-    this.store.dispatch(fetchFeed());
+    this.store.dispatch(fetchMentions());
     return this.twitterProvider
-      .getFeed$({ include_entities: true })
+      .getMentions$({ include_entities: true })
       .debounceTime(500)
-      .map(feed => this.store.dispatch(fetchedFeed(feed, true)))
+      .map(feed => this.store.dispatch(fetchedMentions(feed, true)))
       .catch(error => {
-        this.store.dispatch(errorFeed());
+        this.store.dispatch(errorMentions());
         return Observable.of(null);
       });
   }
 
   fetchNextPage$() {
     const lastItem = this.getLastFeedItem();
-    this.store.dispatch(fetchFeed());
+    this.store.dispatch(fetchMentions());
     return this.twitterProvider
-      .getFeed$({ max_id: lastItem.id, include_entities: true })
+      .getMentions$({ max_id: lastItem.id, include_entities: true })
       .debounceTime(500)
-      .map(feed => this.store.dispatch(fetchedFeed(feed)))
+      .map(feed => this.store.dispatch(fetchedMentions(feed)))
       .catch(error => {
-        this.store.dispatch(errorFeed());
+        this.store.dispatch(errorMentions());
         return Observable.of(null);
       });
   }
+
 }

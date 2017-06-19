@@ -1,8 +1,15 @@
 media {
-    max-height: 180px;
+    height: 180px;
     overflow: hidden;
     display: block;
-    img {
+    .media-img {
         margin-top: 10px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        height: 180px;
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
     }
 }

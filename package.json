@@ -49,6 +49,7 @@
     "@types/webpack": "^2.2.15",
     "csv-write-stream": "^2.0.0",
     "http-server": "^0.10.0",
+    "ionic": "^3.4.0",
     "ng-pwa-tools": "^0.0.15",
     "purify-css": "^1.2.5",
     "source-map-explorer": "^1.3.3",

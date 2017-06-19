@@ -1,0 +1,7 @@
+page-mentions {
+    > ion-content {
+        > .scroll-content {
+            overflow: hidden;
+        }
+    }
+}

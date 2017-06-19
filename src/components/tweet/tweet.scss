@@ -2,4 +2,10 @@ tweet {
     .item-inner {
         padding: 10px 0;
     }
+    avatar{
+        margin: 0 !important;
+    }
+    ion-item {
+        align-items: baseline !important;
+    }
 }

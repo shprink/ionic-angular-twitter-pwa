@@ -3,7 +3,7 @@ import { Storage as IonicStorage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 
 import { AppState, IAuthState, ITweet, IUsersState, ITrends } from './../../reducers';
-import { INIT } from './../../actions';
+import { INIT, ON_BEFORE_UNLOAD } from './../../actions';
 
 /*
   Generated class for the StorageProvider provider.
@@ -51,5 +51,7 @@ export class StorageProvider {
       console.log('saving trends');
       this.storage.set('trends', JSON.stringify(trends));
     });
+
+    window.onbeforeunload = () => this.store.dispatch({ type: ON_BEFORE_UNLOAD });
   }
 }
