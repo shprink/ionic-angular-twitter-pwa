@@ -13,7 +13,6 @@ import { ITwitterUser } from './../../reducers';
 })
 export class AvatarComponent {
   @Input() 'user': ITwitterUser;
-  @Input() 'type': string = 'round'; // round or square
   @Input() 'size': string = 'normal'; // mini, normal or bigger
   profile_image: string;
 

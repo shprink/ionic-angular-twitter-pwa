@@ -1,7 +1,7 @@
 <!-- Generated template for the ProfileHeaderComponent component -->
 <div *ngIf="user" class="cover" [ngStyle]="{'background-image': 'url(' + user.profile_banner_url + '/mobile)'}"></div>
 <div *ngIf="user" class="user-details">
-  <avatar [user]="user" type="square" size="bigger"></avatar>
+  <avatar [user]="user" size="bigger"></avatar>
   <h2>{{user.name}}</h2>
   <h3>@{{user.screen_name}}</h3>
   <p>{{user.description}}</p>
