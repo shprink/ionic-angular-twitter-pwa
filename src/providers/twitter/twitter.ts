@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Platform } from 'ionic-angular';
 
-import { AppState, ITwitterUser, ITrends } from '../../reducers';
+import { AppState, ITwitterUser, ITrends, ITweet } from '../../reducers';
 import { AuthProvider } from './../auth/auth';
 
 const authRequiredError = { error: 'Auth is required' };
@@ -98,6 +98,13 @@ export class TwitterProvider {
   getMentions$(): Observable<any> {
     return this.authProvider.isAuthenticated()
       ? this.http.post(`${__APIURI__}api/mentions`, {},
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
+  }
+
+  search$(q, type = 'popular'): Observable<any>{
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/search/${type}`, { q: encodeURI(q) },
         this.getRequestOptions()).map(res => res.json())
       : Observable.throw(authRequiredError);
   }

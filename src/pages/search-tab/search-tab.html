@@ -7,21 +7,19 @@
 <ion-header>
   <avatar-toolbar>
     <ion-searchbar
-      [(ngModel)]="myInput"
-      [showCancelButton]="shouldShowCancel"
-      (ionInput)="onInput($event)"
-      (ionCancel)="onCancel($event)">
+      [(ngModel)]="searchTerm"
+      (change)="searchFromInput($event)">
     </ion-searchbar>
   </avatar-toolbar>
 </ion-header>
-
 
 <ion-content>
   <ion-item-divider color="light">Trending Now</ion-item-divider>
   <trending-hashtags 
     [isFetching]="fetching$ | async"
     [content]="trendingHashtags$ | async"
-    (onRefresh)="refresh($event)">
+    (onRefresh)="refresh($event)"
+    (onClick)="search($event)">
   </trending-hashtags>
   <ion-fab bottom right>
     <tweet-fab></tweet-fab>

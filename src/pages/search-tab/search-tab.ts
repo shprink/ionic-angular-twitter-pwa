@@ -23,6 +23,7 @@ import { ITrendingHashtag } from './../../reducers';
 export class SearchTabPage {
   trendingHashtags$: Observable<ITrendingHashtag[]>
   fetching$: Observable<boolean>;
+  searchTerm: string;
 
   constructor(
     public navCtrl: NavController,
@@ -43,7 +44,7 @@ export class SearchTabPage {
     console.log('ionViewWillLeave SearchTabPage');
   }
 
-  ionViewWillEnter() { 
+  ionViewWillEnter() {
     const canFetch = this.trendsProvider.canFetchNewContent();
     if (canFetch) {
       console.log('init')
@@ -61,6 +62,11 @@ export class SearchTabPage {
       .first()
       .finally(() => refresher.complete())
       .subscribe(() => { }, error => console.log('trends error', error));
+  }
+
+  searchFromInput(e) {
+    this.appCtrl.getRootNav().push('SearchPage', { query: encodeURIComponent(this.searchTerm) });
+    this.searchTerm = '';
   }
 
   search(item) {

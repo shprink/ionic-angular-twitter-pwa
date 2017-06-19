@@ -8,14 +8,21 @@
   <ion-navbar>
     <ion-searchbar
       [(ngModel)]="query"
-      showCancelButton="true"
-      (ionInput)="onInput($event)"
-      (ionCancel)="onCancel($event)">
+      (ionInput)="search($event)">
     </ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <feed
+    [content]="results"
+    [isFetching]="isFetching"
+    (onRefresh)="refresh($event)"
+    (onInfinite)="loadMore($event)">
+  </feed>
+  <!--<spinner [isVisible]="isFetching"></spinner>
+  <ion-list>
+    <tweet *ngFor="let data of results;trackBy: trackById" [data]="data"></tweet>
+  </ion-list>-->
 </ion-content>

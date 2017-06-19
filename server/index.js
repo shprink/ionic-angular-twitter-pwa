@@ -138,7 +138,19 @@ app.post('/api/trending', (req, res) => {
     });
 });
 
-// const server = http.createServer(app);
+app.post('/api/search/recent', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('search/tweets.json', Object.assign({ result_type: 'recent' }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/search/popular', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('search/tweets.json', Object.assign({ result_type: 'popular' }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
 
 app.listen(config.port, (err) => {
     console.log(`server listening on port ${config.port}`)

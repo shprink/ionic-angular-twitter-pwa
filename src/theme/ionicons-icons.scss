@@ -37,13 +37,15 @@
 .ion-md-chatboxes:before { content: "\f2b6"; }
 .ion-md-close:before { content: "\f2c0"; }
 .ion-md-person:before { content: "\f47e"; }
+.ion-md-arrow-back:before { content: "\f27d"; }
 
 .ion-md-home:before,
 .ion-md-search:before,
 .ion-md-notifications:before,
 .ion-md-chatboxes:before,
 .ion-md-close:before,
-.ion-md-person:before
+.ion-md-person:before,
+.ion-md-arrow-back:before
 {
   @extend .ion
 }
