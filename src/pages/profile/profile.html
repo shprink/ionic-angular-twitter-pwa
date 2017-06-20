@@ -6,10 +6,11 @@
 -->
 
 
+<ion-header no-border>
+  <ion-navbar transparent></ion-navbar>
+</ion-header>
+
 <ion-content fullscreen>
-  <ion-header no-border>
-    <ion-navbar transparent>
-    </ion-navbar>
-  </ion-header>
   <profile-header [user]="user$ | async"></profile-header>
+
 </ion-content>

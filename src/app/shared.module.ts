@@ -12,6 +12,7 @@ import { OgComponent } from '../components/og/og';
 import { MediaComponent } from '../components/media/media';
 import { SpinnerComponent } from '../components/spinner/spinner';
 import { TrendingHashtagsComponent } from '../components/trendingHashtags/trendingHashtags';
+import { AutoLinkPipe } from '../pipes/auto-link/auto-link';
 
 @NgModule({
   imports: [CommonModule, IonicModule],
@@ -27,6 +28,7 @@ import { TrendingHashtagsComponent } from '../components/trendingHashtags/trendi
     MediaComponent,
     SpinnerComponent,
     TrendingHashtagsComponent,
+    AutoLinkPipe,
   ],
   exports: [
     AvatarComponent,

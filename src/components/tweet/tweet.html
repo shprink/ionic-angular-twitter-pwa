@@ -2,7 +2,7 @@
 <ion-item text-wrap *ngIf="data">
   <avatar item-start [user]="data.user" (click)="goToProfile()"></avatar>
   <h2><span class="name">{{data.user.name}}</span> <span class="handle">@{{data.user.screen_name}}</span></h2>
-  <p [innerHTML]="text"></p>
+  <p [innerHTML]="data.text | autoLink"></p>
   <p><ng-template #dynamicText></ng-template></p>
   <media *ngIf="media" [data]="media"></media>
   <og></og>

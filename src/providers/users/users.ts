@@ -4,6 +4,9 @@ import { Store } from '@ngrx/store';
 import _get from 'lodash/get';
 
 import { AppState, ITwitterUser } from '../../reducers';
+import { TwitterProvider } from './../twitter/twitter';
+import { addTwitterUser } from '../../actions';
+
 /*
   Generated class for the UsersProvider provider.
 
@@ -15,6 +18,7 @@ export class UsersProvider {
 
   constructor(
     public store: Store<AppState>,
+    private twitterProvider: TwitterProvider,
   ) {
     console.log('Hello UsersProvider Provider');
   }
@@ -33,8 +37,25 @@ export class UsersProvider {
     return user;
   }
 
-  getUserById$(id: string) {
-    return this.store.select(state => state.users[id]);
+  doesUserExist(handle: string) {
+    let doesUserExist: boolean;
+    this.getUserById$(handle)
+      .first()
+      .subscribe((u: ITwitterUser) => doesUserExist = typeof u !== 'undefined');
+    return doesUserExist;
+  }
+
+  fetchUser$(handle: string) {
+    return this.twitterProvider.getUser$(handle)
+      .debounceTime(500)
+      .map(user => this.store.dispatch(addTwitterUser(user)))
+      .catch(error => {
+        return Observable.of(null);
+      });
+  }
+
+  getUserById$(handle: string) {
+    return this.store.select(state => state.users[handle]);
   }
 
 }

@@ -6,10 +6,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { AppState, IUser, ICredential, IAuthState } from '../../reducers';
-import { TwitterProvider } from './../twitter/twitter';
 import {
-  addAuthUser, addAuthCredential,
-  cleanAuth, logout, addTwitterUser, login
+  addAuthCredential,
+  cleanAuth, logout, login
 } from '../../actions';
 /*
   Generated class for the AuthProvider provider.

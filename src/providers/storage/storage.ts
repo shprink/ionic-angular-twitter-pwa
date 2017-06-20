@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage as IonicStorage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 
-import { AppState, IAuthState, ITweet, IUsersState, ITrends } from './../../reducers';
+import { AppState, IAuthState, IFeed, IUsersState, ITrends, IMentions } from './../../reducers';
 import { INIT, ON_BEFORE_UNLOAD } from './../../actions';
 
 /*
@@ -24,7 +24,7 @@ export class StorageProvider {
     // because this blocks => https://github.com/ngrx/store/pull/217
     let defaultState = {};
     const storagePromise = this.storage.forEach((val, key) => {
-      defaultState[key] = JSON.parse(val);
+      defaultState[key] = val;
     });
 
     return storagePromise
@@ -34,24 +34,35 @@ export class StorageProvider {
   run() {
     this.store.select('auth').skip(1).debounceTime(500).subscribe((auth: IAuthState) => {
       console.log('saving auth');
-      this.storage.set('auth', JSON.stringify(auth));
+      this.storage.set('auth', auth);
     });
 
-    this.store.select('feed').skip(1).debounceTime(500).subscribe((feed: ITweet[]) => {
+    this.store.select('feed').skip(1).debounceTime(500).subscribe((feed: IFeed) => {
       console.log('saving feed');
-      this.storage.set('feed', JSON.stringify(feed));
+      this.storage.set('feed', feed);
+    });
+
+    this.store.select('mentions').skip(1).debounceTime(500).subscribe((mentions: IMentions) => {
+      console.log('saving mentions');
+      this.storage.set('mentions', mentions);
     });
 
     this.store.select('users').skip(1).debounceTime(500).subscribe((users: IUsersState) => {
       console.log('saving users');
-      this.storage.set('users', JSON.stringify(users));
+      this.storage.set('users', users);
     });
 
     this.store.select('trends').skip(1).debounceTime(500).subscribe((trends: ITrends) => {
       console.log('saving trends');
-      this.storage.set('trends', JSON.stringify(trends));
+      this.storage.set('trends', trends);
     });
 
-    window.onbeforeunload = () => this.store.dispatch({ type: ON_BEFORE_UNLOAD });
+    window.onbeforeunload = () => {
+      // cleanup the local storage when closing the app
+      // to have a instant load on next bootstrap
+      this.store.dispatch({ type: ON_BEFORE_UNLOAD });
+      this.store.select('feed').first().subscribe((feed: IFeed) => this.storage.set('feed', feed));
+      this.store.select('mentions').first().subscribe((mentions: IMentions) => this.storage.set('mentions', mentions));
+    };
   }
 }

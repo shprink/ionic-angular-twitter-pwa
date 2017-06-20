@@ -8,7 +8,7 @@ const propertiesToKeep: string[] = [
     'id', 'id_str', 'screen_name', 'name', 'description', 'url',
     'location', 'followers_count', 'friends_count',
     'profile_background_image_url_https', 'profile_banner_url',
-    'profile_image_url_https', 'profile_use_background_image'
+    'profile_image_url_https', 'profile_use_background_image', 'following'
 ];
 
 export const usersReducer: ActionReducer<Object> = (state: IUsersState = defaultState, action: Action) => {

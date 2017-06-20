@@ -1,6 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import _slice from 'lodash/slice';
 
-import { MENTIONS_FETCH, MENTIONS_FETCHED, MENTIONS_ERROR, LOGOUT, INIT } from '../actions';
+import { ON_BEFORE_UNLOAD, MENTIONS_FETCH, MENTIONS_FETCHED, MENTIONS_ERROR, LOGOUT, INIT } from '../actions';
 import { filterFeedList } from '../utils/feed';
 import { ITweet } from './feed';
 
@@ -44,11 +45,22 @@ export const mentionsReducer: ActionReducer<Object> = (state: IMentions = defaul
         }
 
         case INIT: {
-            return payload.notifications || defaultState;
+            if (!payload.mentions) return state;
+            return {
+                ...payload.mentions,
+                fetching: false
+            };
         }
 
         case LOGOUT: {
             return defaultState;
+        }
+
+        case ON_BEFORE_UNLOAD: {
+            return {
+                fetching: false,
+                list: _slice(state.list, 0, 20),
+            };
         }
 
         default:

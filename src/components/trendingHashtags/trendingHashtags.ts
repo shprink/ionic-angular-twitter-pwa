@@ -13,7 +13,7 @@ import { ITrendingHashtag } from './../../reducers';
   templateUrl: 'trendingHashtags.html',
 })
 export class TrendingHashtagsComponent {
-  @Input() content: ITrendingHashtag[];
+  @Input() content: ITrendingHashtag[] = [];
   @Input() isFetching: boolean;
   @Output() onRefresh: EventEmitter<any> = new EventEmitter<any>();
   @Output() onClick: EventEmitter<any> = new EventEmitter<any>();

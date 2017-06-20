@@ -38,6 +38,8 @@
 .ion-md-close:before { content: "\f2c0"; }
 .ion-md-person:before { content: "\f47e"; }
 .ion-md-arrow-back:before { content: "\f27d"; }
+.ion-md-pin:before { content: "\f34a"; }
+.ion-md-link:before { content: "\f22e"; }
 
 .ion-md-home:before,
 .ion-md-search:before,
@@ -45,7 +47,9 @@
 .ion-md-chatboxes:before,
 .ion-md-close:before,
 .ion-md-person:before,
-.ion-md-arrow-back:before
+.ion-md-arrow-back:before,
+.ion-md-pin:before,
+.ion-md-link:before
 {
   @extend .ion
 }

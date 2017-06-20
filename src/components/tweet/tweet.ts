@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { App } from 'ionic-angular';
-import { autoLinkWithJSON } from 'twitter-text';
 import _get from 'lodash/get';
 
 import { ITweet, ITweetEntitiesMedia } from './../../reducers';
@@ -26,11 +25,6 @@ export class TweetComponent {
 
   ngOnInit() {
     this.media = _get(this.data, 'entities.media[0]');
-
-    this.text = autoLinkWithJSON(this.data.text, _get(this.data, 'entities'), {
-      hashtagUrlBase: '#search/%23',
-      usernameUrlBase: '#profile/',
-    });
   }
 
   goToProfile = (id, handle) => {

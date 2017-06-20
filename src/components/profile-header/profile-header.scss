@@ -1,4 +1,8 @@
 profile-header {
+    display: block;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
     .cover {
         background-repeat: no-repeat;
         background-size: cover;
@@ -6,10 +10,17 @@ profile-header {
         padding: 10px 15px;
         display: flex;
         flex-direction: column;
+        & + .user-details {
+            margin-top: -40px;
+        }
+    }
+    ion-avatar img{
+        border: 3px solid white;
+        background-color: white;
     }
     .user-details {
         padding: 10px;
-        margin-top: -40px;
+        
         h2 {
             font-size: 18px;
             margin-bottom: 7px;
@@ -20,10 +31,21 @@ profile-header {
             margin-bottom: 0px;
             color: color($colors, gray)
         }
-        .following {
+        .following-row {
             color: color($colors, gray);
             .count{
                 color: black;
+                font-weight: bold;
+            }
+            .followers{
+                margin-left: 30px;
+            }
+        }
+        .location {
+            margin: 12px 0;
+            color: color($colors, gray);
+            ion-icon {
+                margin: 0 5px;
             }
         }
     }

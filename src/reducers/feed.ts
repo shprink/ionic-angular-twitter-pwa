@@ -1,6 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import _slice from 'lodash/slice';
 
-import { FEED_FETCH, FEED_FETCHED, FEED_ERROR, LOGOUT, INIT } from '../actions';
+import { ON_BEFORE_UNLOAD, FEED_FETCH, FEED_FETCHED, FEED_ERROR, LOGOUT, INIT } from '../actions';
 import { ITwitterUser } from './users';
 import { filterFeedList } from '../utils/feed';
 
@@ -47,13 +48,22 @@ export const feedReducer: ActionReducer<Object> = (
     }
 
     case INIT: {
-      return (
-        Object.assign({}, payload.feed, { fetching: false }) || defaultState
-      );
+      if (!payload.feed) return state;
+      return {
+        ...payload.feed,
+        fetching: false
+      };
     }
-
+    
     case LOGOUT: {
       return defaultState;
+    }
+
+    case ON_BEFORE_UNLOAD: {
+      return {
+        fetching: false,
+        list: _slice(state.list, 0, 20),
+      };
     }
 
     default:

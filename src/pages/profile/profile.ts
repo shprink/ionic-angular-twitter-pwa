@@ -18,18 +18,25 @@ import { UsersProvider } from './../../providers';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  handle: string;
   user$: Observable<ITwitterUser>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private users: UsersProvider,
+    private usersProvider: UsersProvider,
   ) {
   }
 
   ionViewDidLoad() {
-    console.log('handle', this.navParams.get('handle'))
-    this.user$ = this.users.getUserById$(this.navParams.get('id'));
+    this.handle = this.navParams.get('handle');
+    this.user$ = this.usersProvider.getUserById$(this.handle);
+
+    if (!this.usersProvider.doesUserExist(this.handle)) {
+      this.usersProvider.fetchUser$(this.handle)
+        .first()
+        .subscribe(() => { }, error => console.log('fetchUser error', error));
+    }
   }
 
 }
