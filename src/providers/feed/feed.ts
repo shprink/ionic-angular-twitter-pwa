@@ -93,6 +93,7 @@ export class FeedProvider {
 
   fetchNextPage$() {
     const lastItem = this.getLastFeedItem();
+    if (!lastItem) return Observable.of(null);
     this.store.dispatch(fetchFeed());
     return this.twitterProvider
       .getFeed$({ max_id: lastItem.id, include_entities: true })

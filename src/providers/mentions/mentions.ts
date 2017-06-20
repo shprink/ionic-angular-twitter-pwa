@@ -94,6 +94,7 @@ export class MentionsProvider {
 
   fetchNextPage$() {
     const lastItem = this.getLastFeedItem();
+    if (!lastItem) return Observable.of(null);
     this.store.dispatch(fetchMentions());
     return this.twitterProvider
       .getMentions$({ max_id: lastItem.id, include_entities: true })
