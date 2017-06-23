@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Storage as IonicStorage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
+import _slice from 'lodash/slice';
+import _uniq from 'lodash/uniq';
+import _pickBy from 'lodash/pickBy';
 
-import { AppState, IAuthState, IFeed, IUsersState, ITrends, IMentions } from './../../reducers';
+import { AppState, IAuthState, IFeed, IUsersState, ITrends, IMentions, ITweet } from './../../reducers';
 import { INIT, ON_BEFORE_UNLOAD } from './../../actions';
 
 /*
@@ -37,32 +40,36 @@ export class StorageProvider {
       this.storage.set('auth', auth);
     });
 
-    this.store.select('feed').skip(1).debounceTime(500).subscribe((feed: IFeed) => {
-      console.log('saving feed');
-      this.storage.set('feed', feed);
-    });
-
-    this.store.select('mentions').skip(1).debounceTime(500).subscribe((mentions: IMentions) => {
-      console.log('saving mentions');
-      this.storage.set('mentions', mentions);
-    });
-
-    this.store.select('users').skip(1).debounceTime(500).subscribe((users: IUsersState) => {
-      console.log('saving users');
-      this.storage.set('users', users);
-    });
-
     this.store.select('trends').skip(1).debounceTime(500).subscribe((trends: ITrends) => {
       console.log('saving trends');
       this.storage.set('trends', trends);
     });
 
+    this.store.select(state => state).skip(1).debounceTime(500).subscribe(this.cleanupAndSaveState);
+
     window.onbeforeunload = () => {
-      // cleanup the local storage when closing the app
-      // to have a instant load on next bootstrap
       this.store.dispatch({ type: ON_BEFORE_UNLOAD });
-      this.store.select('feed').first().subscribe((feed: IFeed) => this.storage.set('feed', feed));
-      this.store.select('mentions').first().subscribe((mentions: IMentions) => this.storage.set('mentions', mentions));
     };
+  }
+
+  cleanupAndSaveState = (state: AppState) => {
+    console.log('saving state');
+    // FEED
+    const first20Feed = _slice(state.feed.list, 0, 20);
+    this.storage.set('feed', { fetching: false, list: first20Feed });
+
+    // MENTION
+    const first20Mentions = _slice(state.mentions.list, 0, 20);
+    this.storage.set('mentions', { fetching: false, list: first20Mentions });
+
+    // TWEETS
+    const tweetIdsToKeep = _uniq([...first20Feed, ...first20Mentions]);
+    const tweetsToKeep = _pickBy(state.tweets, (v, k) => tweetIdsToKeep.includes(k));
+    this.storage.set('tweets', tweetsToKeep);
+
+    // USERS
+    const userHandlesToKeep = Object.values(tweetsToKeep).map(tweet => tweet.userHandle);
+    const usersToKeep = _pickBy(state.users, (v, k) => userHandlesToKeep.includes(k));
+    this.storage.set('users', usersToKeep);
   }
 }

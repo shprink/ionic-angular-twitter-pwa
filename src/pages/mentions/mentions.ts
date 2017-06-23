@@ -39,7 +39,7 @@ export class MentionsPage {
   init() {
     const hasFeed = this.mentionsProvider.hasFeed();
     if (!hasFeed) {
-      console.log('init')
+      console.log('hasFeed', hasFeed)
       this.mentionsProvider
         .fetch$()
         .first()

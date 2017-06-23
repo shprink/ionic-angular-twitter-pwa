@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import _get from 'lodash/get';
 import _take from 'lodash/take';
+import _without from 'lodash/without';
 
 import { AppState, ITweet, IUsersState } from '../../reducers';
 import { fetchMentions, fetchedMentions, errorMentions } from '../../actions';
@@ -28,39 +29,33 @@ export class MentionsProvider {
     return this.store.select(state => state.mentions.fetching);
   }
 
-  getFeed$(): Observable<ITweet[]> {
-    return Observable.combineLatest(
-      this.store.select(state => state.mentions.list),
-      this.store.select(state => state.users),
-      (feed: ITweet[], users: IUsersState) =>
-        feed.map(feedItem => {
-          feedItem.user = _get(users, `[${feedItem.userHandle}]`);
-          return feedItem;
-        }),
-    );
+  getFeed$(): Observable<string[]> {
+    return this.store.select(state => state.mentions.list);
   }
 
-  getMentionsPaginated$(
-    pageBSubject: BehaviorSubject<number>,
-    perPage: number = 10,
-  ): Observable<ITweet[]> {
+  getMentionsPaginated$(pageBSubject: BehaviorSubject<number>, perPage: number = 10, ): Observable<ITweet[]> {
     return Observable.combineLatest(
       this.store.select(state => state.mentions.list),
+      this.store.select(state => state.tweets),
       this.store.select(state => state.users),
       pageBSubject,
-      (feed: ITweet[], users: IUsersState, page) =>
-        _take(feed, page * perPage).map(feedItem => {
-          feedItem.user = _get(users, `[${feedItem.userHandle}]`);
-          return feedItem;
-        }),
+      (feed: ITweet[], tweets: ITweet[], users: IUsersState, page) => _without(_take(feed, page * perPage)
+        .map(tweetId => {
+          const tweet = tweets[tweetId];
+          if (!tweet) return null;
+          return {
+            ...tweet, // avoid mutation
+            user: _get(users, `[${tweet.userHandle}]`)
+          };
+        }), null)
     );
   }
 
-  getLastFeedItem(): ITweet {
-    let lastItem: ITweet;
+  getLastTweetId(): string {
+    let lastItem: string;
     this.getFeed$()
       .first()
-      .subscribe((items: ITweet[]) => (lastItem = items[items.length - 1]));
+      .subscribe((items: string[]) => (lastItem = items[items.length - 1]));
     return lastItem;
   }
 
@@ -68,7 +63,7 @@ export class MentionsProvider {
     let hasFeed: boolean;
     this.getFeed$()
       .first()
-      .subscribe((items: ITweet[]) => (hasFeed = items.length !== 0));
+      .subscribe((items: string[]) => (hasFeed = items.length !== 0));
     return hasFeed;
   }
 
@@ -76,7 +71,7 @@ export class MentionsProvider {
     let feedLength: number;
     this.getFeed$()
       .first()
-      .subscribe((items: ITweet[]) => (feedLength = items.length));
+      .subscribe((items: string[]) => (feedLength = items.length));
     return feedLength;
   }
 
@@ -93,11 +88,11 @@ export class MentionsProvider {
   }
 
   fetchNextPage$() {
-    const lastItem = this.getLastFeedItem();
-    if (!lastItem) return Observable.of(null);
+    const lastTweetId = this.getLastTweetId();
+    if (!lastTweetId) return Observable.of(null);
     this.store.dispatch(fetchMentions());
     return this.twitterProvider
-      .getMentions$({ max_id: lastItem.id, include_entities: true })
+      .getMentions$({ max_id: lastTweetId, include_entities: true })
       .debounceTime(500)
       .map(feed => this.store.dispatch(fetchedMentions(feed)))
       .catch(error => {

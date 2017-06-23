@@ -1,11 +1,32 @@
 tweet {
     .item-inner {
         padding: 10px 0;
+        ion-label{
+            overflow: hidden;
+            flex:1;
+        }
     }
     avatar{
         margin: 0 !important;
     }
     ion-item {
         align-items: baseline !important;
+    }
+    .actions{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        button {
+            margin: 0;
+            font-size: 1.7rem !important;
+            color: color($colors, gray);
+            &.retweet.active {
+                color: color($colors, secondary)
+            }
+            &.favorite.active {
+                color: color($colors, danger)
+            }
+        }
     }
 }

@@ -70,6 +70,7 @@ export class FeedPage {
       .first()
       .subscribe((items: ITweet[]) => (currentLength = items.length));
 
+    console.log('loadMore', this.feedProvider.feedLength(), currentLength)
     if (this.feedProvider.feedLength() > currentLength) {
       this.nextPage();
       infiniteScroll.complete();

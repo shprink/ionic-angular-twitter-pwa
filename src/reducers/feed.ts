@@ -1,28 +1,11 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import _slice from 'lodash/slice';
 
-import { ON_BEFORE_UNLOAD, FEED_FETCH, FEED_FETCHED, FEED_ERROR, LOGOUT, INIT } from '../actions';
-import { ITwitterUser } from './users';
-import { filterFeedList } from '../utils/feed';
+import { FEED_FETCH, FEED_FETCHED, FEED_ERROR, LOGOUT, INIT } from '../actions';
 
 const defaultState = {
   fetching: false,
   list: [],
 };
-
-const propertiesToKeep: string[] = [
-  'id',
-  'id_str',
-  'created_at',
-  'text',
-  'truncated',
-  'user',
-  'favorite_count',
-  'favorited',
-  'retweet_count',
-  'retweeted',
-  'entities',
-];
 
 export const feedReducer: ActionReducer<Object> = (
   state: IFeed = defaultState,
@@ -40,7 +23,7 @@ export const feedReducer: ActionReducer<Object> = (
     }
 
     case FEED_FETCHED: {
-      const newItems = filterFeedList(payload.feed, propertiesToKeep);
+      const newItems = payload.feed.map(item => item.id_str);
       return {
         fetching: false,
         list: payload.reset ? newItems : [...state.list, ...newItems],
@@ -54,16 +37,9 @@ export const feedReducer: ActionReducer<Object> = (
         fetching: false
       };
     }
-    
+
     case LOGOUT: {
       return defaultState;
-    }
-
-    case ON_BEFORE_UNLOAD: {
-      return {
-        fetching: false,
-        list: _slice(state.list, 0, 20),
-      };
     }
 
     default:
@@ -71,61 +47,7 @@ export const feedReducer: ActionReducer<Object> = (
   }
 };
 
-// https://dev.twitter.com/overview/api/entities-in-twitter-objects
-export interface ITweetEntities {
-  hashtags: ITweetEntitiesHashtag[];
-  symbols: ITweetEntitiesSymbol[];
-  url: ITweetEntitiesUrl[];
-  media: ITweetEntitiesMedia[];
-  user_mentions: ITweetEntitiesMention[];
-}
-
-export interface ITweetEntitiesHashtag {
-  text: string;
-  indices: number[];
-}
-
-export interface ITweetEntitiesSymbol {
-  text: string;
-  indices: number[];
-}
-
-export interface ITweetEntitiesUrl {
-  display_url: string;
-  expanded_url: string;
-  url: string;
-  indices: number[];
-}
-
-export interface ITweetEntitiesMedia {
-  type: string;
-  media_url_https: string;
-}
-
-export interface ITweetEntitiesMention {
-  id: number;
-  id_str: string;
-  name: string;
-  screen_name: string;
-  indices: number[];
-}
-
-export interface ITweet {
-  id: number;
-  id_str: string;
-  created_at: string;
-  text: string;
-  truncated: boolean;
-  favorited: boolean;
-  favorite_count: number;
-  retweeted: boolean;
-  retweet_count: number;
-  userHandle?: number;
-  user?: ITwitterUser;
-  entities: ITweetEntities;
-}
-
 export interface IFeed {
   fetching: boolean;
-  list: ITweet[];
+  list: string[];
 }

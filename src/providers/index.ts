@@ -6,4 +6,5 @@ export * from './auth/auth';
 export * from './trends/trends';
 export * from './search/search';
 export * from './mentions/mentions';
+export * from './tweet/tweet';
 export * from './service-worker/service-worker';

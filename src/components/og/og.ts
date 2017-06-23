@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ITweetEntitiesUrl } from './../../reducers/feed';
+import { ITweetEntitiesUrl } from './../../reducers';
 /**
  * Generated class for the OgComponent component.
  *

@@ -2,8 +2,23 @@
 <ion-item text-wrap *ngIf="data">
   <avatar item-start [user]="data.user" (click)="goToProfile()"></avatar>
   <h2><span class="name">{{data.user.name}}</span> <span class="handle">@{{data.user.screen_name}}</span></h2>
-  <p [innerHTML]="data.text | autoLink"></p>
-  <p><ng-template #dynamicText></ng-template></p>
+  <p [innerHTML]="text"></p>
+  <p>
+    <ng-template #dynamicText></ng-template>
+  </p>
   <media *ngIf="media" [data]="media"></media>
   <og></og>
+  <div class="actions">
+    <button ion-button clear>
+      <ion-icon name="chatboxes" color="gray"></ion-icon>
+    </button>
+    <button ion-button clear class="retweet" [class.active]="data.retweeted" (click)="retweet()">
+      <ion-icon name="repeat" color="gray"></ion-icon>&nbsp;
+      <span *ngIf="data.retweet_count">{{ data.retweet_count }}</span>
+    </button>
+    <button ion-button clear class="favorite" [class.active]="data.favorited" (click)="favorite()">
+      <ion-icon name="heart" color="gray"></ion-icon>&nbsp;
+      <span *ngIf="data.favorite_count">{{ data.favorite_count }}</span>
+    </button>
+  </div>
 </ion-item>

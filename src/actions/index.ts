@@ -6,3 +6,4 @@ export * from './users';
 export * from './feed';
 export * from './trends';
 export * from './mentions';
+export * from './tweet';

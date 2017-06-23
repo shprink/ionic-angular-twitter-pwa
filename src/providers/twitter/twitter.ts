@@ -116,4 +116,17 @@ export class TwitterProvider {
       : Observable.throw(authRequiredError);
   }
 
+  favorite$(handleDo: boolean = false, id): Observable<any> {
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/${handleDo ? 'favorite' : 'unfavorite'}`, { id },
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
+  }
+
+  retweet$(handleDo: boolean = false, id): Observable<any> {
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/${handleDo ? 'retweet' : 'unretweet'}`, { id },
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
+  }
 }

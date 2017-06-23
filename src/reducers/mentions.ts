@@ -1,28 +1,11 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import _slice from 'lodash/slice';
 
-import { ON_BEFORE_UNLOAD, MENTIONS_FETCH, MENTIONS_FETCHED, MENTIONS_ERROR, LOGOUT, INIT } from '../actions';
-import { filterFeedList } from '../utils/feed';
-import { ITweet } from './feed';
+import { MENTIONS_FETCH, MENTIONS_FETCHED, MENTIONS_ERROR, LOGOUT, INIT } from '../actions';
 
 const defaultState = {
     fetching: false,
     list: [],
 };
-
-const propertiesToKeep: string[] = [
-    'id',
-    'id_str',
-    'created_at',
-    'text',
-    'truncated',
-    'user',
-    'favorite_count',
-    'favorited',
-    'retweet_count',
-    'retweeted',
-    'entities',
-];
 
 export const mentionsReducer: ActionReducer<Object> = (state: IMentions = defaultState, action: Action) => {
     const payload = action.payload;
@@ -37,7 +20,7 @@ export const mentionsReducer: ActionReducer<Object> = (state: IMentions = defaul
         }
 
         case MENTIONS_FETCHED: {
-            const newItems = filterFeedList(payload.feed, propertiesToKeep);
+            const newItems = payload.feed.map(item => item.id_str);
             return {
                 fetching: false,
                 list: payload.reset ? newItems : [...state.list, ...newItems],
@@ -56,13 +39,6 @@ export const mentionsReducer: ActionReducer<Object> = (state: IMentions = defaul
             return defaultState;
         }
 
-        case ON_BEFORE_UNLOAD: {
-            return {
-                fetching: false,
-                list: _slice(state.list, 0, 20),
-            };
-        }
-
         default:
             return state;
     }
@@ -70,5 +46,5 @@ export const mentionsReducer: ActionReducer<Object> = (state: IMentions = defaul
 
 export interface IMentions {
     fetching: boolean;
-    list: ITweet[];
+    list: string[];
 }

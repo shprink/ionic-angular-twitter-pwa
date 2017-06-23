@@ -3,12 +3,14 @@ import { usersReducer, IUsersState } from './users';
 import { feedReducer, IFeed } from './feed';
 import { trendsReducer, ITrends } from './trends';
 import { mentionsReducer, IMentions } from './mentions';
+import { tweetsReducer, ITweets } from './tweets';
 
 export * from './auth';
 export * from './users';
 export * from './feed';
 export * from './trends';
 export * from './mentions';
+export * from './tweets';
 
 export interface AppState {
     auth: IAuthState;
@@ -16,6 +18,7 @@ export interface AppState {
     feed: IFeed;
     trends: ITrends;
     mentions: IMentions;
+    tweets: ITweets
 }
 
 export const Reducers = {
@@ -24,4 +27,5 @@ export const Reducers = {
     feed: feedReducer,
     trends: trendsReducer,
     mentions: mentionsReducer,
+    tweets: tweetsReducer,
 }

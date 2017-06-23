@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { InfiniteScroll, Refresher } from 'ionic-angular';
 
-import { ITweet } from './../../reducers/feed';
+import { ITweet } from './../../reducers';
 /**
  * Generated class for the FeedComponent component.
  *
@@ -11,6 +11,7 @@ import { ITweet } from './../../reducers/feed';
 @Component({
   selector: 'feed',
   templateUrl: 'feed.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent {
   @Input() content: ITweet[];
@@ -34,6 +35,6 @@ export class FeedComponent {
   }
 
   trackById(index, item) {
-    return item.id;
+    return item.id_str;
   }
 }

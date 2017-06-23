@@ -37,6 +37,7 @@ import {
   ServiceWorkerProvider,
   SearchProvider,
   MentionsProvider,
+  TweetProvider,
 } from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
 import { HttpWrapper } from './http.wrapper';
@@ -106,6 +107,7 @@ export function provideHttp(
     ServiceWorkerProvider,
     SearchProvider,
     MentionsProvider,
+    TweetProvider,
   ],
 })
 export class AppModule {}

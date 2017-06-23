@@ -103,9 +103,37 @@ app.post('/api/tweet', (req, res) => {
     });
 });
 
+app.post('/api/retweet', (req, res) => {
+    var client = getTwitterClient(req);
+    client.post(`statuses/retweet/${req.body.id}`, Object.assign({ trim_user: false }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/unretweet', (req, res) => {
+    var client = getTwitterClient(req);
+    client.post(`statuses/unretweet/${req.body.id}`, Object.assign({ trim_user: false }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
 app.post('/api/mentions', (req, res) => {
     var client = getTwitterClient(req);
     client.get('statuses/mentions_timeline', req.body, function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/favorite', (req, res) => {
+    var client = getTwitterClient(req);
+    client.post('favorites/create', Object.assign({ include_entities: true }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/unfavorite', (req, res) => {
+    var client = getTwitterClient(req);
+    client.post('favorites/destroy', Object.assign({ include_entities: true }, req.body || {}), function (error, body, response) {
         (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
