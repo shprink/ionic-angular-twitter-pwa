@@ -11,7 +11,8 @@ console.log('OUTPUT', OUTPUT)
 
 const folderData = getFileInfoFromFolder(BUILDFOLDER);
 
-var writer = csvWriter({ headers: folderData.map(line => line.name) })
+const headers = folderData.map(line => line.name);
+var writer = csvWriter({ headers })
 writer.pipe(fs.createWriteStream(OUTPUT))
 writer.write(folderData.map(line => line.size))
 writer.end()
@@ -19,10 +20,13 @@ writer.end()
 function getFileInfoFromFolder(route) {
     let files = fs.readdirSync(route, 'utf8');
     let response = [];
+    let totalSize = 0;
     for (let name of files) {
         const filePath = `${BUILDFOLDER}/${name}`;
         const size = fs.statSync(filePath).size;
+        totalSize += size;
         response.push({ name, size });
     }
+    response.push({ name: 'Total', size: totalSize });
     return response;
 }

@@ -61,6 +61,7 @@
   "description": "An Ionic project",
   "config": {
     "ionic_webpack": "./webpack.js",
+    "ionic_copy": "./ionic_copy.js",
     "ionic_sass": "./sass.js"
   }
 }
