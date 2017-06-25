@@ -1,7 +1,12 @@
 <!-- Generated template for the TweetComponent component -->
 <ion-item text-wrap *ngIf="data">
   <avatar item-start [user]="data.user" (click)="goToProfile()"></avatar>
-  <h2><span class="name">{{data.user.name}}</span> <span class="handle">@{{data.user.screen_name}}</span></h2>
+  <div class="title">
+    <h2>{{data.user.name}}</h2>
+    <span class="handle gray">@{{data.user.screen_name}}</span>
+    <span class="gray">·</span>
+    <span class="gray">{{timeAgo}}</span>
+  </div>
   <p [innerHTML]="text"></p>
   <p>
     <ng-template #dynamicText></ng-template>

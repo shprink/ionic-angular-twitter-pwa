@@ -6,6 +6,21 @@ tweet {
             flex:1;
         }
     }
+    .title {
+        flex-direction: row;
+        display: flex;
+        h2 {
+            font-size: 1.5rem !important;
+            font-weight: bold;
+            margin-right: 3px;
+            white-space: nowrap;
+        }
+        > span {
+            margin: 0 3px;
+            color: color($colors, gray);
+            @include ellipsis();
+        }
+    }
     avatar{
         margin: 0 !important;
     }

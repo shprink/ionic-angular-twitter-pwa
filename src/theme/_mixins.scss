@@ -3,3 +3,9 @@
     justify-content: center;
     align-items: center;
 }
+
+@mixin ellipsis(){
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,10 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { App } from 'ionic-angular';
 import { autoLinkWithJSON } from 'twitter-text';
+import javascript_time_ago from 'javascript-time-ago'
 import _get from 'lodash/get';
 
 import { ITweet, ITweetEntitiesMedia } from './../../reducers';
 import { TweetProvider } from './../../providers';
+
+javascript_time_ago.locale(require('javascript-time-ago/locales/en'))
+const time_ago = new javascript_time_ago('en');
 /**
  * Generated class for the TweetComponent component.
  *
@@ -17,6 +21,7 @@ import { TweetProvider } from './../../providers';
 })
 export class TweetComponent {
   media: ITweetEntitiesMedia;
+  timeAgo: string;
   text: string;
 
   @Input() data: ITweet;
@@ -34,6 +39,7 @@ export class TweetComponent {
       hashtagUrlBase: `#/nav/${this.appCtrl.getRootNav().id}/search/%23`,
       usernameUrlBase: `#/nav/${this.appCtrl.getRootNav().id}/profile/`,
     });
+    this.timeAgo = time_ago.format(new Date(this.data.created_at));
   }
 
   goToProfile = (id, handle) => {
