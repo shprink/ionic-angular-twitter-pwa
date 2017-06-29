@@ -9,6 +9,7 @@ import _without from 'lodash/without';
 import { AppState, ITweet, IUsersState } from '../../reducers';
 import { fetchFeed, fetchedFeed, errorFeed } from '../../actions';
 import { TwitterProvider } from './../twitter/twitter';
+import { createTweetObject } from '../tweet/tweet';
 /*
   Generated class for the FeedProvider provider.
 
@@ -38,13 +39,8 @@ export class FeedProvider {
       this.store.select(state => state.tweets),
       this.store.select(state => state.users),
       pageBSubject,
-      (feed: ITweet[], tweets: ITweet[], users: IUsersState, page) => _without(_take(feed, page * perPage)
-        .map(tweetId => {
-          const tweet = tweets[tweetId];
-          if (!tweet) return null;
-          tweet.user = _get(users, `[${tweet.userHandle}]`);
-          return tweet;
-        }), null)
+      (feed: ITweet[], tweets: ITweet[], users: IUsersState, page) => _take(feed, page * perPage)
+        .map(tweetId => createTweetObject(tweets[tweetId], tweets, users))
     );
   }
 

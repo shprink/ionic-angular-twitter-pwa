@@ -36,15 +36,27 @@ export class TweetComponent {
     this.timeAgo = time_ago.format(new Date(this.data.created_at));
   }
 
-  goToProfile(handle) {
+  goToProfile(e, handle) {
+    e.preventDefault();
+    e.stopPropagation();
     this.appCtrl.getRootNav().push('ProfilePage', { handle });
   };
 
-  retweet() {
+  goToTweetDetails(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.appCtrl.getRootNav().push('TweetDetailsPage', { id: this.data.id_str });
+  }
+
+  retweet(e) {
+    e.preventDefault();
+    e.stopPropagation();
     return this.tweetProvider.retweet$(!this.data.retweeted, this.data.id_str).subscribe()
   }
 
-  favorite() {
+  favorite(e) {
+    e.preventDefault();
+    e.stopPropagation();
     return this.tweetProvider.favorite$(!this.data.favorited, this.data.id_str).subscribe()
   }
 }

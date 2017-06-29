@@ -44,7 +44,7 @@ export class TweetPage {
   ionViewDidLoad() {
     this.user$ = this.users.getCurrentUser$();
     // wait for the animation to finish before focus
-    setTimeout(() => this.textarea.setFocus(), 250);
+    setTimeout(() => this.textarea.setFocus(), 400);
   }
 
   ionViewDidLeave() {

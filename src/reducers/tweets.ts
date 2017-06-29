@@ -71,12 +71,23 @@ export const tweetsReducer: ActionReducer<Object> = (state: ITweets = defaultSta
     }
 };
 
+function filterTweetProperties(tweet) {
+    let feedItem = _pickBy(tweet, (v, k) => propertiesToKeep.includes(k));
+    feedItem.userHandle = feedItem.user.screen_name;
+    delete feedItem.user;
+    return feedItem;
+}
+
 export function filterTweetList(list = [], propertiesToKeep = []) {
     const feedItems = {};
     list.forEach(item => {
-        let feedItem = _pickBy(item, (v, k) => propertiesToKeep.includes(k));
-        feedItem.userHandle = feedItem.user.screen_name;
-        delete feedItem.user;
+        let feedItem = filterTweetProperties(item);
+        if (feedItem.retweeted_status) { // if the tweet contains another tweet
+            let retweetedFeedItem = filterTweetProperties(feedItem.retweeted_status);
+            feedItems[retweetedFeedItem.id_str] = retweetedFeedItem;
+            feedItem.retweeted_status_id = retweetedFeedItem.id_str;
+            delete feedItem.retweeted_status;
+        }
         feedItems[feedItem.id_str] = feedItem;
     });
     return feedItems;
@@ -133,8 +144,9 @@ export interface ITweet {
     retweet_count: number;
     userHandle?: number;
     user?: ITwitterUser;
+    retweeted_status_id?: string;
+    retweeted_status?: ITweet;
     entities: ITweetEntities;
-    retweeted_status: ITweet;
 }
 
 export interface ITweets {

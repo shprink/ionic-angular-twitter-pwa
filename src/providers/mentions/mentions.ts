@@ -44,8 +44,8 @@ export class MentionsProvider {
           const tweet = tweets[tweetId];
           if (!tweet) return null;
           return {
-            ...tweet, // avoid mutation
-            user: _get(users, `[${tweet.userHandle}]`)
+            ...tweet, // avoid state mutation
+            user: users[tweet.userHandle]
           };
         }), null)
     );

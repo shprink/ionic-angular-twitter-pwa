@@ -28,6 +28,9 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
             const users = {};
             payload.feed.forEach(item => {
                 users[item.user.screen_name] = filterUser(item.user);
+                if (item.retweeted_status) {
+                    users[item.retweeted_status.user.screen_name] = filterUser(item.retweeted_status.user);
+                }
             });
             return Object.assign({}, state, users);
         }

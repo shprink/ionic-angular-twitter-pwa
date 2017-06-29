@@ -65,10 +65,14 @@ export class StorageProvider {
     // TWEETS
     const tweetIdsToKeep = _uniq([...first20Feed, ...first20Mentions]);
     const tweetsToKeep = _pickBy(state.tweets, (v, k) => tweetIdsToKeep.includes(k));
-    this.storage.set('tweets', tweetsToKeep);
+    const retweetIdsToKeep = Object.values(tweetsToKeep)
+      .filter(tweet => tweet.retweeted_status_id).map(tweet => tweet.retweeted_status_id);
+    const retweetsToKeep = _pickBy(state.tweets, (v, k) => retweetIdsToKeep.includes(k));
+    const tweetsState = { ...tweetsToKeep, ...retweetsToKeep };
+    this.storage.set('tweets', tweetsState);
 
     // USERS
-    const userHandlesToKeep = Object.values(tweetsToKeep).map(tweet => tweet.userHandle);
+    const userHandlesToKeep = Object.values(tweetsState).map(tweet => tweet.userHandle);
     const usersToKeep = _pickBy(state.users, (v, k) => userHandlesToKeep.includes(k));
     this.storage.set('users', usersToKeep);
   }

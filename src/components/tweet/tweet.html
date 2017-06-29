@@ -1,9 +1,9 @@
 <!-- Generated template for the TweetComponent component -->
-<ion-item text-wrap *ngIf="data">
-  <avatar item-start [user]="data.user" (click)="goToProfile(data.user.screen_name)"></avatar>
+<ion-item text-wrap *ngIf="data" (click)="goToTweetDetails($event)">
+  <avatar item-start [user]="data.user" (click)="goToProfile($event, data.user.screen_name)"></avatar>
   <div class="title">
-    <h2>{{data.user.name}}</h2>
-    <span class="handle gray">@{{data.user.screen_name}}</span>
+    <h2>{{data.user?.name}}</h2>
+    <span class="handle gray">@{{data.user?.screen_name}}</span>
     <span class="gray" *ngIf="!retweetedStatus">·</span>
     <span class="gray" *ngIf="!retweetedStatus">{{timeAgo}}</span>
   </div>
@@ -15,11 +15,11 @@
     <button ion-button clear>
       <ion-icon name="chatboxes" color="gray"></ion-icon>
     </button>
-    <button ion-button clear class="retweet" [class.active]="data.retweeted" (click)="retweet()">
+    <button ion-button clear class="retweet" [class.active]="data.retweeted" (click)="retweet($event)">
       <ion-icon name="repeat" color="gray"></ion-icon>&nbsp;
       <span *ngIf="data.retweet_count">{{ data.retweet_count }}</span>
     </button>
-    <button ion-button clear class="favorite" [class.active]="data.favorited" (click)="favorite()">
+    <button ion-button clear class="favorite" [class.active]="data.favorited" (click)="favorite($event)">
       <ion-icon name="heart" color="gray"></ion-icon>&nbsp;
       <span *ngIf="data.favorite_count">{{ data.favorite_count }}</span>
     </button>

@@ -27,7 +27,7 @@ export class TweetTextComponent {
   ) { }
 
   ngOnChanges(changes: any) {
-    if (changes.text.currentValue && this.tweetContent && changes.text.currentValue !== changes.text.previousValue) {
+    if (changes.text && changes.text.currentValue && this.tweetContent && changes.text.currentValue !== changes.text.previousValue) {
       this.text = this.entities
         ? autoLinkWithJSON(this.text, this.entities || {}, this.options)
         : autoLink(this.text, this.options);
@@ -36,20 +36,24 @@ export class TweetTextComponent {
       const linksToSearch = this.tweetContent.nativeElement.querySelectorAll('.hashtag');
 
       [].forEach.call(linksToProfile, div => {
-        div.onclick = () => this.goToProfile(div.innerText);
+        div.onclick = e => this.goToProfile(e, div.innerText);
       });
 
       [].forEach.call(linksToSearch, div => {
-        div.onclick = () => this.goToSearch(div.innerText);
+        div.onclick = e => this.goToSearch(e, div.innerText);
       });
     }
   }
 
-  goToProfile(handle) {
+  goToProfile(e, handle) {
+    e.preventDefault();
+    e.stopPropagation();
     this.appCtrl.getRootNav().push('ProfilePage', { handle });
   };
 
-  goToSearch(searchTerm) {
+  goToSearch(e, searchTerm) {
+    e.preventDefault();
+    e.stopPropagation();
     this.appCtrl.getRootNav().push('SearchPage', { query: encodeURIComponent(searchTerm) });
   };
 
