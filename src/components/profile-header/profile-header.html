@@ -4,7 +4,7 @@
   <avatar [user]="user" size="bigger"></avatar>
   <h2>{{user.name}}</h2>
   <h3>@{{user.screen_name}}</h3>
-  <p [innerHTML]="user.description | autoLink"></p>
+  <tweet-text [text]="user.description"></tweet-text>
   <div class="location" *ngIf="user.location || user.url">
     <span *ngIf="user.location"><ion-icon name="pin"></ion-icon>{{user.location}}</span>
     <span *ngIf="user.url"><ion-icon name="link"></ion-icon><a [href]="user.url" target="_blank">{{user.url}}</a></span>

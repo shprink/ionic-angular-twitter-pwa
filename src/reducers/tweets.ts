@@ -20,6 +20,7 @@ const propertiesToKeep: string[] = [
     'favorited',
     'retweet_count',
     'retweeted',
+    'retweeted_status',
     'entities',
 ];
 
@@ -133,6 +134,7 @@ export interface ITweet {
     userHandle?: number;
     user?: ITwitterUser;
     entities: ITweetEntities;
+    retweeted_status: ITweet;
 }
 
 export interface ITweets {

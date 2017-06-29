@@ -29,7 +29,7 @@ export class MyApp {
         if (this.previousAuthState !== isAuthenticated) {
           console.log('isAuthenticated', isAuthenticated, )
 
-          if (isAuthenticated && !location.hash.includes('login')) {
+          if (isAuthenticated && (location.hash === "" || location.hash.includes('login'))) {
             this.nav.setRoot('HomePage');
           } else if (!isAuthenticated && !location.hash.includes('login')) {
             this.nav.setRoot('LoginPage');

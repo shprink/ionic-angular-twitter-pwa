@@ -1,4 +1,13 @@
 tweet {
+    tweet {
+        margin-top: 10px;
+        display: block;
+        border: 1px solid $gray-lighter;
+        border-radius: 5px;
+        .item-inner{
+            border: 0 !important;
+        }
+    }
     .item-inner {
         padding: 10px 0;
         ion-label{

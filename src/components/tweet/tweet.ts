@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { App } from 'ionic-angular';
-import { autoLinkWithJSON } from 'twitter-text';
 import javascript_time_ago from 'javascript-time-ago'
 import _get from 'lodash/get';
 
@@ -25,28 +24,20 @@ export class TweetComponent {
   text: string;
 
   @Input() data: ITweet;
+  @Input() retweetedStatus: boolean = false;
 
   constructor(
     public appCtrl: App,
     public tweetProvider: TweetProvider,
-  ) {
-    console.log('Hello TweetComponent Component');
-  }
+  ) { }
 
   ngOnInit() {
     this.media = _get(this.data, 'entities.media[0]');
-    this.text = autoLinkWithJSON(this.data.text, _get(this.data, 'entities'), {
-      hashtagUrlBase: `#/nav/${this.appCtrl.getRootNav().id}/search/%23`,
-      usernameUrlBase: `#/nav/${this.appCtrl.getRootNav().id}/profile/`,
-    });
     this.timeAgo = time_ago.format(new Date(this.data.created_at));
   }
 
-  goToProfile = (id, handle) => {
-    this.appCtrl.getRootNav().push('ProfilePage', {
-      id: this.data.user.id,
-      handle: this.data.user.screen_name,
-    });
+  goToProfile(handle) {
+    this.appCtrl.getRootNav().push('ProfilePage', { handle });
   };
 
   retweet() {

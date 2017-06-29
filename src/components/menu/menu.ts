@@ -31,8 +31,8 @@ export class MenuComponent {
   }
 
   goToProfile = (e) => {
-    const { id } = this.usersProvider.getCurrentUser();
-    this.content.push('ProfilePage', { id });
+    const { screen_name } = this.usersProvider.getCurrentUser();
+    this.content.push('ProfilePage', { handle: screen_name });
   }
 
   logout() {

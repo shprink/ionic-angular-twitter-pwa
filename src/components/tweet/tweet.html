@@ -1,19 +1,17 @@
 <!-- Generated template for the TweetComponent component -->
 <ion-item text-wrap *ngIf="data">
-  <avatar item-start [user]="data.user" (click)="goToProfile()"></avatar>
+  <avatar item-start [user]="data.user" (click)="goToProfile(data.user.screen_name)"></avatar>
   <div class="title">
     <h2>{{data.user.name}}</h2>
     <span class="handle gray">@{{data.user.screen_name}}</span>
-    <span class="gray">·</span>
-    <span class="gray">{{timeAgo}}</span>
+    <span class="gray" *ngIf="!retweetedStatus">·</span>
+    <span class="gray" *ngIf="!retweetedStatus">{{timeAgo}}</span>
   </div>
-  <p [innerHTML]="text"></p>
-  <p>
-    <ng-template #dynamicText></ng-template>
-  </p>
-  <media *ngIf="media" [data]="media"></media>
+  <tweet-text [text]="data.text" [entities]="this.data.entities"></tweet-text>
+  <tweet *ngIf="data.retweeted_status" [data]="data.retweeted_status" [retweetedStatus]="true"></tweet>
+  <media *ngIf="!data.retweeted_status && media" [data]="media"></media>
   <og></og>
-  <div class="actions">
+  <div class="actions" *ngIf="!retweetedStatus">
     <button ion-button clear>
       <ion-icon name="chatboxes" color="gray"></ion-icon>
     </button>

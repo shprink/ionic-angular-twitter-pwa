@@ -15,7 +15,5 @@ import { ITwitterUser } from './../../reducers';
 export class ProfileHeaderComponent {
   @Input() user: ITwitterUser;
 
-  constructor() {
-    console.log('Hello ProfileHeaderComponent Component');
-  }
+  constructor() { }
 }

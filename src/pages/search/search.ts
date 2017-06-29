@@ -33,6 +33,7 @@ export class SearchPage {
     public injector: Injector,
     public twitter: TwitterProvider
   ) {
+    // this.navCtrl.insert(this.navCtrl.length() - 1, 'HomePage');
   }
 
   ionViewDidLoad() {

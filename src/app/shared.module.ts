@@ -12,7 +12,7 @@ import { OgComponent } from '../components/og/og';
 import { MediaComponent } from '../components/media/media';
 import { SpinnerComponent } from '../components/spinner/spinner';
 import { TrendingHashtagsComponent } from '../components/trendingHashtags/trendingHashtags';
-import { AutoLinkPipe } from '../pipes/auto-link/auto-link';
+import { TweetTextComponent } from '../components/tweet-text/tweet-text';
 
 @NgModule({
   imports: [CommonModule, IonicModule],
@@ -28,7 +28,7 @@ import { AutoLinkPipe } from '../pipes/auto-link/auto-link';
     MediaComponent,
     SpinnerComponent,
     TrendingHashtagsComponent,
-    AutoLinkPipe,
+    TweetTextComponent,
   ],
   exports: [
     AvatarComponent,
@@ -42,6 +42,7 @@ import { AutoLinkPipe } from '../pipes/auto-link/auto-link';
     MediaComponent,
     SpinnerComponent,
     TrendingHashtagsComponent,
+    TweetTextComponent,
   ],
 })
 export class SharedLazyModule {}
