@@ -28,7 +28,7 @@ export class MessagesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagesPage');
-    
+    this.twitter.getDirectMessages().subscribe()
   }
 
 }

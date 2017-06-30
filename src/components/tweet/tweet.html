@@ -12,7 +12,7 @@
   <media *ngIf="!data.retweeted_status && media" [data]="media"></media>
   <og></og>
   <div class="actions" *ngIf="!retweetedStatus">
-    <button ion-button clear>
+    <button ion-button clear (click)="reply($event)">
       <ion-icon name="chatboxes" color="gray"></ion-icon>
     </button>
     <button ion-button clear class="retweet" [class.active]="data.retweeted" (click)="retweet($event)">

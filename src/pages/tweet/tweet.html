@@ -17,6 +17,7 @@
 
 
 <ion-content>
+  <p class="replying-to" *ngIf="replyingTo$ | async; let replyingTo">{{ replyingTo }}</p>
   <form [formGroup]="tweetForm">
     <ion-list>
       <ion-item>

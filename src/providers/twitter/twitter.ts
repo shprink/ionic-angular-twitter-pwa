@@ -82,9 +82,9 @@ export class TwitterProvider {
       : Observable.throw(authRequiredError);
   }
 
-  tweet(status) {
+  tweet(status, in_reply_to_status_id?) {
     return this.authProvider.isAuthenticated()
-      ? this.http.post(`${__APIURI__}api/tweet`, { status }, this.getRequestOptions())
+      ? this.http.post(`${__APIURI__}api/tweet`, { status, in_reply_to_status_id }, this.getRequestOptions())
         .map(res => res.json())
       : Observable.throw(authRequiredError);
   }

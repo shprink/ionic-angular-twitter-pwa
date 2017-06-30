@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { App } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 import javascript_time_ago from 'javascript-time-ago'
 import _get from 'lodash/get';
 
@@ -29,6 +30,7 @@ export class TweetComponent {
   constructor(
     public appCtrl: App,
     public tweetProvider: TweetProvider,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -58,5 +60,15 @@ export class TweetComponent {
     e.preventDefault();
     e.stopPropagation();
     return this.tweetProvider.favorite$(!this.data.favorited, this.data.id_str).subscribe()
+  }
+
+  reply(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let tweetModal = this.modalCtrl.create('TweetPage', {
+      in_reply_to_status_id: this.data.id_str,
+      username: this.data.userHandle,
+    })
+    tweetModal.present();
   }
 }
