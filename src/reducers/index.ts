@@ -4,6 +4,7 @@ import { feedReducer, IFeed } from './feed';
 import { trendsReducer, ITrends } from './trends';
 import { mentionsReducer, IMentions } from './mentions';
 import { tweetsReducer, ITweets } from './tweets';
+import { searchReducer, ISearch } from './search';
 
 export * from './auth';
 export * from './users';
@@ -11,6 +12,7 @@ export * from './feed';
 export * from './trends';
 export * from './mentions';
 export * from './tweets';
+export * from './search';
 
 export interface AppState {
     auth: IAuthState;
@@ -18,7 +20,8 @@ export interface AppState {
     feed: IFeed;
     trends: ITrends;
     mentions: IMentions;
-    tweets: ITweets
+    tweets: ITweets;
+    search: ISearch;
 }
 
 export const Reducers = {
@@ -28,4 +31,5 @@ export const Reducers = {
     trends: trendsReducer,
     mentions: mentionsReducer,
     tweets: tweetsReducer,
+    search: searchReducer,
 }

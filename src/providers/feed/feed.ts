@@ -2,9 +2,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import _get from 'lodash/get';
 import _take from 'lodash/take';
-import _without from 'lodash/without';
 
 import { AppState, ITweet, IUsersState } from '../../reducers';
 import { fetchFeed, fetchedFeed, errorFeed } from '../../actions';
@@ -75,6 +73,7 @@ export class FeedProvider {
       .debounceTime(500)
       .map(feed => this.store.dispatch(fetchedFeed(feed, true)))
       .catch(error => {
+        console.error('fetch$', error)
         this.store.dispatch(errorFeed());
         return Observable.of(null);
       });
@@ -89,6 +88,7 @@ export class FeedProvider {
       .debounceTime(500)
       .map(feed => this.store.dispatch(fetchedFeed(feed)))
       .catch(error => {
+        console.error('fetchNextPage$', error)
         this.store.dispatch(errorFeed());
         return Observable.of(null);
       });

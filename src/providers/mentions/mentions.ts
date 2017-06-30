@@ -82,6 +82,7 @@ export class MentionsProvider {
       .debounceTime(500)
       .map(feed => this.store.dispatch(fetchedMentions(feed, true)))
       .catch(error => {
+        console.error('fetch$', error)
         this.store.dispatch(errorMentions());
         return Observable.of(null);
       });
@@ -96,6 +97,7 @@ export class MentionsProvider {
       .debounceTime(500)
       .map(feed => this.store.dispatch(fetchedMentions(feed)))
       .catch(error => {
+        console.error('fetchNextPage$', error)
         this.store.dispatch(errorMentions());
         return Observable.of(null);
       });

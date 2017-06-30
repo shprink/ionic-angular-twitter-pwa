@@ -34,9 +34,7 @@ export class MentionsPage {
   ionViewDidLoad() {
     this.feed$ = this.mentionsProvider.getMentionsPaginated$(this.itemsToDisplay$);
     this.fetching$ = this.mentionsProvider.isFetching$();
-  }
 
-  init() {
     const hasFeed = this.mentionsProvider.hasFeed();
     if (!hasFeed) {
       console.log('hasFeed', hasFeed)

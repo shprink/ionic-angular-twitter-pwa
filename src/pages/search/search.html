@@ -8,7 +8,7 @@
   <ion-navbar>
     <ion-searchbar
       [(ngModel)]="query"
-      (ionInput)="search($event)">
+      (change)="search($event)">
     </ion-searchbar>
   </ion-navbar>
 </ion-header>
@@ -16,8 +16,8 @@
 
 <ion-content>
   <feed
-    [content]="results"
-    [isFetching]="isFetching"
+    [content]="feed$ | async"
+    [isFetching]="fetching$ | async"
     (onRefresh)="refresh($event)"
     (onInfinite)="loadMore($event)">
   </feed>

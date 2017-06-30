@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Component, Injector } from '@angular/core';
 import { IonicPage, NavController, NavParams, Refresher, InfiniteScroll } from 'ionic-angular';
 
 import { canEnterIfAuthenticated } from '../../decorators';
-import { TwitterProvider } from './../../providers';
+import { SearchProvider } from './../../providers';
 import { ITweet } from './../../reducers';
 /**
  * Generated class for the SearchPage page.
@@ -22,53 +22,82 @@ import { ITweet } from './../../reducers';
 })
 export class SearchPage {
   query: string;
-  isFetching: boolean;
-  next_results: string;
-  searchTermSubject = new Subject<string>();
-  results: ITweet[] = [];
+  feed$: Observable<ITweet[]>;
+  fetching$: Observable<boolean>;
+  page: number = 0;
+  itemsToDisplay$ = new BehaviorSubject<number>(1);
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public injector: Injector,
-    public twitter: TwitterProvider
+    public searchProvider: SearchProvider
   ) {
     // this.navCtrl.insert(this.navCtrl.length() - 1, 'HomePage');
   }
 
   ionViewDidLoad() {
     this.query = decodeURIComponent(this.navParams.get('query'));
-
-    this.searchTermSubject
-      .debounceTime(300)
-      .map(query => { this.isFetching = true; return query; })
-      .switchMap(query => this.twitter.search$(query))
-      // .finally(() => { console.log('finally'); this.isFetching = false})
-      .subscribe(response => {
-        this.results = response.statuses;
-        this.next_results = response.search_metadata.next_results;
-        this.isFetching = false;
-      }, () => this.isFetching = false);
-
-    this.searchTermSubject.next(this.query);
+    this.init();
   }
 
+  init() {
+    this.feed$ = this.searchProvider.getSearchPaginated$(this.query, this.itemsToDisplay$);
+    this.fetching$ = this.searchProvider.isFetching$();
+
+    const hasFeed = this.searchProvider.hasSearch(this.query);
+    if (!hasFeed) {
+      console.log('hasFeed', hasFeed)
+      this.searchProvider
+        .fetch$(this.query)
+        .first()
+        .subscribe(() => { }, error => console.log('feed error', error));
+    }    
+  }
+
+  // searchFromInput(e) {
+  //   this.appCtrl.getRootNav().push('SearchPage', { query: encodeURIComponent(this.searchTerm) });
+  //   this.searchTerm = '';
+  // }
+
   search(e) {
-    this.searchTermSubject.next(this.query);
+    this.init();
   }
 
   refresh(refresher: Refresher) {
     console.log('refresh')
-    refresher.complete();
+    this.searchProvider
+      .fetch$(this.query)
+      .first()
+      .finally(() => refresher.complete())
+      .subscribe(() => { }, error => console.log('feed error', error));
   }
 
   loadMore(infiniteScroll: InfiniteScroll) {
-    console.log('InfiniteScroll')
-    infiniteScroll.complete();
+    console.log('loadMore')
+    let currentLength;
+    this.feed$
+      .first()
+      .subscribe((items: ITweet[]) => (currentLength = items.length));
+
+    if (this.searchProvider.searchLength(this.query) > currentLength) {
+      this.nextPage();
+      infiniteScroll.complete();
+    } else {
+      this.searchProvider
+        .fetchNextPage$(this.query)
+        .first()
+        .finally(() => infiniteScroll.complete())
+        .subscribe(
+        () => this.nextPage(),
+        error => console.log('feed error', error),
+      );
+    }
   }
 
-  trackById(index, item) {
-    return item.id;
-  }
+  nextPage = (): void => {
+    this.page += 1;
+    this.itemsToDisplay$.next(this.page);
+  };
 
 }

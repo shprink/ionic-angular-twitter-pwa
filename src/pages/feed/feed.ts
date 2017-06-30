@@ -36,21 +36,19 @@ export class FeedPage {
     public feedProvider: FeedProvider,
     public usersProvider: UsersProvider,
     public injector: Injector,
-  ) {}
+  ) { }
 
   ionViewDidLoad() {
     this.feed$ = this.feedProvider.getFeedPaginated$(this.itemsToDisplay$);
     this.fetching$ = this.feedProvider.isFetching$();
-  }
 
-  init() {
     const hasFeed = this.feedProvider.hasFeed();
     if (!hasFeed) {
-    console.log('init')
+      console.log('init')
       this.feedProvider
         .fetch$()
         .first()
-        .subscribe(() => {}, error => console.log('feed error', error));
+        .subscribe(() => { }, error => console.log('feed error', error));
     }
   }
 
@@ -60,7 +58,7 @@ export class FeedPage {
       .fetch$()
       .first()
       .finally(() => refresher.complete())
-      .subscribe(() => {}, error => console.log('feed error', error));
+      .subscribe(() => { }, error => console.log('feed error', error));
   }
 
   loadMore(infiniteScroll: InfiniteScroll) {
@@ -80,9 +78,9 @@ export class FeedPage {
         .first()
         .finally(() => infiniteScroll.complete())
         .subscribe(
-          () => this.nextPage(),
-          error => console.log('feed error', error),
-        );
+        () => this.nextPage(),
+        error => console.log('feed error', error),
+      );
     }
   }
 

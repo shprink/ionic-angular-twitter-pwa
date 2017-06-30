@@ -109,9 +109,9 @@ export class TwitterProvider {
       : Observable.throw(authRequiredError);
   }
 
-  search$(q, type = 'popular'): Observable<any> {
+  search$(q, type = 'popular', options = {}): Observable<any> {
     return this.authProvider.isAuthenticated()
-      ? this.http.post(`${__APIURI__}api/search/${type}`, { q: encodeURI(q) },
+      ? this.http.post(`${__APIURI__}api/search/${type}`, { ...options, q: encodeURI(q) },
         this.getRequestOptions()).map(res => res.json())
       : Observable.throw(authRequiredError);
   }

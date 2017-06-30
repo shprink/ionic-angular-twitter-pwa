@@ -1,5 +1,8 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { ADD_TWITTER_USER, ADD_CURRENT_TWITTER_USER, FEED_FETCHED, MENTIONS_FETCHED, INIT } from '../actions';
+import {
+    ADD_TWITTER_USER, ADD_CURRENT_TWITTER_USER, FEED_FETCHED,
+    MENTIONS_FETCHED, INIT, SEARCH_FETCHED
+} from '../actions';
 import _pickBy from 'lodash/pickBy';
 
 const defaultState = {};
@@ -22,6 +25,7 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
             });
         }
 
+        case SEARCH_FETCHED:
         case MENTIONS_FETCHED:
         case FEED_FETCHED: {
             if (!payload.feed) return state;

@@ -12,7 +12,6 @@
   <feed 
     [content]="feed$ | async"
     [isFetching]="fetching$ | async"
-    (onInit)="init()"
     (onRefresh)="refresh($event)"
     (onInfinite)="loadMore($event)">
   </feed>
