@@ -18,6 +18,7 @@ import { UsersProvider } from './../../providers';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  tab: string = 'tweets';
   handle: string;
   user$: Observable<ITwitterUser>;
 
@@ -30,6 +31,7 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.handle = this.navParams.get('handle');
+    console.log('this.handle', this.handle)
     this.user$ = this.usersProvider.getUserById$(this.handle);
 
     if (!this.usersProvider.doesUserExist(this.handle)) {
@@ -37,6 +39,10 @@ export class ProfilePage {
         .first()
         .subscribe(() => { }, error => console.log('fetchUser error', error));
     }
+  }
+
+  changeTab() {
+    
   }
 
 }

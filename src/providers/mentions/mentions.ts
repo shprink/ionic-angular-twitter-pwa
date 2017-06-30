@@ -45,7 +45,7 @@ export class MentionsProvider {
           if (!tweet) return null;
           return {
             ...tweet, // avoid state mutation
-            user: users[tweet.userHandle]
+            user: users[tweet.userHandle.toLowerCase()]
           };
         }), null)
     );

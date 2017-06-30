@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import _take from 'lodash/take';
+import _without from 'lodash/without';
 
 import { AppState, ITweet, IUsersState } from '../../reducers';
 import { fetchFeed, fetchedFeed, errorFeed } from '../../actions';
@@ -37,8 +38,8 @@ export class FeedProvider {
       this.store.select(state => state.tweets),
       this.store.select(state => state.users),
       pageBSubject,
-      (feed: ITweet[], tweets: ITweet[], users: IUsersState, page) => _take(feed, page * perPage)
-        .map(tweetId => createTweetObject(tweets[tweetId], tweets, users))
+      (feed: ITweet[], tweets: ITweet[], users: IUsersState, page) => _without(_take(feed, page * perPage)
+        .map(tweetId => createTweetObject(tweets[tweetId], tweets, users)), null)
     );
   }
 

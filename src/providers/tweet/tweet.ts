@@ -49,13 +49,13 @@ export class TweetProvider {
 export function createTweetObject(tweet, tweets, users) {
   let tweetWithEntities = {
     ...tweet, // avoid state mutation
-    user: users[tweet.userHandle],
+    user: users[tweet.userHandle.toLowerCase()],
   }
   if (tweet.retweeted_status_id) {
     const retweeted_status = tweets[tweet.retweeted_status_id];
     tweetWithEntities.retweeted_status = {
       ...retweeted_status,
-      user: users[retweeted_status.userHandle]
+      user: users[retweeted_status.userHandle.toLowerCase()]
     }
   }
   return tweetWithEntities;

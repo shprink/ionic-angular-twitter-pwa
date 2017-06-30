@@ -54,8 +54,8 @@ export class UsersProvider {
       });
   }
 
-  getUserById$(handle: string) {
-    return this.store.select(state => state.users[handle]);
+  getUserById$(handle: string = '') {
+    return this.store.select(state => state.users[handle.toLowerCase()]);
   }
 
 }

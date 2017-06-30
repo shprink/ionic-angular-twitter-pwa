@@ -12,5 +12,12 @@
 
 <ion-content fullscreen>
   <profile-header [user]="user$ | async"></profile-header>
-
+  <ion-segment [(ngModel)]="tab" color="primary" (ionChange)="changeTab($event)">
+    <ion-segment-button value="tweets">
+      Tweets
+    </ion-segment-button>
+    <ion-segment-button value="likes">
+      Likes
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>

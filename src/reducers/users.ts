@@ -21,7 +21,7 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
         case ADD_CURRENT_TWITTER_USER:
         case ADD_TWITTER_USER: {
             return Object.assign({}, state, {
-                [payload.user.screen_name]: filterUser(payload.user)
+                [payload.user.screen_name.toLowerCase()]: filterUser(payload.user)
             });
         }
 
@@ -31,9 +31,9 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
             if (!payload.feed) return state;
             const users = {};
             payload.feed.forEach(item => {
-                users[item.user.screen_name] = filterUser(item.user);
+                users[item.user.screen_name.toLowerCase()] = filterUser(item.user);
                 if (item.retweeted_status) {
-                    users[item.retweeted_status.user.screen_name] = filterUser(item.retweeted_status.user);
+                    users[item.retweeted_status.user.screen_name.toLowerCase()] = filterUser(item.retweeted_status.user);
                 }
             });
             return Object.assign({}, state, users);

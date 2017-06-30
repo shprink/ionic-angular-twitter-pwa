@@ -74,7 +74,7 @@ export const tweetsReducer: ActionReducer<Object> = (state: ITweets = defaultSta
 
 function filterTweetProperties(tweet) {
     let feedItem = _pickBy(tweet, (v, k) => propertiesToKeep.includes(k));
-    feedItem.userHandle = feedItem.user.screen_name;
+    feedItem.userHandle = feedItem.user.screen_name.toLowerCase();
     delete feedItem.user;
     return feedItem;
 }
@@ -143,7 +143,7 @@ export interface ITweet {
     favorite_count: number;
     retweeted: boolean;
     retweet_count: number;
-    userHandle?: number;
+    userHandle?: string;
     user?: ITwitterUser;
     retweeted_status_id?: string;
     retweeted_status?: ITweet;

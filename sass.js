@@ -64,7 +64,7 @@ module.exports = {
    */
   excludeFiles: [
     /\.(wp|ios).(scss)$/i,
-    /(action-sheet|alert|badge|card|checkbox|chip|datetime|grid|item-reorder|item-sliding|label|loading|note|picker|popover|radio|range|segment|select|select|slides|toggle|virtual-scroll|cordova)/i,
+    /(action-sheet|alert|badge|card|checkbox|chip|datetime|grid|item-reorder|item-sliding|label|loading|note|picker|popover|radio|range|select|select|slides|toggle|virtual-scroll|cordova)/i,
   ],
 
   /**
