@@ -1,5 +1,5 @@
 <!-- Generated template for the ProfileHeaderComponent component -->
-<div *ngIf="user && user.profile_use_background_image" class="cover" [ngStyle]="{'background-image': 'url(' + user.profile_banner_url + '/mobile)'}"></div>
+<div *ngIf="user" class="cover" [ngStyle]="{'background-image': 'url(' + user.profile_banner_url + '/mobile)'}"></div>
 <div *ngIf="user" class="user-details">
   <avatar [user]="user" size="bigger"></avatar>
   <h2>{{user.name}}</h2>
@@ -7,7 +7,7 @@
   <tweet-text [text]="user.description"></tweet-text>
   <div class="location" *ngIf="user.location || user.url">
     <span *ngIf="user.location"><ion-icon name="pin"></ion-icon>{{user.location}}</span>
-    <span *ngIf="user.url"><ion-icon name="link"></ion-icon><a [href]="user.url" target="_blank">{{user.url}}</a></span>
+    <span *ngIf="user.url"><ion-icon name="link"></ion-icon><a [href]="user.url" target="_blank" rel="noopener">{{user.url}}</a></span>
   </div>
   <div class="following-row">
     <span class="following"><span class="count">{{user.friends_count}}</span> Following</span>
