@@ -1,2 +1,16 @@
 # ionic-twitter-pwa
-secret for now :P
+
+## Create Tweets
+![tweet](https://user-images.githubusercontent.com/1388706/27761023-b94622f6-5e54-11e7-8c45-fa6aeb56c728.gif)
+
+## Like, Retweet and Reply
+![like_retweet_reply](https://user-images.githubusercontent.com/1388706/27760951-8b3685be-5e53-11e7-9044-224042fa16c2.gif)
+
+## Open tweets and retweets
+![expand_tweets](https://user-images.githubusercontent.com/1388706/27760952-8b527b02-5e53-11e7-8195-e96b77be66e0.gif)
+
+## Search
+![search](https://user-images.githubusercontent.com/1388706/27760973-e02011b2-5e53-11e7-9a66-9aee329da8d9.gif)
+
+## Profile page
+![profile](https://user-images.githubusercontent.com/1388706/27760953-8b6ca356-5e53-11e7-9f86-d67a719316da.gif)
