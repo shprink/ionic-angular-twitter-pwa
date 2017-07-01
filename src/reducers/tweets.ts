@@ -2,8 +2,9 @@ import { ActionReducer, Action } from '@ngrx/store';
 import _pickBy from 'lodash/pickBy';
 
 import {
-    MENTIONS_FETCHED, FEED_FETCHED, LOGOUT, INIT, SEARCH_FETCHED,
-    TWEET_RETWEET, TWEET_UNRETWEET, TWEET_FAVORITE, TWEET_UNFAVORITE
+    MENTIONS_FETCHED, FEED_FETCHED, LOGOUT, INIT, SEARCH_FETCHED, 
+    TWEET_RETWEET, TWEET_UNRETWEET, TWEET_FAVORITE, TWEET_UNFAVORITE,
+    USER_TWEETS_FETCHED, USER_LIKES_FETCHED
 } from '../actions';
 import { ITwitterUser } from './users';
 
@@ -28,6 +29,8 @@ export const tweetsReducer: ActionReducer<Object> = (state: ITweets = defaultSta
     const payload = action.payload;
 
     switch (action.type) {
+        case USER_TWEETS_FETCHED:
+        case USER_LIKES_FETCHED:    
         case SEARCH_FETCHED:
         case MENTIONS_FETCHED:
         case FEED_FETCHED: {

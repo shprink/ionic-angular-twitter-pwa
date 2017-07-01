@@ -42,6 +42,8 @@ import {
   SearchProvider,
   MentionsProvider,
   TweetProvider,
+  UserTweetsProvider,
+  UserLikesProvider,
 } from '../providers';
 import { MenuComponentModule } from '../components/menu/menu.module';
 import { HttpWrapper } from './http.wrapper';
@@ -112,6 +114,8 @@ export function provideHttp(
     SearchProvider,
     MentionsProvider,
     TweetProvider,
+    UserTweetsProvider,
+    UserLikesProvider,
   ],
 })
-export class AppModule {}
+export class AppModule { }

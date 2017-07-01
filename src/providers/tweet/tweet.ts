@@ -46,7 +46,8 @@ export class TweetProvider {
 
 }
 
-export function createTweetObject(tweet, tweets, users) {
+export function createTweetObject(tweet: ITweet, tweets, users) {
+  if (!tweet) return null;
   let tweetWithEntities = {
     ...tweet, // avoid state mutation
     user: users[tweet.userHandle.toLowerCase()],

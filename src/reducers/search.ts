@@ -2,11 +2,6 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 import { SEARCH_FETCH, SEARCH_FETCHED, SEARCH_ERROR, LOGOUT } from '../actions';
 
-const defaultSearchItem = {
-    fetching: false,
-    list: [],
-};
-
 const defaultState = {};
 
 export const searchReducer: ActionReducer<Object> = (state: ISearch = defaultState, action: Action, ) => {

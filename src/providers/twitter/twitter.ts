@@ -65,11 +65,10 @@ export class TwitterProvider {
       : Observable.throw(authRequiredError);
   }
 
-  getTimeline(user_id, count = 5): Observable<any> {
+  getTimeline$(screen_name, options = {}): Observable<any> {
     return this.authProvider.isAuthenticated()
-      ? this.http.post(`${__APIURI__}api/timeline`, {
-        user_id, count
-      }, this.getRequestOptions()).map(res => res.json())
+      ? this.http.post(`${__APIURI__}api/timeline`, { ...options, screen_name },
+        this.getRequestOptions()).map(res => res.json())
       : Observable.throw(authRequiredError);
   }
 
@@ -116,9 +115,16 @@ export class TwitterProvider {
       : Observable.throw(authRequiredError);
   }
 
+  getFavoriteList$(id: string, options = {}): Observable<any> {
+    return this.authProvider.isAuthenticated()
+      ? this.http.post(`${__APIURI__}api/favorites/list`, { ...options, id },
+        this.getRequestOptions()).map(res => res.json())
+      : Observable.throw(authRequiredError);
+  }
+
   favorite$(handleDo: boolean = false, id): Observable<any> {
     return this.authProvider.isAuthenticated()
-      ? this.http.post(`${__APIURI__}api/${handleDo ? 'favorite' : 'unfavorite'}`, { id },
+      ? this.http.post(`${__APIURI__}api/favorites/${handleDo ? 'create' : 'destroy'}`, { id },
         this.getRequestOptions()).map(res => res.json())
       : Observable.throw(authRequiredError);
   }

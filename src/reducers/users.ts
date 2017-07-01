@@ -1,7 +1,8 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import {
     ADD_TWITTER_USER, ADD_CURRENT_TWITTER_USER, FEED_FETCHED,
-    MENTIONS_FETCHED, INIT, SEARCH_FETCHED
+    MENTIONS_FETCHED, INIT, SEARCH_FETCHED, USER_TWEETS_FETCHED,
+    USER_LIKES_FETCHED
 } from '../actions';
 import _pickBy from 'lodash/pickBy';
 
@@ -25,6 +26,8 @@ export const usersReducer: ActionReducer<Object> = (state: IUsersState = default
             });
         }
 
+        case USER_TWEETS_FETCHED:
+        case USER_LIKES_FETCHED:    
         case SEARCH_FETCHED:
         case MENTIONS_FETCHED:
         case FEED_FETCHED: {

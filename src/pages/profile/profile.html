@@ -12,7 +12,10 @@
 
 <ion-content fullscreen>
   <profile-header [user]="user$ | async"></profile-header>
-  <ion-segment [(ngModel)]="tab" color="primary" (ionChange)="changeTab($event)">
+  <ion-segment
+    [(ngModel)]="tab"
+    color="primary"
+    (ionChange)="changeTab($event)">
     <ion-segment-button value="tweets">
       Tweets
     </ion-segment-button>
@@ -20,4 +23,18 @@
       Likes
     </ion-segment-button>
   </ion-segment>
+  <feed
+    *ngIf="tab === 'tweets'"
+    [content]="tweets$ | async"
+    [isFetching]="tweetsFetching$ | async"
+    (onRefresh)="refreshTweets($event)"
+    (onInfinite)="loadMoreTweets($event)">
+  </feed>
+  <feed
+    *ngIf="tab === 'likes'"
+    [content]="likes$ | async"
+    [isFetching]="likesFetching$ | async"
+    (onRefresh)="refreshLikes($event)"
+    (onInfinite)="loadMoreLikes($event)">
+  </feed>
 </ion-content>

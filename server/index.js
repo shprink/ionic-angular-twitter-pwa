@@ -124,14 +124,21 @@ app.post('/api/mentions', (req, res) => {
     });
 });
 
-app.post('/api/favorite', (req, res) => {
+app.post('/api/favorites/list', (req, res) => {
+    var client = getTwitterClient(req);
+    client.get('favorites/list', Object.assign({ include_entities: true }, req.body || {}), function (error, body, response) {
+        (!error) ? res.status(200).json(body) : res.status(400).json(error);
+    });
+});
+
+app.post('/api/favorites/create', (req, res) => {
     var client = getTwitterClient(req);
     client.post('favorites/create', Object.assign({ include_entities: true }, req.body || {}), function (error, body, response) {
         (!error) ? res.status(200).json(body) : res.status(400).json(error);
     });
 });
 
-app.post('/api/unfavorite', (req, res) => {
+app.post('/api/favorites/destroy', (req, res) => {
     var client = getTwitterClient(req);
     client.post('favorites/destroy', Object.assign({ include_entities: true }, req.body || {}), function (error, body, response) {
         (!error) ? res.status(200).json(body) : res.status(400).json(error);
