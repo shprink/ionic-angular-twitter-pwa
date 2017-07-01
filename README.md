@@ -1,5 +1,11 @@
 # ionic-twitter-pwa
 
+## PWA Lighthouse results
+
+### Ionic-twitter-pwa
+
+![image](https://user-images.githubusercontent.com/1388706/27761320-fe9a67c2-5e59-11e7-84f2-a27882e07eb9.png)
+
 ## Tweet, Like, Retweet and Reply
 ![tweet](https://user-images.githubusercontent.com/1388706/27761023-b94622f6-5e54-11e7-8c45-fa6aeb56c728.gif)
 ![like_retweet_reply](https://user-images.githubusercontent.com/1388706/27760951-8b3685be-5e53-11e7-9044-224042fa16c2.gif)
