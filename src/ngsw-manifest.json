@@ -1,6 +1,11 @@
 {
     "routing": {
-        "index": "/index.html"
+        "index": "/index.html",
+        "routes": {
+            "/": {
+                "prefix": false
+            }
+        }
     },
     "dynamic": {
         "group": [
