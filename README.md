@@ -1,6 +1,8 @@
-# ionic-twitter-pwa
-
 ## PWA Lighthouse results
+
+### mobile.twitter.com
+
+![image](https://user-images.githubusercontent.com/1388706/27774064-84ee196a-5f89-11e7-86a6-2aaff19701a2.png)
 
 ### Ionic-twitter-pwa
 
@@ -16,3 +18,13 @@
 
 ## Search
 ![search](https://user-images.githubusercontent.com/1388706/27760973-e02011b2-5e53-11e7-9a66-9aee329da8d9.gif)
+
+## [Ngrx/store](https://github.com/ngrx/store) powered
+
+![ngrx](https://user-images.githubusercontent.com/1388706/27774130-7005ecec-5f8b-11e7-8462-41124fa76af1.gif)
+
+## Thanks
+
+@webmaxru for [his PWA logo source](https://github.com/webmaxru/progressive-web-apps-logo)
+
+![logo](./src/assets/icon/app_96.png)
