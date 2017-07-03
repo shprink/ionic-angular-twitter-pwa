@@ -6,7 +6,7 @@ platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .then(() => {
         console.log('bootstrap')
-        if ('serviceWorker' in navigator && __PROD__) {
+        if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('worker-basic.js')
                 .then((reg) => {
                     if (reg.installing) {

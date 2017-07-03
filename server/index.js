@@ -35,7 +35,7 @@ admin.initializeApp({
 
 const allowCrossDomain = function (req, res, next) {
     var origin = req.headers.origin;
-    if (origin === 'twitter-pwa.julienrenaux.fr' || origin.includes('localhost')) {
+    if (origin === 'twitter-pwa.julienrenaux.fr' || origin.includes('127.0.0.1') || origin.includes('localhost')) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

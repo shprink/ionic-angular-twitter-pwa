@@ -45,7 +45,7 @@ module.exports = {
         __PROD__: process.env.IONIC_ENV === 'prod',
         __APIURI__: JSON.stringify(process.env.IONIC_ENV === 'prod' 
           ? '//twitter-pwa.julienrenaux.fr/'
-          : `//localhost:${process.env.SERVER_PORT || 5000}/`)
+          : `//127.0.0.1:${process.env.SERVER_PORT || 5000}/`)
     }),  
   ],
 

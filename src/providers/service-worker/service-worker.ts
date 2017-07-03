@@ -20,6 +20,7 @@ export class ServiceWorkerProvider {
   run() {
     this.sw.log().subscribe(logs => console.log('service-worker logs', logs));
     this.sw.updates.subscribe(res => {
+      console.log('SW updates', res, res.version);
       switch (res.type) {
         case 'activation':
           let toast = this.toastCtrl.create({

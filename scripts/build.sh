@@ -28,4 +28,5 @@ ngu-sw-manifest --out $BUILDFOLDER"ngsw-manifest.json" \
                 # --module src/app/app.module.ts \
 
 # Copy basic SW file
-cp node_modules/@angular/service-worker/bundles/worker-basic.js $BUILDFOLDER
+cp node_modules/@angular/service-worker/bundles/worker-basic.min.js $BUILDFOLDER
+mv $BUILDFOLDER"worker-basic.min.js" $BUILDFOLDER"worker-basic.js" 

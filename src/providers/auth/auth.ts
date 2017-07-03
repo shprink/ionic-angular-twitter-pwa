@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Network } from '@ionic-native/network';
 
 import * as firebase from 'firebase/app';
 
@@ -18,22 +19,28 @@ import {
 */
 @Injectable()
 export class AuthProvider {
+  isOnline: boolean = navigator.onLine;
 
   constructor(
     public afAuth: AngularFireAuth,
     public store: Store<AppState>,
-    // public twitterProvider: TwitterProvider,
-  ) { }
+    private network: Network,
+  ) {
+    this.network.onConnect().subscribe(() => this.isOnline = true);
+    this.network.onDisconnect().subscribe(() => this.isOnline = false);
+  }
 
   run() {
-
     const credential = this.getCredential();
     if (credential) { // checking credential on app ready
       this.afAuth.auth.signInAndRetrieveDataWithCredential(
         firebase.auth.TwitterAuthProvider.credential(credential.access_token_key, credential.access_token_secret)
       ).then(
         result => this.store.dispatch(addAuthCredential(result.credential)),
-        error => this.logout());
+        error => {
+          // If offline we want the last user to stay logged in
+          this.isOnline && this.logout()
+        });
     } else {
       this.logout();
     }

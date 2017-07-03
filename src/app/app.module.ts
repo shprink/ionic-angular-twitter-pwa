@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Network } from '@ionic-native/network';
 
 import 'javascript-time-ago/intl-messageformat-global';
 import 'intl-messageformat/dist/locale-data/en';
@@ -116,6 +117,7 @@ export function provideHttp(
     TweetProvider,
     UserTweetsProvider,
     UserLikesProvider,
+    Network,
   ],
 })
 export class AppModule { }
