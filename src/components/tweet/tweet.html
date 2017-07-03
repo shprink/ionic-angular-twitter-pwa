@@ -13,14 +13,14 @@
   <og></og>
   <div class="actions" *ngIf="!retweetedStatus">
     <button ion-button clear (click)="reply($event)">
-      <ion-icon name="chatboxes" color="gray"></ion-icon>
+      <ion-icon name="chatboxes"></ion-icon>
     </button>
     <button ion-button clear class="retweet" [class.active]="data.retweeted" (click)="retweet($event)">
-      <ion-icon name="repeat" color="gray"></ion-icon>&nbsp;
+      <ion-icon name="repeat"></ion-icon>&nbsp;
       <span *ngIf="data.retweet_count">{{ data.retweet_count }}</span>
     </button>
     <button ion-button clear class="favorite" [class.active]="data.favorited" (click)="favorite($event)">
-      <ion-icon name="heart" color="gray"></ion-icon>&nbsp;
+      <ion-icon name="heart"></ion-icon>&nbsp;
       <span *ngIf="data.favorite_count">{{ data.favorite_count }}</span>
     </button>
   </div>

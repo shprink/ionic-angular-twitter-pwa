@@ -3,6 +3,9 @@
         "index": "/index.html",
         "routes": {
             "/": {
+                "prefix": false
+            },
+            "/#/nav": {
                 "prefix": true
             }
         }
