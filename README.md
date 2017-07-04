@@ -13,15 +13,25 @@
 
 ![ngrx](https://user-images.githubusercontent.com/1388706/27774130-7005ecec-5f8b-11e7-8462-41124fa76af1.gif)
 
-## Performance
+## Ionic-twitter-pwa Performance
 
-### mobile.twitter.com lighthouse results
+### [lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en) results
+
+![image](https://user-images.githubusercontent.com/1388706/27761320-fe9a67c2-5e59-11e7-84f2-a27882e07eb9.png)
+
+### [testmysite](https://testmysite.withgoogle.com) results
+
+![image](https://user-images.githubusercontent.com/1388706/27823192-98835cfe-60a8-11e7-820e-fe684f068796.png)
+
+## mobile.twitter.com Performance
+
+### [lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=en) results
 
 ![image](https://user-images.githubusercontent.com/1388706/27774064-84ee196a-5f89-11e7-86a6-2aaff19701a2.png)
 
-### Ionic-twitter-pwa lighthouse results
+### [testmysite](https://testmysite.withgoogle.com) results
 
-![image](https://user-images.githubusercontent.com/1388706/27761320-fe9a67c2-5e59-11e7-84f2-a27882e07eb9.png)
+![image](https://user-images.githubusercontent.com/1388706/27823365-244fbfde-60a9-11e7-9a4a-fbba4bdfd4e9.png)
 
 ## Thanks
 
