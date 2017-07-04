@@ -44,7 +44,7 @@ export const authReducer: ActionReducer<Object> = (state: IAuthState = defaultSt
 
         case ADD_CURRENT_TWITTER_USER: {
             return Object.assign({}, state, {
-                screen_name: payload.user.screen_name
+                screen_name: payload.user.screen_name.toLowerCase()
             });
         }
 
