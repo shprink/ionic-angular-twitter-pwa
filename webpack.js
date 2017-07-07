@@ -1,13 +1,14 @@
 var path = require('path');
 var webpack = require('webpack');
 var ionicWebpackFactory = require(process.env.IONIC_WEBPACK_FACTORY);
+var ModuleConcatPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 module.exports = {
   entry: process.env.IONIC_APP_ENTRY_POINT,
   output: {
     path: '{{BUILD}}',
     publicPath: 'build/',
-    filename: process.env.IONIC_OUTPUT_JS_FILE_NAME,
+    filename: '[name].js',
     devtoolModuleFilenameTemplate: ionicWebpackFactory.getSourceMapperFunction(),
   },
   devtool: process.env.IONIC_SOURCE_MAP_TYPE,
@@ -36,6 +37,8 @@ module.exports = {
 
   plugins: [
     ionicWebpackFactory.getIonicEnvironmentPlugin(),
+    ionicWebpackFactory.getCommonChunksPlugin(),
+    new ModuleConcatPlugin(),
     new webpack.NormalModuleReplacementPlugin(
       /dist[\\\/]scss[\\\/]ionicons-icons.scss$/,
       path.join(__dirname, '/src/theme/ionicons-icons.scss')
