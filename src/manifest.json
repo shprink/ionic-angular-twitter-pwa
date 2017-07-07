@@ -1,6 +1,6 @@
 {
   "background_color": "#ffffff",
-  "description": "Ionic PWA rewritten with Ionic and Open Source",
+  "description": "Twitter PWA rewritten with Ionic",
   "display": "standalone",
   "icons": [
     {
