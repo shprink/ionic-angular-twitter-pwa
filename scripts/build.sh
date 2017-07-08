@@ -14,6 +14,7 @@ ionic-app-scripts build --prod \
 # remove unused css (~20% gain)
 purifycss $BUILDFOLDER"build/main.css" \
           $BUILDFOLDER"build/main.js" \
+          $BUILDFOLDER"build/vendor.js" \
           $BUILDFOLDER"build/*.main.js" \
           --info \
           --min \
