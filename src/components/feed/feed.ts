@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { InfiniteScroll, Refresher } from 'ionic-angular';
 
 import { ITweet } from './../../reducers';
@@ -14,13 +14,14 @@ import { ITweet } from './../../reducers';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedComponent {
+  @Input() addRefresher: boolean = true;
   @Input() content: ITweet[];
   @Input() isFetching: boolean;
   @Output() onInit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onInfinite: EventEmitter<any> = new EventEmitter<any>();
   @Output() onRefresh: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
     this.onInit.emit();

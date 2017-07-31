@@ -1,9 +1,9 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  InfiniteScroll, Refresher,
+  InfiniteScroll, Refresher, Content
 } from 'ionic-angular';
 
 import { ITwitterUser, ITweet } from './../../reducers';
@@ -22,9 +22,10 @@ import { UsersProvider, UserTweetsProvider, UserLikesProvider } from './../../pr
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  afix: boolean = false;
   tab: string = 'tweets';
   handle: string;
-  user$: Observable<ITwitterUser>;
+  user: ITwitterUser;
   // tweets
   tweets$: Observable<ITweet[]>;
   tweetsFetching$: Observable<boolean>;
@@ -36,18 +37,22 @@ export class ProfilePage {
   likesPage: number = 0;
   likesItemsToDisplay$ = new BehaviorSubject<number>(1);
 
+  @ViewChild(Content) content: Content;
+  @ViewChild('segmentWrapper') segmentWrapper: ElementRef;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private usersProvider: UsersProvider,
     private userTweetsProvider: UserTweetsProvider,
     private userLikesProvider: UserLikesProvider,
+    public zone: NgZone,
   ) {
   }
 
   ionViewDidLoad() {
     this.handle = this.navParams.get('handle');
-    this.user$ = this.usersProvider.getUserById$(this.handle);
+    this.usersProvider.getUserById$(this.handle).subscribe(user => this.user = user);
 
     if (!this.usersProvider.doesUserExist(this.handle)) {
       this.usersProvider.fetchUser$(this.handle)
@@ -64,6 +69,17 @@ export class ProfilePage {
     this.init();
   }
 
+  ngAfterViewInit() {
+    this.content.ionScroll.subscribe(e => {
+      const top = this.segmentWrapper.nativeElement.getBoundingClientRect().top;
+      if (top <= 56 && !this.afix) {
+        this.zone.run(()=> this.afix = true);
+      } else if (top > 56 && this.afix) {
+        this.zone.run(()=> this.afix = false);
+      }
+    });
+  }
+
   init(selectedSegment = this.tab) {
     selectedSegment === 'tweets' ? this.initTweets() : this.initLikes();
   }
@@ -77,15 +93,6 @@ export class ProfilePage {
         .first()
         .subscribe(() => { }, error => console.log('feed error', error));
     }
-  }
-
-  refreshTweets(refresher: Refresher) {
-    console.log('refreshTweets')
-    this.userTweetsProvider
-      .fetch$(this.handle)
-      .first()
-      .finally(() => refresher.complete())
-      .subscribe(() => { }, error => console.log('feed error', error));
   }
 
   loadMoreTweets(infiniteScroll: InfiniteScroll) {
@@ -161,5 +168,4 @@ export class ProfilePage {
   changeTab({ value }) {
     this.init(value);
   }
-
 }

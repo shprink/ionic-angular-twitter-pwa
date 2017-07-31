@@ -7,34 +7,39 @@
 
 
 <ion-header no-border>
-  <ion-navbar transparent></ion-navbar>
+  <ion-navbar transparent [class.afix]="afix" [class.not-afix]="!afix" [ngStyle]="{'background-image': 'url(' + user?.profile_banner_url + '/mobile)'}">
+    <ion-title>{{user?.name}}</ion-title>
+  </ion-navbar>
 </ion-header>
 
-<ion-content fullscreen>
-  <profile-header [user]="user$ | async"></profile-header>
-  <ion-segment
-    [(ngModel)]="tab"
-    color="primary"
-    (ionChange)="changeTab($event)">
-    <ion-segment-button value="tweets">
-      Tweets
-    </ion-segment-button>
-    <ion-segment-button value="likes">
-      Likes
-    </ion-segment-button>
-  </ion-segment>
-  <feed
+<ion-content fullscreen #myContent>
+  <profile-header [user]="user"></profile-header>
+  <div class="segment-wrapper" #segmentWrapper>
+    <ion-segment
+      [class.afix]="afix"
+      [(ngModel)]="tab"
+      color="primary"
+      (ionChange)="changeTab($event)">
+      <ion-segment-button value="tweets">
+        Tweets
+      </ion-segment-button>
+      <ion-segment-button value="likes">
+        Likes
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+   <feed
     *ngIf="tab === 'tweets'"
     [content]="tweets$ | async"
+    [addRefresher]="false"
     [isFetching]="tweetsFetching$ | async"
-    (onRefresh)="refreshTweets($event)"
     (onInfinite)="loadMoreTweets($event)">
   </feed>
   <feed
     *ngIf="tab === 'likes'"
     [content]="likes$ | async"
+    [addRefresher]="false"
     [isFetching]="likesFetching$ | async"
-    (onRefresh)="refreshLikes($event)"
     (onInfinite)="loadMoreLikes($event)">
   </feed>
 </ion-content>

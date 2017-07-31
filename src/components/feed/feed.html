@@ -1,6 +1,6 @@
 <!-- Generated template for the FeedComponent component -->
 <ion-content fullscreen>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher *ngIf="addRefresher" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
