@@ -1,23 +1,11 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+// import { enableProdMode } from '@angular/core';
+import { bootstrapWorkerUi } from '@angular/platform-webworker';
 
 import { AppModule } from './app.module';
+// import { environment } from './environments/environment';
 
-platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .then(() => {
-        console.log('bootstrap')
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('worker-basic.js')
-                .then((reg) => {
-                    console.log('SW reg', reg);
-                    if (reg.installing) {
-                        console.log('SW installing');
-                    } else if (reg.waiting) {
-                        console.log('SW installed');
-                    } else if (reg.active) {
-                        console.log('SW active');
-                    }
-                })
-                .catch(err => console.error('SW error', err));
-        }
-    });
+// if (environment.production) {
+//   enableProdMode();
+// }
+
+bootstrapWorkerUi('build/webworker.js');

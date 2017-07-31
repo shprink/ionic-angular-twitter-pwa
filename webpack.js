@@ -4,7 +4,10 @@ var ionicWebpackFactory = require(process.env.IONIC_WEBPACK_FACTORY);
 var ModuleConcatPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 module.exports = {
-  entry: process.env.IONIC_APP_ENTRY_POINT,
+  entry: {
+    'main': process.env.IONIC_APP_ENTRY_POINT,
+    'webworker': path.join(__dirname, '/src/app/main.worker.ts')
+  },
   output: {
     path: '{{BUILD}}',
     publicPath: 'build/',
@@ -37,7 +40,7 @@ module.exports = {
 
   plugins: [
     ionicWebpackFactory.getIonicEnvironmentPlugin(),
-    ionicWebpackFactory.getCommonChunksPlugin(),
+    // ionicWebpackFactory.getCommonChunksPlugin(),
     new ModuleConcatPlugin(),
     new webpack.NormalModuleReplacementPlugin(
       /dist[\\\/]scss[\\\/]ionicons-icons.scss$/,
@@ -49,7 +52,7 @@ module.exports = {
         __APIURI__: JSON.stringify(process.env.IONIC_ENV === 'prod' 
           ? '//twitter-pwa.julienrenaux.fr/'
           : `//127.0.0.1:${process.env.SERVER_PORT || 5000}/`)
-    }),  
+    }),
   ],
 
   // Some libraries import Node modules but don't use them in the browser.

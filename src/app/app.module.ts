@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { WorkerAppModule } from '@angular/platform-webworker';
 import {
   ErrorHandler,
   NgModule,
@@ -69,7 +69,7 @@ export function provideHttp(
 @NgModule({
   declarations: [MyApp],
   imports: [
-    BrowserModule,
+    WorkerAppModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
       iconMode: 'md',
