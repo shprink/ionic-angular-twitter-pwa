@@ -4,10 +4,13 @@
 
 ## Open tweets, retweets, Profile page
 ![expand_tweets](https://user-images.githubusercontent.com/1388706/27760952-8b527b02-5e53-11e7-8195-e96b77be66e0.gif)
-![profile](https://user-images.githubusercontent.com/1388706/27760953-8b6ca356-5e53-11e7-9f86-d67a719316da.gif)
+![profile_sticky_segment](https://user-images.githubusercontent.com/1388706/28865595-b4504f80-7770-11e7-97a4-e38c43010b59.gif)
 
 ## Search
 ![search](https://user-images.githubusercontent.com/1388706/27760973-e02011b2-5e53-11e7-9a66-9aee329da8d9.gif)
+
+## Service Worker Update
+![sw_reload](https://user-images.githubusercontent.com/1388706/28865593-b4404e32-7770-11e7-8a13-b043b9d89001.gif)
 
 ## [Ngrx/store](https://github.com/ngrx/store) powered
 
