@@ -32,18 +32,25 @@ export class TweetTextComponent {
         ? autoLinkWithJSON(this.text, this.entities || {}, this.options)
         : autoLink(this.text, this.options);
       this.tweetContent.nativeElement.innerHTML = this.text;
-      const linksToProfile = this.tweetContent.nativeElement.querySelectorAll('.username');
-      const linksToSearch = this.tweetContent.nativeElement.querySelectorAll('.hashtag');
+      const links = this.tweetContent.nativeElement.querySelectorAll('a');
 
-      [].forEach.call(linksToProfile, div => {
-        div.onclick = e => this.goToProfile(e, div.innerText);
-      });
-
-      [].forEach.call(linksToSearch, div => {
-        div.onclick = e => this.goToSearch(e, div.innerText);
+      [].forEach.call(links, a => {
+        if (a.classList.contains('username')) {
+          a.onclick = e => this.goToProfile(e, a.innerText);
+        } else if (a.classList.contains('hashtag')) {
+          a.onclick = e => this.goToSearch(e, a.innerText);
+        } else {
+          a.onclick = e => this.openLink(e, a.getAttribute('href'));
+        }
       });
     }
   }
+
+  openLink(e, url) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(url, '_blank');
+  };
 
   goToProfile(e, handle) {
     e.preventDefault();
