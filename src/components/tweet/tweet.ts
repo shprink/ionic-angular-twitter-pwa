@@ -25,6 +25,7 @@ export class TweetComponent {
   text: string;
 
   @Input() data: ITweet;
+  @Input() inDetailsPage: boolean = false;
   @Input() retweetedStatus: boolean = false;
 
   constructor(
@@ -47,7 +48,9 @@ export class TweetComponent {
   goToTweetDetails(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.appCtrl.getRootNav().push('TweetDetailsPage', { id: this.data.id_str });
+    if (!this.inDetailsPage) {
+      this.appCtrl.getRootNav().push('TweetDetailsPage', { id: this.data.id_str });
+    }
   }
 
   retweet(e) {

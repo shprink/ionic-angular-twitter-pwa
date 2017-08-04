@@ -13,5 +13,5 @@
 </ion-header>
 
 <ion-content padding>
-  <tweet *ngIf="tweet$ | async; let tweet" [data]="tweet"></tweet>
+  <tweet *ngIf="tweet$ | async; let tweet" [data]="tweet" [inDetailsPage]="true"></tweet>
 </ion-content>
