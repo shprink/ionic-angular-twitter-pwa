@@ -13,8 +13,7 @@ export function reducer(state: any, action: any) {
 
 let modules = [
   StoreModule.provideStore(reducer),
-  EffectsModule.run(AuthEffects),
-  StoreDevtoolsModule.instrumentOnlyWithExtension()
+  EffectsModule.run(AuthEffects)
 ];
 
 if (localStorage.getItem('debug') === "true") {
