@@ -15,7 +15,7 @@ let modules = [
   EffectsModule.run(AuthEffects)
 ];
 
-if (__DEV__) { // will be removed by minification
+if (__DEV__ || localStorage.getItem('debug') === "true") { // will be removed by minification
   const StoreDevtoolsModule = require('@ngrx/store-devtools').StoreDevtoolsModule;
   modules.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
 }
