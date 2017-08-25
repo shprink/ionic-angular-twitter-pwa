@@ -1,5 +1,6 @@
 import { StoreModule, combineReducers } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { Reducers } from './reducers';
 import { AuthEffects } from './effects/auth';
@@ -12,11 +13,11 @@ export function reducer(state: any, action: any) {
 
 let modules = [
   StoreModule.provideStore(reducer),
-  EffectsModule.run(AuthEffects)
+  EffectsModule.run(AuthEffects),
+  StoreDevtoolsModule.instrumentOnlyWithExtension()
 ];
 
-if (__DEV__ || localStorage.getItem('debug') === "true") { // will be removed by minification
-  const StoreDevtoolsModule = require('@ngrx/store-devtools').StoreDevtoolsModule;
+if (localStorage.getItem('debug') === "true") {
   modules.push(StoreDevtoolsModule.instrumentOnlyWithExtension())
 }
 
